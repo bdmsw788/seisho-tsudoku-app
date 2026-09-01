@@ -1,0 +1,1386 @@
+<meta charset="utf-8">
+<title>みことばの庭</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Klee+One:wght@400;600&display=swap">
+
+<style>
+:root{
+  --paper:#F1EBDC;
+  --paper-raised:#FBF8F0;
+  --paper-sunken:#E5DDC7;
+  --ink:#2B2A22;
+  --ink-soft:#655F4C;
+  --ink-faint:#8B8570;
+  --indigo:#2E4459;
+  --indigo-soft:#4C6C86;
+  --indigo-tint:#DCE4E9;
+  --gold:#AC7C24;
+  --gold-soft:#D9AE5C;
+  --gold-tint:#F3E4C2;
+  --sage:#586B49;
+  --sage-tint:#DCE4D0;
+  --line:rgba(43,42,34,0.15);
+  --line-strong:rgba(43,42,34,0.28);
+  --shadow:0 1px 2px rgba(43,42,34,0.06),0 6px 20px -8px rgba(43,42,34,0.18);
+  --radius:14px;
+  --radius-sm:9px;
+  --font-display:"Shippori Mincho",serif;
+  --font-body:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  --font-accent:"Klee One","Zen Kaku Gothic New",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#1B1C21;
+    --paper-raised:#25272F;
+    --paper-sunken:#16171B;
+    --ink:#ECE6D6;
+    --ink-soft:#B7AF98;
+    --ink-faint:#7E7869;
+    --indigo:#93B2CC;
+    --indigo-soft:#6C8CA8;
+    --indigo-tint:#293845;
+    --gold:#E3B354;
+    --gold-soft:#C99433;
+    --gold-tint:#3A3223;
+    --sage:#9BB587;
+    --sage-tint:#2A331F;
+    --line:rgba(236,230,214,0.14);
+    --line-strong:rgba(236,230,214,0.26);
+    --shadow:0 1px 2px rgba(0,0,0,0.3),0 10px 30px -10px rgba(0,0,0,0.55);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#1B1C21;
+  --paper-raised:#25272F;
+  --paper-sunken:#16171B;
+  --ink:#ECE6D6;
+  --ink-soft:#B7AF98;
+  --ink-faint:#7E7869;
+  --indigo:#93B2CC;
+  --indigo-soft:#6C8CA8;
+  --indigo-tint:#293845;
+  --gold:#E3B354;
+  --gold-soft:#C99433;
+  --gold-tint:#3A3223;
+  --sage:#9BB587;
+  --sage-tint:#2A331F;
+  --line:rgba(236,230,214,0.14);
+  --line-strong:rgba(236,230,214,0.26);
+  --shadow:0 1px 2px rgba(0,0,0,0.3),0 10px 30px -10px rgba(0,0,0,0.55);
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:15px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  min-height:100%;
+}
+h1,h2,h3{font-family:var(--font-display);font-weight:600;text-wrap:balance;margin:0;}
+p{margin:0;}
+button{font-family:inherit;}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
+
+.icon{width:1em;height:1em;display:inline-block;vertical-align:-0.15em;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.icon.filled{fill:currentColor;stroke:none;}
+
+.app{max-width:920px;margin:0 auto;padding:0 20px 80px;}
+
+/* ---------- Topbar ---------- */
+.topbar{
+  display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-end;justify-content:space-between;
+  padding:32px 0 18px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:28px;
+}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-mark{
+  width:42px;height:42px;border-radius:50%;
+  background:var(--indigo);color:var(--paper-raised);
+  display:flex;align-items:center;justify-content:center;
+  flex:none;
+}
+.brand-mark .icon{width:22px;height:22px;}
+.brand-text h1{font-size:1.5rem;color:var(--ink);letter-spacing:.02em;}
+.brand-text p{font-size:.78rem;color:var(--ink-faint);margin-top:2px;letter-spacing:.05em;}
+
+.plan-tabs{display:flex;flex-wrap:wrap;gap:8px;}
+.plan-tab{
+  display:flex;align-items:center;gap:7px;
+  padding:7px 14px 7px 10px;border-radius:999px;border:1px solid var(--line);
+  background:var(--paper-raised);color:var(--ink-soft);
+  font-size:.82rem;cursor:pointer;transition:border-color .15s,color .15s,background .15s;
+}
+.plan-tab .ring{width:20px;height:20px;flex:none;}
+.plan-tab:hover{border-color:var(--line-strong);color:var(--ink);}
+.plan-tab.active{background:var(--indigo);border-color:var(--indigo);color:var(--paper-raised);}
+.plan-tab.active .ring{color:var(--paper-raised);}
+.plan-tab.add{color:var(--indigo);border-style:dashed;background:transparent;}
+:root[data-theme="dark"] .plan-tab.add,
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .plan-tab.add{color:var(--indigo);}}
+
+/* ---------- Onboarding ---------- */
+.hero-scene{
+  width:100%;height:auto;display:block;border-radius:var(--radius);
+  margin-bottom:28px;box-shadow:var(--shadow);background:var(--paper-sunken);
+}
+.onboarding-intro{margin-bottom:26px;}
+.onboarding-intro h2{font-size:1.3rem;margin-bottom:8px;}
+.onboarding-intro p{color:var(--ink-soft);max-width:52ch;}
+.plan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+.plan-card{
+  background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--radius);
+  padding:0 0 20px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow);
+  cursor:pointer;text-align:left;color:inherit;transition:transform .15s, border-color .15s;
+  overflow:hidden;
+}
+.plan-card:hover{border-color:var(--line-strong);transform:translateY(-2px);}
+.plan-card-banner{width:100%;height:96px;display:block;background:var(--paper-sunken);}
+.plan-card-banner svg{width:100%;height:100%;display:block;}
+.plan-card-body{display:flex;flex-direction:column;gap:12px;padding:16px 20px 0;flex:1;}
+.plan-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+.plan-card-icon{
+  width:40px;height:40px;border-radius:11px;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--gold-tint);color:var(--gold);
+  margin-top:-38px;border:3px solid var(--paper-raised);
+}
+.plan-card-icon .icon{width:22px;height:22px;}
+.plan-card-badge{
+  font-size:.7rem;color:var(--ink-faint);border:1px solid var(--line);border-radius:999px;
+  padding:3px 10px;white-space:nowrap;letter-spacing:.03em;background:var(--paper-raised);
+}
+.plan-card-badge.started{color:var(--sage);border-color:var(--sage-tint);background:var(--sage-tint);}
+.plan-card h3{font-size:1.12rem;}
+.plan-card .subtitle{font-size:.78rem;color:var(--indigo);font-weight:500;letter-spacing:.02em;}
+.plan-card .citation,.citation{font-family:var(--font-accent);font-size:.72rem;color:var(--gold);margin-top:3px;display:flex;align-items:center;gap:4px;}
+.plan-card .citation .icon,.citation .icon{width:11px;height:11px;}
+.plan-card .blurb{font-size:.86rem;color:var(--ink-soft);flex:1;}
+.plan-card .meta{font-size:.76rem;color:var(--ink-faint);display:flex;gap:14px;border-top:1px solid var(--line);padding-top:10px;margin:0 20px;}
+
+/* ---------- Dashboard sections ---------- */
+.dashboard{display:flex;flex-direction:column;gap:22px;}
+.card{
+  background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+
+.stat-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;}
+.stat{
+  background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--radius-sm);
+  padding:14px 16px;display:flex;flex-direction:column;gap:6px;
+}
+.stat .label{font-size:.72rem;color:var(--ink-faint);letter-spacing:.04em;display:flex;align-items:center;gap:5px;}
+.stat .label .icon{width:14px;height:14px;}
+.stat .value{font-family:var(--font-display);font-size:1.55rem;font-variant-numeric:tabular-nums;color:var(--ink);}
+.stat .value small{font-family:var(--font-body);font-size:.62em;color:var(--ink-faint);font-weight:500;margin-left:2px;}
+.stat.flame .value{color:var(--gold);}
+.stat .sub{font-size:.72rem;color:var(--ink-faint);}
+.xp-bar{height:6px;border-radius:99px;background:var(--paper-sunken);overflow:hidden;margin-top:2px;}
+.xp-bar > span{display:block;height:100%;background:linear-gradient(90deg,var(--gold-soft),var(--gold));border-radius:99px;}
+
+.today-card{padding:0;position:relative;overflow:hidden;}
+.today-card-banner{width:100%;height:130px;display:block;background:var(--paper-sunken);}
+.today-card-banner svg{width:100%;height:100%;display:block;}
+.today-card-body{padding:20px 24px 22px;}
+.today-card .eyebrow{font-size:.74rem;color:var(--indigo);letter-spacing:.08em;display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap;}
+.today-card .eyebrow .icon{width:13px;height:13px;}
+.today-card .eyebrow-citation{font-family:var(--font-accent);font-size:.76rem;color:var(--gold);letter-spacing:0;display:inline-flex;align-items:center;gap:4px;margin-left:2px;}
+.today-card .eyebrow-citation .icon{width:11px;height:11px;}
+.today-card h2{font-size:1.28rem;margin-bottom:4px;}
+.today-card .date-line{font-size:.82rem;color:var(--ink-faint);margin-bottom:14px;}
+.refs-list{list-style:none;margin:0 0 16px;padding:0;display:flex;flex-direction:column;gap:8px;}
+.refs-list li{
+  background:var(--paper-sunken);border-radius:var(--radius-sm);padding:10px 14px;
+  font-size:.94rem;color:var(--ink);
+}
+.today-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;}
+.btn{
+  border:none;border-radius:999px;padding:11px 22px;font-size:.9rem;font-weight:700;
+  cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:transform .12s, opacity .12s;
+}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:var(--indigo);color:var(--paper-raised);}
+.btn-primary:hover{opacity:.92;}
+.btn-primary.done{background:var(--sage);}
+.btn-ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line);}
+.btn-ghost:hover{border-color:var(--line-strong);color:var(--ink);}
+.btn-text{background:none;border:none;color:var(--ink-faint);font-size:.78rem;cursor:pointer;text-decoration:underline;padding:4px;}
+.backlog-note{font-size:.78rem;color:var(--gold);background:var(--gold-tint);border-radius:999px;padding:5px 12px;}
+.all-caught-up{color:var(--ink-soft);font-size:.9rem;}
+.quote-line{
+  font-family:var(--font-accent);font-size:.95rem;color:var(--ink-soft);
+  border-top:1px dashed var(--line);margin-top:16px;padding-top:14px;
+}
+
+.split-row{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+@media(max-width:680px){.split-row{grid-template-columns:1fr;}}
+
+.growth-panel,.badge-panel{padding:20px 22px;}
+.panel-head{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+.panel-head .icon-badge{
+  width:30px;height:30px;border-radius:50%;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--sage-tint);color:var(--sage);
+}
+.panel-head .icon-badge .icon{width:15px;height:15px;}
+.panel-head h3{font-size:1rem;}
+.badge-panel .panel-head .icon-badge{background:var(--gold-tint);color:var(--gold);}
+.heatmap-panel .panel-head .icon-badge{background:var(--indigo-tint);color:var(--indigo);}
+.agenda-panel .panel-head .icon-badge{background:var(--gold-tint);color:var(--gold);}
+.level-title{font-family:var(--font-accent);font-size:1.1rem;color:var(--sage);margin:2px 0 14px;}
+
+.tree-wrap{display:flex;align-items:center;gap:20px;}
+.tree-svg{width:150px;height:172px;flex:none;border-radius:12px;overflow:hidden;background:var(--paper-sunken);}
+.tree-info{flex:1;}
+.tree-info .lv-line{font-size:.78rem;color:var(--ink-faint);margin-bottom:6px;}
+.tree-info .xp-line{font-size:.72rem;color:var(--ink-faint);margin-top:6px;}
+
+.tree-stage{opacity:0;transform-origin:60px 118px;transform:scale(.85);transition:opacity .5s ease, transform .5s ease;}
+.tree-stage.on{opacity:1;transform:scale(1);}
+@media(prefers-reduced-motion:reduce){.tree-stage{transition:none;}}
+
+.badge-shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:10px;margin-top:10px;}
+.badge-item{display:flex;flex-direction:column;align-items:center;gap:5px;background:none;border:none;cursor:pointer;color:inherit;padding:2px;}
+.badge-medal{
+  width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:var(--paper-sunken);color:var(--ink-faint);border:2px solid var(--line);
+}
+.badge-item.unlocked .badge-medal{background:var(--gold-tint);color:var(--gold);border-color:var(--gold-soft);}
+.badge-medal .icon{width:22px;height:22px;}
+.badge-item .b-label{font-size:.63rem;color:var(--ink-faint);text-align:center;line-height:1.25;}
+.badge-item.unlocked .b-label{color:var(--ink-soft);}
+.badge-more{font-size:.75rem;color:var(--indigo);text-decoration:underline;background:none;border:none;cursor:pointer;margin-top:12px;padding:0;}
+
+.heatmap-panel{padding:20px 22px;}
+.heatmap-rows{display:flex;flex-direction:column;gap:4px;margin-top:12px;overflow-x:auto;padding-bottom:4px;}
+.heatmap-row{display:flex;align-items:center;gap:8px;}
+.heatmap-row .row-label{font-size:.66rem;color:var(--ink-faint);width:52px;flex:none;font-variant-numeric:tabular-nums;}
+.heatmap-cells{display:flex;gap:4px;}
+.hm-cell{
+  width:16px;height:16px;border-radius:4px;background:var(--paper-sunken);border:1px solid var(--line);
+  cursor:pointer;flex:none;transition:transform .1s;
+}
+.hm-cell:hover{transform:scale(1.25);}
+.hm-cell.done{background:var(--sage);border-color:var(--sage);}
+.hm-cell.today{box-shadow:0 0 0 2px var(--gold);}
+.hm-cell.overdue{background:var(--gold-tint);border-color:var(--gold-soft);}
+.hm-cell.future{opacity:.45;cursor:default;}
+.heatmap-legend{display:flex;gap:16px;font-size:.68rem;color:var(--ink-faint);margin-top:10px;flex-wrap:wrap;}
+.heatmap-legend span{display:inline-flex;align-items:center;gap:5px;}
+.legend-swatch{width:10px;height:10px;border-radius:3px;display:inline-block;}
+
+.agenda-panel{padding:20px 22px;}
+.agenda-month{border:none;margin-bottom:6px;}
+.agenda-month + .agenda-month{border-top:1px solid var(--line);padding-top:6px;}
+.agenda-month summary{
+  cursor:pointer;padding:10px 4px;font-family:var(--font-display);font-size:1rem;
+  display:flex;align-items:center;justify-content:space-between;list-style:none;
+}
+.agenda-month summary::-webkit-details-marker{display:none;}
+.agenda-month summary .m-count{font-family:var(--font-body);font-size:.72rem;color:var(--ink-faint);}
+.agenda-rows{display:flex;flex-direction:column;gap:2px;padding:4px 0 10px;}
+.agenda-row{
+  display:flex;align-items:flex-start;gap:12px;padding:9px 6px;border-radius:8px;
+}
+.agenda-row:hover{background:var(--paper-sunken);}
+.agenda-row.done{opacity:.6;}
+.agenda-check{
+  width:22px;height:22px;border-radius:50%;border:1.6px solid var(--line-strong);
+  flex:none;margin-top:1px;cursor:pointer;background:var(--paper-raised);
+  display:flex;align-items:center;justify-content:center;color:transparent;
+}
+.agenda-row.done .agenda-check{background:var(--sage);border-color:var(--sage);color:var(--paper-raised);}
+.agenda-check .icon{width:12px;height:12px;}
+.agenda-date{font-size:.72rem;color:var(--ink-faint);width:64px;flex:none;padding-top:3px;font-variant-numeric:tabular-nums;}
+.agenda-refs{flex:1;font-size:.86rem;line-height:1.6;}
+.agenda-row.done .agenda-refs{text-decoration:line-through;text-decoration-color:var(--line-strong);}
+
+.reset-row{display:flex;justify-content:flex-end;margin-top:-6px;}
+
+/* ---------- Modals & toasts ---------- */
+.modal-backdrop{
+  position:fixed;inset:0;background:rgba(20,19,14,0.45);display:flex;align-items:center;justify-content:center;
+  padding:20px;z-index:50;
+}
+.modal{
+  background:var(--paper-raised);border-radius:var(--radius);padding:26px;max-width:420px;width:100%;
+  box-shadow:var(--shadow);border:1px solid var(--line);
+}
+.modal h3{font-size:1.1rem;margin-bottom:10px;}
+.modal p{color:var(--ink-soft);font-size:.86rem;margin-bottom:16px;}
+.modal input[type="date"]{
+  width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line-strong);
+  background:var(--paper);color:var(--ink);font-family:inherit;font-size:.9rem;margin-bottom:18px;
+}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;}
+
+.badge-modal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:6px;max-height:60vh;overflow-y:auto;}
+.badge-modal-item{display:flex;gap:10px;align-items:flex-start;padding:10px;border-radius:10px;background:var(--paper-sunken);}
+.badge-modal-item .badge-medal{width:38px;height:38px;flex:none;}
+.badge-modal-item .badge-medal .icon{width:18px;height:18px;}
+.badge-modal-text .bt-title{font-size:.82rem;font-weight:700;font-family:var(--font-accent);}
+.badge-modal-text .bt-desc{font-size:.7rem;color:var(--ink-faint);margin-top:2px;}
+.badge-modal-item.locked{opacity:.55;}
+
+.toast-layer{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;gap:8px;align-items:center;}
+.toast{
+  background:var(--indigo);color:var(--paper-raised);padding:12px 20px;border-radius:999px;
+  font-size:.85rem;box-shadow:var(--shadow);display:flex;align-items:center;gap:8px;
+  animation:toast-in .25s ease;
+}
+.toast.badge-toast{background:var(--gold);}
+@keyframes toast-in{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+.confetti-canvas{position:fixed;inset:0;pointer-events:none;z-index:55;}
+
+[hidden]{display:none !important;}
+
+footer.appfoot{text-align:center;color:var(--ink-faint);font-size:.72rem;padding:34px 0 6px;}
+</style>
+
+<div class="app">
+  <svg class="visually-hidden" aria-hidden="true">
+    <defs>
+      <symbol id="ic-book" viewBox="0 0 24 24"><path d="M4 5c2-1.5 5-1.5 8 0v13c-3-1.5-6-1.5-8 0V5z"/><path d="M20 5c-2-1.5-5-1.5-8 0v13c3-1.5 6-1.5 8 0V5z"/></symbol>
+      <symbol id="ic-flame" viewBox="0 0 24 24"><path d="M12 2c1 3-3 4-3 8a3 3 0 0 0 6 0c1 1 1.5 2.5 1.5 4a4.5 4.5 0 0 1-9 0C7.5 9 12 7 12 2z"/></symbol>
+      <symbol id="ic-leaf" viewBox="0 0 24 24"><path d="M20 4C10 4 4 10 4 18c0 0 1 1 3 1 8 0 14-6 14-14 0-1 0-1 0-1z"/><path d="M6 18C10 14 14 10 19 5"/></symbol>
+      <symbol id="ic-medal" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M9 14l-2 7 5-2.5L17 21l-2-7"/></symbol>
+      <symbol id="ic-check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></symbol>
+      <symbol id="ic-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
+      <symbol id="ic-seed" viewBox="0 0 24 24"><path d="M12 21c-4-1-7-5-7-10 5 0 7 2 7 2s2-2 7-2c0 5-3 9-7 10z"/></symbol>
+      <symbol id="ic-drop" viewBox="0 0 24 24"><path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/></symbol>
+      <symbol id="ic-star" viewBox="0 0 24 24"><path d="M12 3l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L12 16.9 6.4 20l1.4-6.2L3 9.5l6.4-.6L12 3z"/></symbol>
+      <symbol id="ic-sprout2" viewBox="0 0 24 24"><path d="M7 21V13"/><path d="M17 21v-6"/><path d="M7 13c-3 0-4-2-4-5 3 0 5 1 5 4"/><path d="M7 13c3 0 4-2 4-5-3 0-5 1-5 4"/><path d="M17 15c-2.5 0-3.5-1.7-3.5-4 2.5 0 4 1 4 3.5"/></symbol>
+      <symbol id="ic-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></symbol>
+      <symbol id="ic-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></symbol>
+      <symbol id="ic-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></symbol>
+      <symbol id="ic-wave" viewBox="0 0 24 24"><path d="M2 8c2-2 4-2 6 0s4 2 6 0 4-2 6 0M2 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0M2 20c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></symbol>
+      <symbol id="ic-chevronup" viewBox="0 0 24 24"><path d="M4 18l8-8 8 8M4 11l8-8 8 8"/></symbol>
+      <symbol id="ic-feather" viewBox="0 0 24 24"><path d="M20 4C11 4 5 10 5 19h2C7 12 12 7 20 4z"/><path d="M9.5 14.5L18 6M8 17l3-3M6.5 19l2-2"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark"><svg class="icon"><use href="#ic-leaf"/></svg></span>
+      <div class="brand-text">
+        <h1>みことばの庭</h1>
+        <p>聖書通読トラッカー</p>
+      </div>
+    </div>
+    <nav class="plan-tabs" id="planTabs"></nav>
+  </header>
+
+  <main id="onboarding" class="onboarding" hidden>
+    <div id="heroScene"></div>
+    <div class="onboarding-intro">
+      <h2 id="onbHeading">プランを選んで、はじめましょう</h2>
+      <p>ペースも読む範囲も、プランによっていろいろ。気になるものから始めて、あとから他のプランを追加することもできます。</p>
+    </div>
+    <div class="plan-grid" id="planGrid"></div>
+  </main>
+
+  <main id="dashboard" class="dashboard" hidden>
+    <section class="stat-strip" id="statStrip"></section>
+    <section class="card today-card" id="todayCard"></section>
+    <div class="split-row">
+      <section class="card growth-panel" id="growthPanel"></section>
+      <section class="card badge-panel" id="badgePanel"></section>
+    </div>
+    <section class="card heatmap-panel" id="heatmapPanel"></section>
+    <section class="card agenda-panel" id="agendaPanel"></section>
+    <div class="reset-row"><button class="btn-text" id="resetPlanBtn">このプランの記録をリセット</button></div>
+  </main>
+
+  <footer class="appfoot">今日開いた一冊が、あなたの一年をつくる。</footer>
+</div>
+
+<div class="toast-layer" id="toastLayer" aria-live="polite"></div>
+<canvas class="confetti-canvas" id="confettiCanvas"></canvas>
+
+<div class="modal-backdrop" id="startModalBackdrop" hidden>
+  <div class="modal">
+    <h3 id="startModalTitle">プランを始める</h3>
+    <p>いつから読み始めますか？あとから変更はできません。</p>
+    <input type="date" id="startDateInput">
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="startModalCancel">キャンセル</button>
+      <button class="btn btn-primary" id="startModalConfirm"><svg class="icon"><use href="#ic-check"/></svg>はじめる</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="badgeModalBackdrop" hidden>
+  <div class="modal" style="max-width:560px;">
+    <h3>実績バッジ</h3>
+    <p>読書を続けるほど、庭にバッジが増えていきます。</p>
+    <div class="badge-modal-grid" id="badgeModalGrid"></div>
+    <div class="modal-actions" style="margin-top:16px;">
+      <button class="btn btn-ghost" id="badgeModalClose">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================== DATA ============================== */
+
+var OT_BOOKS=[["創世記",50],["出エジプト記",40],["レビ記",27],["民数記",36],["申命記",34],
+["ヨシュア記",24],["士師記",21],["ルツ記",4],["サムエル記第一",31],["サムエル記第二",24],
+["列王記第一",22],["列王記第二",25],["歴代誌第一",29],["歴代誌第二",36],["エズラ記",10],
+["ネヘミヤ記",13],["エステル記",10],["ヨブ記",42],["詩篇",150],["箴言",31],
+["伝道者の書",12],["雅歌",8],["イザヤ書",66],["エレミヤ書",52],["哀歌",5],
+["エゼキエル書",48],["ダニエル書",12],["ホセア書",14],["ヨエル書",3],["アモス書",9],
+["オバデヤ書",1],["ヨナ書",4],["ミカ書",7],["ナホム書",3],["ハバクク書",3],
+["ゼパニヤ書",3],["ハガイ書",2],["ゼカリヤ書",14],["マラキ書",4]];
+
+var NT_BOOKS=[["マタイ",28],["マルコ",16],["ルカ",24],["ヨハネ",21],["使徒行伝",28],
+["ローマ書",16],["コリント第一",16],["コリント第二",13],["ガラテヤ書",6],["エペソ書",6],
+["ピリピ書",4],["コロサイ書",4],["テサロニケ第一",5],["テサロニケ第二",3],["テモテ第一",6],
+["テモテ第二",4],["テトス書",3],["ピレモン書",1],["ヘブル書",13],["ヤコブ書",5],
+["ペテロ第一",5],["ペテロ第二",3],["ヨハネ第一",5],["ヨハネ第二",1],["ヨハネ第三",1],
+["ユダ書",1],["黙示録",22]];
+
+var GOSPELS=[["マタイ",28],["マルコ",16],["ルカ",24],["ヨハネ",21]];
+var FULL_BIBLE=OT_BOOKS.concat(NT_BOOKS);
+
+function counterFor(name){ return name==="詩篇" ? "篇" : "章"; }
+
+function flattenBooks(list){
+  var flat=[];
+  for(var i=0;i<list.length;i++){
+    var name=list[i][0], count=list[i][1];
+    for(var c=1;c<=count;c++) flat.push([name,c]);
+  }
+  return flat;
+}
+
+function formatRef(book,start,end){
+  var suf=counterFor(book);
+  return start===end ? (book+" "+start+suf) : (book+" "+start+"-"+end+suf);
+}
+
+function formatSlice(slice){
+  var refs=[];
+  var curBook=slice[0][0], startCh=slice[0][1], endCh=slice[0][1];
+  for(var i=1;i<slice.length;i++){
+    var b=slice[i][0], c=slice[i][1];
+    if(b===curBook && c===endCh+1){ endCh=c; }
+    else{
+      refs.push(formatRef(curBook,startCh,endCh));
+      curBook=b; startCh=c; endCh=c;
+    }
+  }
+  refs.push(formatRef(curBook,startCh,endCh));
+  return refs;
+}
+
+function buildGeneratedPlan(list,days){
+  var flat=flattenBooks(list);
+  var total=flat.length;
+  var out=[];
+  var prevEnd=0;
+  for(var d=1; d<=days; d++){
+    var end=Math.round(d*total/days);
+    if(end<=prevEnd) end=prevEnd+1;
+    if(end>total) end=total;
+    var slice=flat.slice(prevEnd,end);
+    prevEnd=end;
+    out.push(formatSlice(slice));
+  }
+  return out;
+}
+
+/* the imported 2026 schedule, 260 weekday entries, whole-Bible in 3 interleaved threads */
+var STREAMS_DAYS = [["創世記 1-2章","詩篇 19篇","マルコ 1章"],["創世記 3-5章","マルコ 2章"],["創世記 6-8章","詩篇 104篇","マルコ 3章"],["創世記 9-11章","マルコ 4章"],["創世記 12-15章","詩篇 148篇","マルコ 5章"],["創世記 16-18章","マルコ 6章"],["創世記 19-20章","詩篇 1篇","マルコ 7章"],["創世記 21-23章","詩篇 107篇","マルコ 8章"],["創世記 24-25章","詩篇 4篇","マルコ 9章"],["創世記 26-27章","マルコ 10章"],["創世記 28-29章","マルコ 11章"],["創世記 30-31章","詩篇 11篇","マルコ 12章"],["創世記 32-34章","詩篇 145篇","マルコ 13章"],["創世記 35-37章","詩篇 12篇","マルコ 14章"],["創世記 38-40章","マルコ 15章"],["創世記 41-42章","マルコ 16章"],["創世記 43-44章","詩篇 24篇","ガラテヤ 1章"],["創世記 45-46章","詩篇 108篇","ガラテヤ 2章"],["創世記 47-48章","詩篇 25篇","ガラテヤ 3章"],["創世記 49-50章","ガラテヤ 4章"],["出エジプト記 1-3章","ガラテヤ 5章"],["出エジプト記 4-6章","ガラテヤ 6章"],["出エジプト記 7-9章","詩篇 105篇","エペソ 1章"],["出エジプト記 10-12章","エペソ 2章"],["出エジプト記 13-15章","詩篇 114篇","エペソ 3章"],["出エジプト記 16-18章","エペソ 4章"],["出エジプト記 19-21章","詩篇 33篇","エペソ 5章"],["出エジプト記 22-24章","詩篇 109篇","エペソ 6章"],["出エジプト記 25-27章","詩篇 90篇","ピリピ 1章"],["出エジプト記 28-31章","ピリピ 2章"],["出エジプト記 32-34章","ピリピ 3章"],["出エジプト記 35-37章","詩篇 26篇","ピリピ 4章"],["出エジプト記 38-40章","ヘブル 1章"],["レビ記 1-3章","詩篇 27篇","ヘブル 2章"],["レビ記 4-7章","ヘブル 3章"],["レビ記 8-11章","詩篇 110篇","ヘブル 4章"],["レビ記 12-14章","詩篇 111篇","ヘブル 5章"],["レビ記 15-18章","詩篇 31篇","ヘブル 6章"],["レビ記 19-20章","ヘブル 7章"],["レビ記 21-23章","ヘブル 8章"],["レビ記 24-25章","詩篇 81篇","ヘブル 9章"],["レビ記 26-27章","詩篇 112篇","ヘブル 10章"],["民数記 1-2章","詩篇 64篇","ヘブル 11章"],["民数記 3-5章","ヘブル 12章"],["民数記 6-7章","ヘブル 13章"],["民数記 8-11章","コロサイ 1章"],["民数記 12-14章","詩篇 28篇","コロサイ 2章"],["民数記 15-18章","詩篇 113篇","コロサイ 3章"],["民数記 19-21章","コロサイ 4章"],["民数記 22-25章","ルカ 1章"],["民数記 26-29章","ルカ 2章"],["民数記 30-33章","詩篇 35篇","ルカ 3章"],["民数記 34-36章","ルカ 4章"],["申命記 1-3章","詩篇 36篇","ルカ 5章"],["申命記 4-5章","ルカ 6章"],["申命記 6-9章","ルカ 7章"],["申命記 10-14章","詩篇 5篇","ルカ 8章"],["申命記 15-18章","詩篇 115篇","ルカ 9章"],["申命記 19-22章","詩篇 6篇","ルカ 10章"],["申命記 23-26章","ルカ 11章"],["申命記 27-31章","ルカ 12章"],["申命記 32-34章","詩篇 13篇","ルカ 13章"],["ヨシュア記 1-4章","詩篇 143篇","ルカ 14章"],["ヨシュア記 5-8章","詩篇 14篇","ルカ 15章"],["ヨシュア記 9-13章","ルカ 16章"],["ヨシュア記 14-17章","ルカ 17章"],["ヨシュア記 18-21章","詩篇 15篇","ルカ 18章"],["ヨシュア記 22-24章","詩篇 116篇","ルカ 19章"],["士師記 1-3章","詩篇 16篇","ルカ 20章"],["士師記 4-6章","ルカ 21章"],["士師記 7-8章","ルカ 22章"],["士師記 9-11章","詩篇 17篇","ルカ 23章"],["士師記 12-16章","詩篇 146篇","ルカ 24章"],["士師記 17-18章","詩篇 21篇","使徒 1章"],["士師記 19-21章","使徒 2章"],["ルツ記 1-2章","使徒 3章"],["ルツ記 3-4章","詩篇 37篇","使徒 4章"],["サムエル記 第一 1-2章","詩篇 120篇","使徒 5章"],["サムエル記 第一 3-5章","詩篇 23篇","使徒 6章"],["サムエル記 第一 6-8章","使徒 7章"],["サムエル記 第一 9-10章","使徒 8章"],["サムエル記 第一 11-13章","詩篇 38篇","使徒 9章"],["サムエル記 第一 14章","詩篇 124篇","使徒 10章"],["サムエル記 第一 15-16章","歴代誌 第一 1章","詩篇 39篇","使徒 11章"],["サムエル記 第一 17章","歴代誌 第一 2章","使徒 12章"],["サムエル記 第一 18-19章","歴代誌 第一 3章","詩篇 59篇","使徒 13章"],["サムエル記 第一 20章","歴代誌 第一 4章","詩篇 56, 57, 142篇","使徒 14章"],["サムエル記 第一 21-22章","歴代誌 第一 5章","詩篇 52篇","使徒 15章"],["サムエル記 第一 23-24章","歴代誌 第一 6章","詩篇 54篇","使徒 16章"],["サムエル記 第一 25章","歴代誌 第一 7章","詩篇 120篇","使徒 17章"],["サムエル記 第一 26-27章","歴代誌 第一 8章","使徒 18章"],["サムエル記 第一 28-29章","歴代誌 第一 9章","使徒 19章"],["サムエル記 第一 30-31章","歴代誌 第一 10章","使徒 20章"],["サムエル記 第二 1-2章","歴代誌 第一 11章","詩篇 96, 106篇","使徒 21章"],["サムエル記 第二 3-5章","歴代誌 第一 12章","詩篇 122篇","使徒 22章"],["サムエル記 第二 6章","歴代誌 第一 13章","詩篇 60篇","使徒 23章"],["歴代誌 第一 14-16章","使徒 24章"],["サムエル記 第二 7-8章","歴代誌 第一 17章","詩篇 132篇","使徒 25章"],["サムエル記 第二 9-10章","歴代誌 第一 18-19章","詩篇 89篇","使徒 26章"],["サムエル記 第二 11-12章","歴代誌 第一 20章","詩篇 51, 32篇","使徒 27章"],["サムエル記 第二 13-14章","使徒 28章"],["サムエル記 第二 15-17章","詩篇 3, 63篇","ローマ 1章"],["サムエル記 第二 18-20章","詩篇 34篇","ローマ 2章"],["サムエル記 第二 21-23章","詩篇 18篇","ローマ 3章"],["サムエル記 第二 24章","歴代誌 第一 21章","ローマ 4章"],["歴代誌 第一 22-25章","詩篇 78篇","ローマ 5章"],["列王記 第一 1章","歴代誌 第一 26-28章","ローマ 6章"],["列王記 第一 2章","歴代誌 第一 29章","ローマ 7章"],["列王記 第一 3章","歴代誌 第二 1章","詩篇 42篇","ローマ 8章"],["列王記 第一 4章","箴言 1-2章","詩篇 43篇","ローマ 9章"],["箴言 3-5章","ローマ 10章"],["箴言 6-7章","詩篇 7篇","ローマ 11章"],["箴言 8-10章","詩篇 144篇","ローマ 12章"],["箴言 11-13章","詩篇 8篇","ローマ 13章"],["箴言 14-15章","ローマ 14章"],["箴言 16-18章","ローマ 15章"],["箴言 19-21章","詩篇 40篇","ローマ 16章"],["箴言 22-23章","詩篇 117篇","テサロニケ 第一 1章"],["箴言 24-25章","詩篇 41篇","テサロニケ 第一 2章"],["箴言 26-28章","テサロニケ 第一 3章"],["箴言 29-31章","テサロニケ 第一 4章"],["雅歌 1-3章","詩篇 72篇","テサロニケ 第一 5章"],["雅歌 4-6章","テサロニケ 第二 1章"],["雅歌 7-8章","詩篇 127篇","テサロニケ 第二 2章"],["列王記 第一 5章","歴代誌 第二 2章","テサロニケ 第二 3章"],["列王記 第一 6章","歴代誌 第二 3章","テモテ 第一 1章"],["列王記 第一 7章","歴代誌 第二 4章","詩篇 44篇","テモテ 第一 2章"],["列王記 第一 8章","詩篇 30篇","テモテ 第一 3章"],["歴代誌 第二 5-7章","詩篇 121篇","テモテ 第一 4章"],["列王記 第一 9章","歴代誌 第二 8章","テモテ 第一 5章"],["列王記 第一 10-11章","歴代誌 第二 9章","テモテ 第一 6章"],["伝道者の書 1-3章","詩篇 45篇","テモテ 第二 1章"],["伝道者の書 4-6章","詩篇 125篇","テモテ 第二 2章"],["伝道者の書 7-9章","詩篇 46篇","テモテ 第二 3章"],["伝道者の書 10-12章","テモテ 第二 4章"],["列王記 第一 12章","歴代誌 第二 10-11章","テトス 1章"],["列王記 第一 13-14章","歴代誌 第二 12章","詩篇 47篇","テトス 2章"],["列王記 第一 15章","歴代誌 第二 13-14章","テトス 3章"],["歴代誌 第二 15-16章","列王記 第一 16章","フィレモン 1章"],["列王記 第一 17-18章","詩篇 119篇","ユダ 1章"],["列王記 第一 19-21章","歴代誌 第二 17章","詩篇 129篇","マタイ 1章"],["列王記 第一 22章","歴代誌 第二 18章","マタイ 2章"],["歴代誌 第二 19-20章","列王記 第二 1章","詩篇 20篇","マタイ 3章"],["列王記 第二 2-3章","詩篇 48篇","マタイ 4章"],["列王記 第二 4-6章","マタイ 5章"],["列王記 第二 7-8章","歴代誌 第二 21章","マタイ 6章"],["列王記 第二 9-10章","詩篇 49篇","マタイ 7章"],["歴代誌 第二 22-23章","列王記 第二 11章","詩篇 131篇","マタイ 8章"],["歴代誌 第二 24章","列王記 第二 12章","詩篇 50篇","マタイ 9章"],["ヨエル書 1-3章","マタイ 10章"],["ヨナ書 1-4章","マタイ 11章"],["列王記 第二 13-14章","歴代誌 第二 25章","詩篇 53篇","マタイ 12章"],["アモス書 1-3章","マタイ 13章"],["アモス書 4-6章","詩篇 55篇","マタイ 14章"],["アモス書 7-9章","マタイ 15章"],["ホセア書 1-3章","マタイ 16章"],["ホセア書 4-6章","詩篇 58篇","マタイ 17章"],["ホセア書 7-10章","マタイ 18章"],["ホセア書 11-13章","マタイ 19章"],["ホセア書 14章","歴代誌 第二 26-27章","詩篇 61篇","マタイ 20章"],["列王記 第二 15-16章","マタイ 21章"],["イザヤ書 1-3章","詩篇 9篇","マタイ 22章"],["イザヤ書 4-6章","マタイ 23章"],["ミカ書 1-4章","詩篇 10篇","マタイ 24章"],["ミカ書 5-7章","マタイ 25章"],["イザヤ書 7-10章","詩篇 22篇","マタイ 26章"],["イザヤ書 11-13章","詩篇 118篇","マタイ 27章"],["イザヤ書 14-16章","マタイ 28章"],["イザヤ書 17-19章","詩篇 62篇","コリント 第一 1章"],["イザヤ書 20-22章","コリント 第一 2章"],["イザヤ書 23-25章","コリント 第一 3章"],["イザヤ書 26-29章","詩篇 65篇","コリント 第一 4章"],["イザヤ書 30-32章","コリント 第一 5章"],["イザヤ書 33-35章","コリント 第一 6章"],["歴代誌 第二 28章","列王記 第二 17章","詩篇 66篇","コリント 第一 7章"],["歴代誌 第二 29-31章","コリント 第一 8章"],["列王記 第二 18-19章","歴代誌 第二 32章","詩篇 67篇","コリント 第一 9章"],["イザヤ書 36-37章","コリント 第一 10章"],["列王記 第二 20章","詩篇 123篇","コリント 第一 11章"],["イザヤ書 41-44章","詩篇 68篇","コリント 第一 12章"],["イザヤ書 45-48章","コリント 第一 13章"],["イザヤ書 49-52章","詩篇 69篇","コリント 第一 14章"],["イザヤ書 53-55章","詩篇 128篇","コリント 第一 15章"],["イザヤ書 56-59章","詩篇 70篇","コリント 第一 16章"],["イザヤ書 60-63章","コリント 第二 1章"],["イザヤ書 64-66章","詩篇 71篇","コリント 第二 2章"],["列王記 第二 21章","歴代誌 第二 33章","コリント 第二 3章"],["ナホム書 1-3章","詩篇 149篇","コリント 第二 4章"],["列王記 第二 22-23章","詩篇 73篇","コリント 第二 5章"],["歴代誌 第二 34-35章","コリント 第二 6章"],["ハバクク書 1-3章","詩篇 74篇","コリント 第二 7章"],["ゼパニヤ書 1-3章","コリント 第二 8章"],["エレミヤ書 1-4章","詩篇 130篇","コリント 第二 9章"],["エレミヤ書 5-7章","詩篇 75篇","コリント 第二 10章"],["エレミヤ書 8-10章","コリント 第二 11章"],["エレミヤ書 11-13章","詩篇 76篇","コリント 第二 12章"],["エレミヤ書 14-16章","コリント 第二 13章"],["エレミヤ書 17-20章","詩篇 137篇","ヤコブ 1章"],["エレミヤ書 22, 23, 26章","詩篇 77篇","ヤコブ 2章"],["エレミヤ書 25, 35, 36, 45章","ヤコブ 3章"],["エレミヤ書 27, 28, 29, 24章","ヤコブ 4章"],["エレミヤ書 37, 21, 34章","詩篇 79篇","ヤコブ 5章"],["エレミヤ書 30-33章","詩篇 128篇","ペテロ 第一 1章"],["エレミヤ書 38, 39, 52章","詩篇 80篇","ペテロ 第一 2章"],["列王記 第二 24-25章","歴代誌 第二 36章","ペテロ 第一 3章"],["哀歌 1-5章","詩篇 82篇","ペテロ 第一 4章"],["オバデヤ書 1章","エレミヤ書 40-42章","ペテロ 第一 5章"],["エレミヤ書 43, 44, 46章","詩篇 83篇","ペテロ 第二 1章"],["エレミヤ書 47, 48, 49章","詩篇 136篇","ペテロ 第二 2章"],["エレミヤ書 50-51章","ペテロ 第二 3章"],["エゼキエル書 1-3章","詩篇 84篇","ヨハネ 1章"],["エゼキエル書 4-6章","ヨハネ 2章"],["エゼキエル書 7-9章","詩篇 134篇","ヨハネ 3章"],["エゼキエル書 10-12章","詩篇 85篇","ヨハネ 4章"],["エゼキエル書 13-15章","ヨハネ 5章"],["エゼキエル書 16-18章","詩篇 86篇","ヨハネ 6章"],["エゼキエル書 19-21章","ヨハネ 7章"],["エゼキエル書 22-24章","詩篇 87篇","ヨハネ 8章"],["エゼキエル書 25-27章","ヨハネ 9章"],["エゼキエル書 28-30章","詩篇 135篇","ヨハネ 10章"],["エゼキエル書 31-33章","詩篇 88篇","ヨハネ 11章"],["エゼキエル書 34-36章","ヨハネ 12章"],["エゼキエル書 37-39章","詩篇 91篇","ヨハネ 13章"],["エゼキエル書 40-42章","ヨハネ 14章"],["エゼキエル書 43-45章","詩篇 92篇","ヨハネ 15章"],["エゼキエル書 46-48章","ヨハネ 16章"],["ダニエル書 1-3章","詩篇 138篇","ヨハネ 17章"],["ダニエル書 4-6章","詩篇 93篇","ヨハネ 18章"],["ダニエル書 7-9章","ヨハネ 19章"],["ダニエル書 10-12章","詩篇 94篇","ヨハネ 20章"],["エズラ記 1-2章","詩篇 95篇","ヨハネ 21章"],["エズラ記 3-4章","ゼカリヤ書 1章","詩篇 139篇","ヨハネ 第一 1章"],["ハガイ書 1-2章","詩篇 97篇","ヨハネ 第一 2章"],["ゼカリヤ書 2-5章","ヨハネ 第一 3章"],["ゼカリヤ書 6-8章","ヨハネ 第一 4章"],["ゼカリヤ書 9-11章","詩篇 98篇","ヨハネ 第一 5章"],["ゼカリヤ書 12-14章","詩篇 140篇","ヨハネ 第二 1章"],["エズラ記 5-6章","詩篇 2篇","ヨハネ 第三 1章"],["エステル記 1-3章","黙示録 1章"],["エステル記 4-6章","詩篇 29篇","黙示録 2章"],["エステル記 7-10章","詩篇 99篇","黙示録 3章"],["エズラ記 7-10章","黙示録 4章"],["ネヘミヤ記 1-3章","詩篇 100篇","黙示録 5章"],["ネヘミヤ記 4-6章","黙示録 6章"],["ネヘミヤ記 7-9章","詩篇 141篇","黙示録 7章"],["ネヘミヤ記 10-13章","詩篇 101篇","黙示録 8章"],["マラキ書 1-4章","黙示録 9章"],["ヨブ記 1-3章","詩篇 102篇","黙示録 10章"],["ヨブ記 4-7章","黙示録 11章"],["ヨブ記 8-11章","黙示録 12章"],["ヨブ記 12-14章","黙示録 13章"],["ヨブ記 15-17章","詩篇 103篇","黙示録 14章"],["ヨブ記 18-20章","詩篇 150篇","黙示録 15章"],["ヨブ記 21-23章","黙示録 16章"],["ヨブ記 24-27章","黙示録 17章"],["ヨブ記 28-30章","黙示録 18章"],["ヨブ記 31-33章","黙示録 19章"],["ヨブ記 34-36章","黙示録 20章"],["ヨブ記 37-39章","黙示録 21章"],["ヨブ記 40-42章","黙示録 22章"]];
+
+var PLAN_DEFS = {
+  streams:{
+    id:"streams", icon:"ic-wave",
+    title:"三つ撚りの糸", subtitle:"旧約・詩篇/知恵の書・新約を同時進行", citation:"伝道者の書 4:12",
+    blurb:"「三つ撚りの糸は簡単には切れない」— 平日5日間ペースで、3つの流れを同時に読み進めながら、1年で聖書66巻を読み終えます。",
+    schedule:"weekday", days:STREAMS_DAYS
+  },
+  full:{
+    id:"full", icon:"ic-book",
+    title:"アルファからオメガへ", subtitle:"創世記から黙示録まで一直線", citation:"黙示録 22:13",
+    blurb:"「わたしはアルファであり、オメガである」— 毎日欠かさず、聖書全巻を最初から最後まで順番どおりに読み進める王道プランです。",
+    schedule:"daily", days:buildGeneratedPlan(FULL_BIBLE,365)
+  },
+  nt90:{
+    id:"nt90", icon:"ic-chevronup",
+    title:"走るべき道", subtitle:"新約聖書だけを集中的に", citation:"ヘブル 12:1",
+    blurb:"「自分の前に置かれている競走を忍耐をもって走り抜こう」— 新約聖書27巻を90日間で読み切る、短期集中コースです。",
+    schedule:"daily", days:buildGeneratedPlan(NT_BOOKS,90)
+  },
+  gospel:{
+    id:"gospel", icon:"ic-feather",
+    title:"軽やかなくびき", subtitle:"四福音書だけを、じっくりと", citation:"マタイ 11:28-30",
+    blurb:"「わたしの荷は軽い」— マタイ・マルコ・ルカ・ヨハネの4巻を60日かけてゆっくり読む、はじめての方にもおすすめのプランです。",
+    schedule:"daily", days:buildGeneratedPlan(GOSPELS,60)
+  }
+};
+var PLAN_ORDER=["streams","full","nt90","gospel"];
+
+var QUOTES=[
+"今日の一章が、一年の道になる。","焦らなくていい。開いた分だけ、進んでいる。",
+"昨日読めなくても、今日また開けばいい。","小さな種が、いつか大きな木になる。",
+"続けることが、いちばんの力になる。","一行でも、今日のあなたは前に進んだ。",
+"静かな時間が、いちばん深く残る。","読み終えたページの数だけ、根が伸びている。",
+"完璧じゃなくていい。開くことがすべての始まり。","今日という日は、二度と来ない一日。",
+"積み重ねた日々が、いつか実りになる。","少しずつでも、確かに前へ。",
+"今日のひとことが、明日のあなたを支える。","読むたびに、心のページも増えていく。",
+"止まってもいい。また開けば、そこから続きになる。","毎日じゃなくても、また開けばそれでいい。",
+"今日開いたその一冊が、あなたの一年をつくる。","急がず、比べず、自分のペースで。"
+];
+
+var LEVELS=[
+{lv:1,title:"たね",xp:0},{lv:2,title:"発芽",xp:30},{lv:3,title:"双葉",xp:80},
+{lv:4,title:"若葉",xp:160},{lv:5,title:"若木",xp:280},{lv:6,title:"伸びる幹",xp:450},
+{lv:7,title:"枝分かれ",xp:680},{lv:8,title:"つぼみ",xp:1000},{lv:9,title:"開花",xp:1400},
+{lv:10,title:"結実",xp:1900},{lv:11,title:"豊かな実り",xp:2600},{lv:12,title:"大樹",xp:3500}
+];
+
+var BADGES=[
+  {id:"first",icon:"ic-seed",tier:"seed",title:"種まき",desc:"はじめての1日を読み終えた"},
+  {id:"streak7",icon:"ic-drop",tier:"bronze",title:"一週間の水やり",desc:"7日連続で読書を記録した"},
+  {id:"streak30",icon:"ic-drop",tier:"silver",title:"ひと月の恵み",desc:"30日連続で読書を記録した"},
+  {id:"streak100",icon:"ic-drop",tier:"gold",title:"揺るがぬ根",desc:"100日連続で読書を記録した"},
+  {id:"q25",icon:"ic-medal",tier:"bronze",title:"四分の一の道のり",desc:"いずれかのプランを25%達成"},
+  {id:"half",icon:"ic-medal",tier:"silver",title:"折り返し地点",desc:"いずれかのプランを50%達成"},
+  {id:"q75",icon:"ic-medal",tier:"silver",title:"あと少し",desc:"いずれかのプランを75%達成"},
+  {id:"complete",icon:"ic-star",tier:"gold",title:"読了",desc:"いずれかのプランを完走した"},
+  {id:"twoplans",icon:"ic-sprout2",tier:"bronze",title:"二毛作",desc:"2つ目のプランを始めた"},
+  {id:"earlybird",icon:"ic-sun",tier:"bronze",title:"早起きの実",desc:"朝7時前に読書を記録した"},
+  {id:"nightowl",icon:"ic-moon",tier:"bronze",title:"夜更けの灯",desc:"夜10時以降に読書を記録した"}
+];
+
+/* ============================== STORAGE ============================== */
+
+var STORAGE_KEY="seisho-tsudoku-niwa-v1";
+
+function loadState(){
+  try{
+    var raw=localStorage.getItem(STORAGE_KEY);
+    if(raw){ var s=JSON.parse(raw); if(s && typeof s==="object") return normalizeState(s); }
+  }catch(e){}
+  return normalizeState({});
+}
+function normalizeState(s){
+  s.active = s.active || null;
+  s.plans = s.plans || {};
+  s.badges = s.badges || {};
+  s.flags = s.flags || {earlybird:false, nightowl:false};
+  s.bestStreakEver = s.bestStreakEver || 0;
+  s.activity = s.activity || {};
+  return s;
+}
+var state = loadState();
+function saveState(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+}
+
+/* ============================== DATE HELPERS ============================== */
+
+function pad2(n){ return n<10 ? "0"+n : ""+n; }
+function isoDate(d){ return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate()); }
+function parseIsoDate(str){ var p=str.split("-"); return new Date(parseInt(p[0],10), parseInt(p[1],10)-1, parseInt(p[2],10)); }
+function addDays(d,n){ var r=new Date(d); r.setDate(r.getDate()+n); return r; }
+function todayDate(){ var t=new Date(); return new Date(t.getFullYear(),t.getMonth(),t.getDate()); }
+function todayStr(){ return isoDate(todayDate()); }
+
+function planDatesArray(plan, startDateStr){
+  var start = parseIsoDate(startDateStr);
+  var out = new Array(plan.days.length);
+  if(plan.schedule==="daily"){
+    for(var i=0;i<plan.days.length;i++) out[i]=addDays(start,i);
+    return out;
+  }
+  var d=new Date(start);
+  while(d.getDay()===0 || d.getDay()===6) d=addDays(d,1);
+  out[0]=new Date(d);
+  for(var i2=1;i2<plan.days.length;i2++){
+    d=addDays(d,1);
+    while(d.getDay()===0 || d.getDay()===6) d=addDays(d,1);
+    out[i2]=new Date(d);
+  }
+  return out;
+}
+
+var MONTH_NAMES=["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"];
+var WD_NAMES=["日","月","火","水","木","金","土"];
+
+/* ============================== DERIVED STATS ============================== */
+
+function totalCompletedAllPlans(){
+  var t=0;
+  for(var id in state.plans){ t += Object.keys(state.plans[id].completed||{}).length; }
+  return t;
+}
+function globalXP(){ return totalCompletedAllPlans()*10; }
+function levelFor(xp){
+  var cur=LEVELS[0];
+  for(var i=0;i<LEVELS.length;i++){ if(xp>=LEVELS[i].xp) cur=LEVELS[i]; }
+  return cur;
+}
+function nextLevelInfo(xp){
+  var lv=levelFor(xp);
+  var idx=lv.lv-1;
+  if(idx>=LEVELS.length-1) return {cur:lv,next:null,ratio:1};
+  var next=LEVELS[idx+1];
+  var ratio=(xp-lv.xp)/(next.xp-lv.xp);
+  return {cur:lv,next:next,ratio:Math.max(0,Math.min(1,ratio))};
+}
+
+function sortedActivityDates(){
+  return Object.keys(state.activity).sort();
+}
+function currentActivityStreak(){
+  var t=todayDate();
+  var y=addDays(t,-1);
+  var cursor;
+  if(state.activity[isoDate(t)]) cursor=t;
+  else if(state.activity[isoDate(y)]) cursor=y;
+  else return 0;
+  var streak=0;
+  while(state.activity[isoDate(cursor)]){ streak++; cursor=addDays(cursor,-1); }
+  return streak;
+}
+function bestActivityStreak(){
+  var dates=sortedActivityDates();
+  if(dates.length===0) return 0;
+  var best=1, cur=1;
+  for(var i=1;i<dates.length;i++){
+    var prev=parseIsoDate(dates[i-1]), now=parseIsoDate(dates[i]);
+    if(isoDate(addDays(prev,1))===isoDate(now)){ cur++; } else { cur=1; }
+    if(cur>best) best=cur;
+  }
+  return best;
+}
+
+function planCompletedCount(planId){
+  var ps=state.plans[planId]; if(!ps) return 0;
+  return Object.keys(ps.completed||{}).length;
+}
+function planRatio(planId){
+  var plan=PLAN_DEFS[planId];
+  return planCompletedCount(planId)/plan.days.length;
+}
+function maxPlanRatio(){
+  var m=0;
+  for(var id in state.plans){ m=Math.max(m, planRatio(id)); }
+  return m;
+}
+function startedPlanCount(){ return Object.keys(state.plans).length; }
+
+function currentScheduledIndex(planId){
+  var plan=PLAN_DEFS[planId], ps=state.plans[planId];
+  var dates=planDatesArray(plan, ps.startDate);
+  var t=todayStr();
+  var idx=0;
+  for(var i=0;i<dates.length;i++){
+    if(isoDate(dates[i])<=t) idx=i+1; else break;
+  }
+  return idx; /* 1-indexed day number, 0 = not started yet */
+}
+
+/* ============================== BADGES ============================== */
+
+function evaluateBadges(){
+  var newly=[];
+  var checks={
+    first: totalCompletedAllPlans()>=1,
+    streak7: Math.max(currentActivityStreak(),state.bestStreakEver)>=7,
+    streak30: Math.max(currentActivityStreak(),state.bestStreakEver)>=30,
+    streak100: Math.max(currentActivityStreak(),state.bestStreakEver)>=100,
+    q25: maxPlanRatio()>=0.25,
+    half: maxPlanRatio()>=0.5,
+    q75: maxPlanRatio()>=0.75,
+    complete: maxPlanRatio()>=1,
+    twoplans: startedPlanCount()>=2,
+    earlybird: !!state.flags.earlybird,
+    nightowl: !!state.flags.nightowl
+  };
+  for(var i=0;i<BADGES.length;i++){
+    var b=BADGES[i];
+    if(checks[b.id] && !state.badges[b.id]){
+      state.badges[b.id]=new Date().toISOString();
+      newly.push(b);
+    }
+  }
+  return newly;
+}
+
+/* ============================== TOGGLING ============================== */
+
+function markActivity(){
+  state.activity[todayStr()]=true;
+  state.bestStreakEver=Math.max(state.bestStreakEver, currentActivityStreak(), bestActivityStreak());
+}
+
+function toggleDay(planId, dayIndex){
+  var ps=state.plans[planId];
+  if(!ps) return;
+  var key=String(dayIndex);
+  var nowCompleted = !ps.completed[key];
+  if(nowCompleted){
+    ps.completed[key]=true;
+    ps.completedAt[key]=new Date().toISOString();
+    markActivity();
+    var hour=new Date().getHours();
+    if(hour<7) state.flags.earlybird=true;
+    if(hour>=22) state.flags.nightowl=true;
+  } else {
+    delete ps.completed[key];
+    delete ps.completedAt[key];
+  }
+  var prevXP=globalXP();
+  var newBadges = nowCompleted ? evaluateBadges() : [];
+  saveState();
+  renderDashboard();
+  if(nowCompleted){
+    burstConfetti();
+    var lvBefore=levelFor(prevXP), lvAfter=levelFor(globalXP());
+    if(lvAfter.lv>lvBefore.lv){
+      showToast("レベルアップ！「"+lvAfter.title+"」になりました", true);
+    }
+    for(var i=0;i<newBadges.length;i++){
+      (function(b,delay){
+        setTimeout(function(){
+          showToast("バッジ獲得：「"+b.title+"」", true);
+          burstConfetti();
+        }, delay);
+      })(newBadges[i], 450+i*650);
+    }
+  }
+}
+
+/* ============================== RENDER: TOP NAV ============================== */
+
+function iconSvg(id, extraClass){
+  return '<svg class="icon'+(extraClass?(' '+extraClass):'')+'"><use href="#'+id+'"/></svg>';
+}
+
+function panelHead(iconId, title){
+  return '<div class="panel-head"><span class="icon-badge">'+iconSvg(iconId)+'</span><h3>'+title+'</h3></div>';
+}
+
+/* ---------- hand-drawn scene illustrations ---------- */
+
+function bookMarkupBig(cx,cy){
+  var lx=cx-70, rx=cx+70;
+  return '<g>'+
+    '<path d="M'+cx+','+(cy-4)+' C'+(cx-40)+','+(cy-12)+' '+(lx+8)+','+(cy-10)+' '+lx+','+cy+' L'+lx+','+(cy+16)+' C'+(lx+8)+','+(cy+8)+' '+(cx-40)+','+(cy+8)+' '+cx+','+(cy+16)+' Z" fill="var(--paper-raised)" stroke="var(--line-strong)" stroke-width="1.2"/>'+
+    '<path d="M'+cx+','+(cy-4)+' C'+(cx+40)+','+(cy-12)+' '+(rx-8)+','+(cy-10)+' '+rx+','+cy+' L'+rx+','+(cy+16)+' C'+(rx-8)+','+(cy+8)+' '+(cx+40)+','+(cy+8)+' '+cx+','+(cy+16)+' Z" fill="var(--paper-raised)" stroke="var(--line-strong)" stroke-width="1.2"/>'+
+    '<line x1="'+cx+'" y1="'+(cy-6)+'" x2="'+cx+'" y2="'+(cy+18)+'" stroke="var(--gold)" stroke-width="2"/>'+
+  '</g>';
+}
+
+function bookMarkupSmall(cx,cy){
+  var lx=cx-24, rx=cx+24;
+  return '<g>'+
+    '<path d="M'+cx+','+(cy-2)+' C'+(cx-16)+','+(cy-6)+' '+(lx+3)+','+(cy-5)+' '+lx+','+cy+' L'+lx+','+(cy+7)+' C'+(lx+3)+','+(cy+3)+' '+(cx-16)+','+(cy+3)+' '+cx+','+(cy+7)+' Z" fill="var(--paper-raised)" stroke="var(--line-strong)" stroke-width="1"/>'+
+    '<path d="M'+cx+','+(cy-2)+' C'+(cx+16)+','+(cy-6)+' '+(rx-3)+','+(cy-5)+' '+rx+','+cy+' L'+rx+','+(cy+7)+' C'+(rx-3)+','+(cy+3)+' '+(cx+16)+','+(cy+3)+' '+cx+','+(cy+7)+' Z" fill="var(--paper-raised)" stroke="var(--line-strong)" stroke-width="1"/>'+
+    '<line x1="'+cx+'" y1="'+(cy-3)+'" x2="'+cx+'" y2="'+(cy+8)+'" stroke="var(--gold)" stroke-width="1.4"/>'+
+  '</g>';
+}
+
+function sproutMarkup(cx,cy){
+  return '<g>'+
+    '<path d="M'+(cx-14)+','+cy+' L'+(cx+14)+','+cy+' L'+(cx+11)+','+(cy+12)+' Q'+cx+','+(cy+15)+' '+(cx-11)+','+(cy+12)+' Z" fill="var(--paper-raised)" stroke="var(--line-strong)" stroke-width="1"/>'+
+    '<line x1="'+cx+'" y1="'+cy+'" x2="'+cx+'" y2="'+(cy-16)+'" stroke="var(--sage)" stroke-width="2.5"/>'+
+    '<ellipse cx="'+(cx-7)+'" cy="'+(cy-15)+'" rx="7" ry="4" fill="var(--sage)" transform="rotate(-25 '+(cx-7)+' '+(cy-15)+')"/>'+
+    '<ellipse cx="'+(cx+7)+'" cy="'+(cy-15)+'" rx="7" ry="4" fill="var(--sage)" transform="rotate(25 '+(cx+7)+' '+(cy-15)+')"/>'+
+    '<ellipse cx="'+cx+'" cy="'+(cy-22)+'" rx="6" ry="4" fill="var(--sage)"/>'+
+  '</g>';
+}
+
+function featherMarkup(cx,cy){
+  return '<g transform="rotate(18 '+cx+' '+cy+')">'+
+    '<path d="M'+cx+','+(cy-30)+' C'+(cx+14)+','+(cy-16)+' '+(cx+12)+','+(cy+10)+' '+cx+','+(cy+30)+' C'+(cx-12)+','+(cy+10)+' '+(cx-14)+','+(cy-16)+' '+cx+','+(cy-30)+' Z" fill="var(--gold-tint)" stroke="var(--gold-soft)" stroke-width="1.2"/>'+
+    '<line x1="'+cx+'" y1="'+(cy-28)+'" x2="'+cx+'" y2="'+(cy+28)+'" stroke="var(--gold)" stroke-width="1.2"/>'+
+    '<line x1="'+cx+'" y1="'+(cy-14)+'" x2="'+(cx-9)+'" y2="'+(cy-20)+'" stroke="var(--gold-soft)" stroke-width="1"/>'+
+    '<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx-10)+'" y2="'+(cy-6)+'" stroke="var(--gold-soft)" stroke-width="1"/>'+
+    '<line x1="'+cx+'" y1="'+(cy+14)+'" x2="'+(cx-9)+'" y2="'+(cy+8)+'" stroke="var(--gold-soft)" stroke-width="1"/>'+
+  '</g>';
+}
+
+function heroSvg(){
+  var stars=['60,40,1.6,0.7','130,80,1.3,0.5','200,35,1.8,0.8','270,70,1.2,0.5','340,30,1.5,0.65',
+    '420,60,1.3,0.5','500,25,1.7,0.7','580,55,1.3,0.5','640,20,1.5,0.6'].map(function(s){
+    var p=s.split(","); return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+p[2]+'" fill="var(--gold-soft)" opacity="'+p[3]+'"/>';
+  }).join("");
+  return '<svg class="hero-scene" viewBox="0 0 800 240" preserveAspectRatio="xMidYMid slice" role="img" aria-label="夜の庭で本を開いている情景のイラスト">'+
+    '<defs>'+
+      '<linearGradient id="heroSky" x1="0" y1="0" x2="0" y2="1">'+
+        '<stop offset="0%" style="stop-color:var(--indigo-tint)"/>'+
+        '<stop offset="100%" style="stop-color:var(--paper-sunken)"/>'+
+      '</linearGradient>'+
+      '<radialGradient id="heroGlow" cx="50%" cy="50%" r="50%">'+
+        '<stop offset="0%" style="stop-color:var(--gold);stop-opacity:0.38"/>'+
+        '<stop offset="100%" style="stop-color:var(--gold);stop-opacity:0"/>'+
+      '</radialGradient>'+
+    '</defs>'+
+    '<rect x="0" y="0" width="800" height="240" fill="url(#heroSky)"/>'+
+    stars+
+    '<circle cx="704" cy="52" r="30" fill="var(--gold)" opacity="0.18"/>'+
+    '<circle cx="704" cy="52" r="17" fill="var(--gold-tint)" stroke="var(--gold-soft)" stroke-width="1.5"/>'+
+    '<path d="M0,240 L0,175 C120,150 220,168 320,158 C460,144 600,120 800,148 L800,240 Z" fill="var(--sage-tint)" opacity="0.7"/>'+
+    '<path d="M0,240 L0,205 C140,182 260,200 380,196 C520,190 660,168 800,192 L800,240 Z" fill="var(--sage)"/>'+
+    '<ellipse cx="400" cy="196" rx="150" ry="60" fill="url(#heroGlow)"/>'+
+    bookMarkupBig(400,206)+
+    sproutMarkup(500,214)+
+  '</svg>';
+}
+
+function bannerStreams(){
+  return '<svg viewBox="0 0 300 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="300" height="100" fill="var(--indigo-tint)"/>'+
+    '<path d="M-10,30 C60,10 100,50 160,30 C210,14 250,34 310,20" fill="none" stroke="var(--indigo)" stroke-width="5" stroke-linecap="round" opacity="0.85"/>'+
+    '<path d="M-10,55 C60,70 100,40 160,58 C210,72 250,50 310,60" fill="none" stroke="var(--sage)" stroke-width="5" stroke-linecap="round" opacity="0.85"/>'+
+    '<path d="M-10,80 C60,64 100,88 160,78 C210,70 250,86 310,78" fill="none" stroke="var(--gold)" stroke-width="5" stroke-linecap="round" opacity="0.85"/>'+
+  '</svg>';
+}
+
+function bannerFull(){
+  var cx=150, cy=50, rIn=26, rOut=34, ticks="";
+  for(var i=0;i<24;i++){
+    var a=(i/24)*Math.PI*2;
+    var x1=(cx+rIn*Math.cos(a)).toFixed(1), y1=(cy+rIn*Math.sin(a)).toFixed(1);
+    var x2=(cx+rOut*Math.cos(a)).toFixed(1), y2=(cy+rOut*Math.sin(a)).toFixed(1);
+    var col=(i%2===0) ? "var(--gold)" : "var(--sage)";
+    ticks += '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+col+'" stroke-width="2.4" stroke-linecap="round" opacity="0.85"/>';
+  }
+  return '<svg viewBox="0 0 300 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="300" height="100" fill="var(--gold-tint)"/>'+
+    ticks+bookMarkupSmall(cx,cy)+
+  '</svg>';
+}
+
+function bannerNt90(){
+  return '<svg viewBox="0 0 300 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="300" height="100" fill="var(--sage-tint)"/>'+
+    '<path d="M10,90 L70,90 L100,55 L140,55 L175,20 L300,20 L300,100 L10,100 Z" fill="var(--sage)" opacity="0.9"/>'+
+    '<path d="M20,84 L65,58 L105,50 L150,30 L180,26" fill="none" stroke="var(--paper-raised)" stroke-width="2" stroke-dasharray="1 6" stroke-linecap="round" opacity="0.8"/>'+
+    '<line x1="180" y1="26" x2="180" y2="6" stroke="var(--ink)" stroke-width="2"/>'+
+    '<path d="M180,6 L200,12 L180,18 Z" fill="var(--gold)"/>'+
+  '</svg>';
+}
+
+function bannerGospel(){
+  return '<svg viewBox="0 0 300 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="300" height="100" fill="var(--paper-sunken)"/>'+
+    '<path d="M0,72 C40,66 60,78 100,72 C140,66 160,78 200,72 C240,66 260,78 300,72" fill="none" stroke="var(--indigo-soft)" stroke-width="2" opacity="0.55"/>'+
+    '<path d="M0,86 C40,80 60,92 100,86 C140,80 160,92 200,86 C240,80 260,92 300,86" fill="none" stroke="var(--indigo-soft)" stroke-width="2" opacity="0.4"/>'+
+    featherMarkup(150,42)+
+  '</svg>';
+}
+
+function planBannerSvg(planId){
+  var fns={streams:bannerStreams, full:bannerFull, nt90:bannerNt90, gospel:bannerGospel};
+  return fns[planId] ? fns[planId]() : "";
+}
+
+function renderTopNav(){
+  var wrap=document.getElementById("planTabs");
+  var html="";
+  for(var i=0;i<PLAN_ORDER.length;i++){
+    var id=PLAN_ORDER[i];
+    if(!state.plans[id]) continue;
+    var plan=PLAN_DEFS[id];
+    var pct=Math.round(planRatio(id)*100);
+    var active = state.active===id ? " active" : "";
+    html += '<button class="plan-tab'+active+'" data-plan="'+id+'">'+
+      '<svg class="ring"><use href="#'+plan.icon+'"/></svg>'+
+      '<span>'+plan.title+' ・ '+pct+'%</span></button>';
+  }
+  html += '<button class="plan-tab add" id="addPlanTab">'+iconSvg("ic-plus")+'<span>プランを追加</span></button>';
+  wrap.innerHTML=html;
+
+  var tabs=wrap.querySelectorAll(".plan-tab[data-plan]");
+  tabs.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      state.active=this.getAttribute("data-plan");
+      saveState();
+      showView("dashboard");
+    });
+  });
+  document.getElementById("addPlanTab").addEventListener("click", function(){
+    showView("onboarding");
+  });
+}
+
+function showView(view){
+  var onb=document.getElementById("onboarding");
+  var dash=document.getElementById("dashboard");
+  if(view==="onboarding" || !state.active){
+    onb.hidden=false; dash.hidden=true;
+    document.getElementById("onbHeading").textContent = startedPlanCount()>0 ? "他のプランを追加する" : "プランを選んで、はじめましょう";
+    renderOnboarding();
+  } else {
+    onb.hidden=true; dash.hidden=false;
+    renderDashboard();
+  }
+  renderTopNav();
+}
+
+/* ============================== RENDER: ONBOARDING ============================== */
+
+function renderOnboarding(){
+  document.getElementById("heroScene").innerHTML = heroSvg();
+  var grid=document.getElementById("planGrid");
+  var html="";
+  for(var i=0;i<PLAN_ORDER.length;i++){
+    var id=PLAN_ORDER[i];
+    var plan=PLAN_DEFS[id];
+    var started = !!state.plans[id];
+    var lengthLabel = plan.days.length+"日間";
+    var paceLabel = plan.schedule==="weekday" ? "平日のみ" : "毎日";
+    html += '<button class="plan-card" data-plan="'+id+'">'+
+      '<div class="plan-card-banner">'+planBannerSvg(id)+'</div>'+
+      '<div class="plan-card-body">'+
+        '<div class="plan-card-top">'+
+          '<span class="plan-card-icon">'+iconSvg(plan.icon)+'</span>'+
+          (started ? '<span class="plan-card-badge started">開始済み</span>' : '<span class="plan-card-badge">未開始</span>')+
+        '</div>'+
+        '<div><h3>'+plan.title+'</h3><div class="subtitle">'+plan.subtitle+'</div><div class="citation">'+iconSvg("ic-feather")+plan.citation+'</div></div>'+
+        '<p class="blurb">'+plan.blurb+'</p>'+
+      '</div>'+
+      '<div class="meta"><span>'+lengthLabel+'</span><span>'+paceLabel+'</span></div>'+
+    '</button>';
+  }
+  grid.innerHTML=html;
+  grid.querySelectorAll(".plan-card").forEach(function(card){
+    card.addEventListener("click", function(){
+      var id=this.getAttribute("data-plan");
+      if(state.plans[id]){
+        state.active=id; saveState(); showView("dashboard");
+      } else {
+        openStartModal(id);
+      }
+    });
+  });
+}
+
+/* ============================== START MODAL ============================== */
+
+var pendingPlanId=null;
+function openStartModal(planId){
+  pendingPlanId=planId;
+  document.getElementById("startModalTitle").textContent = "「"+PLAN_DEFS[planId].title+"」を始める";
+  document.getElementById("startDateInput").value = todayStr();
+  document.getElementById("startModalBackdrop").hidden=false;
+}
+function closeStartModal(){
+  document.getElementById("startModalBackdrop").hidden=true;
+  pendingPlanId=null;
+}
+document.getElementById("startModalCancel").addEventListener("click", closeStartModal);
+document.getElementById("startModalBackdrop").addEventListener("click", function(e){
+  if(e.target===this) closeStartModal();
+});
+document.getElementById("startModalConfirm").addEventListener("click", function(){
+  if(!pendingPlanId) return;
+  var dateVal=document.getElementById("startDateInput").value || todayStr();
+  state.plans[pendingPlanId]={startDate:dateVal, completed:{}, completedAt:{}};
+  state.active=pendingPlanId;
+  saveState();
+  var id=pendingPlanId;
+  closeStartModal();
+  showView("dashboard");
+  showToast("「"+PLAN_DEFS[id].title+"」を始めました。ようこそ庭へ。", false);
+  burstConfetti();
+});
+
+/* ============================== RENDER: DASHBOARD ============================== */
+
+function renderDashboard(){
+  if(!state.active || !state.plans[state.active]) return;
+  renderStatStrip();
+  renderTodayCard();
+  renderGrowthPanel();
+  renderBadgePanel();
+  renderHeatmap();
+  renderAgenda();
+}
+
+function renderStatStrip(){
+  var el=document.getElementById("statStrip");
+  var streak=currentActivityStreak();
+  var xp=globalXP();
+  var info=nextLevelInfo(xp);
+  var plan=PLAN_DEFS[state.active];
+  var pct=Math.round(planRatio(state.active)*100);
+  var totalDays=totalCompletedAllPlans();
+
+  var xpBarPct = info.next ? Math.round(info.ratio*100) : 100;
+
+  el.innerHTML =
+    '<div class="stat flame">'+
+      '<div class="label">'+iconSvg("ic-flame")+'現在の連続記録</div>'+
+      '<div class="value">'+streak+'<small>日</small></div>'+
+      '<div class="sub">自己ベスト '+Math.max(state.bestStreakEver,bestActivityStreak())+'日</div>'+
+    '</div>'+
+    '<div class="stat">'+
+      '<div class="label">'+iconSvg("ic-calendar")+'これまでの読了日数</div>'+
+      '<div class="value">'+totalDays+'<small>日</small></div>'+
+      '<div class="sub">全プラン合計</div>'+
+    '</div>'+
+    '<div class="stat">'+
+      '<div class="label">'+iconSvg("ic-book")+'このプランの進捗</div>'+
+      '<div class="value">'+pct+'<small>%</small></div>'+
+      '<div class="sub">'+plan.title+'</div>'+
+    '</div>'+
+    '<div class="stat">'+
+      '<div class="label">'+iconSvg("ic-leaf")+'成長レベル</div>'+
+      '<div class="value">Lv.'+info.cur.lv+'<small> '+info.cur.title+'</small></div>'+
+      '<div class="xp-bar"><span style="width:'+xpBarPct+'%"></span></div>'+
+    '</div>';
+}
+
+function findFocusDay(planId){
+  var plan=PLAN_DEFS[planId], ps=state.plans[planId];
+  var todayIdx=currentScheduledIndex(planId);
+  if(todayIdx===0) return {status:"future", todayIdx:0};
+  var backlog=0, focus=null;
+  for(var i=1;i<=todayIdx;i++){
+    if(!ps.completed[i]){ if(focus===null) focus=i; backlog++; }
+  }
+  if(focus===null){
+    if(todayIdx>=plan.days.length) return {status:"finished", todayIdx:todayIdx};
+    return {status:"caught-up", todayIdx:todayIdx, nextIdx:todayIdx+1};
+  }
+  return {status:"focus", todayIdx:todayIdx, focus:focus, backlog:backlog};
+}
+
+function dayOfYearSeed(){
+  var t=todayDate();
+  var start=new Date(t.getFullYear(),0,0);
+  return Math.floor((t-start)/86400000);
+}
+
+function renderTodayCard(){
+  var el=document.getElementById("todayCard");
+  var planId=state.active, plan=PLAN_DEFS[planId], ps=state.plans[planId];
+  var f=findFocusDay(planId);
+  var quote=QUOTES[dayOfYearSeed()%QUOTES.length];
+  var dates=planDatesArray(plan, ps.startDate);
+
+  var eyebrow = '<div class="eyebrow">'+iconSvg("ic-book")+plan.title+'<span class="eyebrow-citation">'+iconSvg("ic-feather")+plan.citation+'</span></div>';
+
+  var body="";
+  if(f.status==="future"){
+    body = eyebrow+
+      '<h2>まもなく始まります</h2>'+
+      '<p class="date-line">'+formatDateJp(dates[0])+' から読み始める予定です</p>';
+  } else if(f.status==="finished"){
+    body = eyebrow+
+      '<h2>すべての予定日を読み終えました</h2>'+
+      '<p class="all-caught-up">お疲れさまでした。下の一覧からいつでも読み返せます。</p>';
+  } else if(f.status==="caught-up"){
+    var nd = dates[f.nextIdx-1];
+    body = eyebrow+
+      '<h2>今日の分は読み終えています</h2>'+
+      '<p class="all-caught-up">次は '+formatDateJp(nd)+'（'+plan.days[f.nextIdx-1].length+'箇所）の予定です</p>';
+  } else {
+    var idx=f.focus;
+    var d=dates[idx-1];
+    var refs=plan.days[idx-1];
+    var isBehind = idx < f.todayIdx || (idx===f.todayIdx && f.backlog>1);
+    body = eyebrow+
+      '<h2>'+(isBehind ? formatDateJp(d)+"の分" : "今日の通読")+'</h2>'+
+      '<p class="date-line">'+formatDateJp(d)+'（'+WD_NAMES[d.getDay()]+'）'+
+        (f.backlog>1 ? ' <span class="backlog-note">たまっている分：あと'+(f.backlog-1)+'日</span>' : '')+
+      '</p>'+
+      '<ul class="refs-list">'+refs.map(function(r){return '<li>'+r+'</li>';}).join("")+'</ul>'+
+      '<div class="today-actions">'+
+        '<button class="btn btn-primary" id="markDoneBtn" data-day="'+idx+'">'+iconSvg("ic-check")+'読み終えた</button>'+
+      '</div>';
+  }
+  body += '<p class="quote-line">'+quote+'</p>';
+  el.innerHTML = '<div class="today-card-banner">'+planBannerSvg(planId)+'</div><div class="today-card-body">'+body+'</div>';
+
+  var markBtn=document.getElementById("markDoneBtn");
+  if(markBtn){
+    markBtn.addEventListener("click", function(){
+      toggleDay(planId, parseInt(this.getAttribute("data-day"),10));
+    });
+  }
+}
+
+function formatDateJp(d){
+  return (d.getMonth()+1)+"月"+d.getDate()+"日";
+}
+
+/* ---------- growth tree ---------- */
+
+function renderGrowthPanel(){
+  var el=document.getElementById("growthPanel");
+  var xp=globalXP();
+  var info=nextLevelInfo(xp);
+  var stage=Math.min(6, Math.ceil(info.cur.lv/2));
+  el.innerHTML =
+    panelHead("ic-leaf","庭の成長")+
+    '<div class="level-title">Lv.'+info.cur.lv+' 「'+info.cur.title+'」</div>'+
+    '<div class="tree-wrap">'+
+      treeSvg(stage)+
+      '<div class="tree-info">'+
+        '<div class="lv-line">全プラン合計 '+totalCompletedAllPlans()+'日分の読書 ＝ '+xp+'XP</div>'+
+        (info.next ? '<div class="xp-bar"><span style="width:'+Math.round(info.ratio*100)+'%"></span></div><div class="xp-line">次のレベル「'+info.next.title+'」まで '+(info.next.xp-xp)+'XP</div>' : '<div class="xp-line">最高レベルに到達しました</div>')+
+      '</div>'+
+    '</div>';
+}
+
+function treeSvg(stage){
+  var groups=[
+    '<g class="tree-stage s1"><ellipse cx="55" cy="118" rx="20" ry="5" fill="var(--gold-tint)"/><circle cx="55" cy="112" r="3" fill="var(--sage)"/></g>',
+    '<g class="tree-stage s2"><line x1="55" y1="118" x2="55" y2="102" stroke="var(--sage)" stroke-width="3"/><ellipse cx="49" cy="100" rx="7" ry="4" fill="var(--sage)" transform="rotate(-20 49 100)"/><ellipse cx="61" cy="100" rx="7" ry="4" fill="var(--sage)" transform="rotate(20 61 100)"/></g>',
+    '<g class="tree-stage s3"><line x1="55" y1="118" x2="55" y2="80" stroke="var(--sage)" stroke-width="4"/><ellipse cx="46" cy="90" rx="9" ry="5" fill="var(--sage)" transform="rotate(-25 46 90)"/><ellipse cx="64" cy="90" rx="9" ry="5" fill="var(--sage)" transform="rotate(25 64 90)"/><ellipse cx="55" cy="78" rx="8" ry="5" fill="var(--sage)"/></g>',
+    '<g class="tree-stage s4"><line x1="42" y1="106" x2="55" y2="80" stroke="var(--sage)" stroke-width="3"/><line x1="68" y1="106" x2="55" y2="80" stroke="var(--sage)" stroke-width="3"/><ellipse cx="40" cy="102" rx="8" ry="5" fill="var(--sage)"/><ellipse cx="70" cy="102" rx="8" ry="5" fill="var(--sage)"/><ellipse cx="47" cy="68" rx="10" ry="6" fill="var(--sage)"/><ellipse cx="63" cy="68" rx="10" ry="6" fill="var(--sage)"/></g>',
+    '<g class="tree-stage s5"><ellipse cx="55" cy="55" rx="20" ry="14" fill="var(--sage)"/><ellipse cx="35" cy="70" rx="12" ry="9" fill="var(--sage)"/><ellipse cx="75" cy="70" rx="12" ry="9" fill="var(--sage)"/><circle cx="55" cy="48" r="3.5" fill="var(--gold)"/></g>',
+    '<g class="tree-stage s6"><ellipse cx="55" cy="50" rx="24" ry="17" fill="var(--sage)"/><ellipse cx="30" cy="68" rx="13" ry="10" fill="var(--sage)"/><ellipse cx="80" cy="68" rx="13" ry="10" fill="var(--sage)"/><circle cx="45" cy="42" r="4" fill="var(--gold)"/><circle cx="63" cy="38" r="4" fill="var(--gold)"/><circle cx="55" cy="55" r="4" fill="var(--gold)"/></g>'
+  ];
+  var trunk='<rect x="52" y="96" width="6" height="22" rx="2" fill="var(--gold-soft)"/>';
+  var pot='<path d="M35 118 L75 118 L70 130 Q55 134 40 130 Z" fill="var(--paper-raised)" stroke="var(--line-strong)"/>';
+  var backdrop='<circle cx="17" cy="15" r="1.3" fill="var(--gold-soft)" opacity="0.55"/>'+
+    '<circle cx="88" cy="22" r="1.1" fill="var(--gold-soft)" opacity="0.4"/>'+
+    '<circle cx="32" cy="32" r="1" fill="var(--gold-soft)" opacity="0.35"/>'+
+    '<circle cx="72" cy="10" r="1" fill="var(--gold-soft)" opacity="0.4"/>'+
+    '<path d="M0,126 C28,118 82,120 110,126 L110,140 L0,140 Z" fill="var(--sage-tint)" opacity="0.55"/>';
+  var html='<svg class="tree-svg" viewBox="0 0 110 140" aria-hidden="true">';
+  html += backdrop;
+  html += pot;
+  if(stage>=2) html += trunk;
+  for(var i=0;i<groups.length;i++){
+    var cls = (i+1<=stage) ? " on" : "";
+    html += groups[i].replace('class="tree-stage', 'class="tree-stage'+cls+' ');
+  }
+  html += '</svg>';
+  return html;
+}
+
+/* ---------- badges ---------- */
+
+function renderBadgePanel(){
+  var el=document.getElementById("badgePanel");
+  var shown=BADGES.slice(0,8);
+  var html=panelHead("ic-medal","実績バッジ")+
+    '<div style="font-size:.78rem;color:var(--ink-faint);">'+Object.keys(state.badges).length+' / '+BADGES.length+' 個獲得</div>'+
+    '<div class="badge-shelf">';
+  for(var i=0;i<shown.length;i++){
+    var b=shown[i];
+    var unlocked=!!state.badges[b.id];
+    html += '<button class="badge-item'+(unlocked?" unlocked":"")+'" data-badge="'+b.id+'" title="'+b.desc+'">'+
+      '<span class="badge-medal">'+iconSvg(b.icon)+'</span>'+
+      '<span class="b-label">'+b.title+'</span></button>';
+  }
+  html += '</div><button class="badge-more" id="badgeMoreBtn">すべてのバッジを見る</button>';
+  el.innerHTML=html;
+  document.getElementById("badgeMoreBtn").addEventListener("click", openBadgeModal);
+  el.querySelectorAll(".badge-item").forEach(function(item){
+    item.addEventListener("click", openBadgeModal);
+  });
+}
+
+function openBadgeModal(){
+  var grid=document.getElementById("badgeModalGrid");
+  var html="";
+  for(var i=0;i<BADGES.length;i++){
+    var b=BADGES[i];
+    var unlocked=!!state.badges[b.id];
+    html += '<div class="badge-modal-item'+(unlocked?"":" locked")+'">'+
+      '<span class="badge-medal">'+iconSvg(b.icon)+'</span>'+
+      '<div class="badge-modal-text"><div class="bt-title">'+b.title+'</div><div class="bt-desc">'+b.desc+'</div></div>'+
+    '</div>';
+  }
+  grid.innerHTML=html;
+  document.getElementById("badgeModalBackdrop").hidden=false;
+}
+document.getElementById("badgeModalClose").addEventListener("click", function(){
+  document.getElementById("badgeModalBackdrop").hidden=true;
+});
+document.getElementById("badgeModalBackdrop").addEventListener("click", function(e){
+  if(e.target===this) this.hidden=true;
+});
+
+/* ---------- heatmap ---------- */
+
+function renderHeatmap(){
+  var el=document.getElementById("heatmapPanel");
+  var planId=state.active, plan=PLAN_DEFS[planId], ps=state.plans[planId];
+  var dates=planDatesArray(plan, ps.startDate);
+  var cols = plan.schedule==="weekday" ? 5 : 7;
+  var t=todayStr();
+
+  var rowsHtml="";
+  for(var r=0; r*cols<dates.length; r++){
+    var startIdx=r*cols;
+    var rowDate=dates[startIdx];
+    var label=MONTH_NAMES[rowDate.getMonth()]+" "+rowDate.getDate()+"日";
+    var cellsHtml="";
+    for(var c=0;c<cols;c++){
+      var idx=startIdx+c;
+      if(idx>=dates.length) break;
+      var d=dates[idx];
+      var dayNum=idx+1;
+      var iso=isoDate(d);
+      var cls="hm-cell";
+      if(ps.completed[dayNum]) cls+=" done";
+      else if(iso<t) cls+=" overdue";
+      else if(iso>t) cls+=" future";
+      if(iso===t) cls+=" today";
+      cellsHtml += '<div class="'+cls+'" data-day="'+dayNum+'" title="'+formatDateJp(d)+'：'+plan.days[idx].join("／")+'"></div>';
+    }
+    rowsHtml += '<div class="heatmap-row"><span class="row-label">'+label+'</span><div class="heatmap-cells">'+cellsHtml+'</div></div>';
+  }
+
+  el.innerHTML =
+    panelHead("ic-calendar","スタンプカレンダー")+
+    '<div class="heatmap-rows">'+rowsHtml+'</div>'+
+    '<div class="heatmap-legend">'+
+      '<span><span class="legend-swatch" style="background:var(--sage)"></span>読了</span>'+
+      '<span><span class="legend-swatch" style="background:var(--gold-tint);border:1px solid var(--gold-soft)"></span>未読了（予定日超過）</span>'+
+      '<span><span class="legend-swatch" style="background:var(--paper-sunken);border:1px solid var(--line)"></span>これから</span>'+
+    '</div>';
+
+  el.querySelectorAll(".hm-cell").forEach(function(cell){
+    cell.addEventListener("click", function(){
+      if(this.classList.contains("future")) return;
+      toggleDay(planId, parseInt(this.getAttribute("data-day"),10));
+    });
+  });
+}
+
+/* ---------- agenda ---------- */
+
+function renderAgenda(){
+  var el=document.getElementById("agendaPanel");
+  var planId=state.active, plan=PLAN_DEFS[planId], ps=state.plans[planId];
+  var dates=planDatesArray(plan, ps.startDate);
+  var t=todayStr();
+  var focusMonthKey = null;
+  for(var i=0;i<dates.length;i++){
+    var iso=isoDate(dates[i]);
+    if(iso<=t) focusMonthKey = dates[i].getFullYear()+"-"+pad2(dates[i].getMonth()+1);
+  }
+  if(focusMonthKey===null) focusMonthKey = dates.length ? (dates[0].getFullYear()+"-"+pad2(dates[0].getMonth()+1)) : null;
+
+  var months=[]; var monthIndex={};
+  for(var i2=0;i2<dates.length;i2++){
+    var d=dates[i2];
+    var key=d.getFullYear()+"-"+pad2(d.getMonth()+1);
+    if(!(key in monthIndex)){ monthIndex[key]=months.length; months.push({key:key,year:d.getFullYear(),month:d.getMonth(),rows:[]}); }
+    months[monthIndex[key]].rows.push(i2);
+  }
+
+  var html=panelHead("ic-book","全日程リスト");
+  for(var m=0;m<months.length;m++){
+    var mo=months[m];
+    var doneCount=0;
+    for(var k=0;k<mo.rows.length;k++){ if(ps.completed[mo.rows[k]+1]) doneCount++; }
+    var openAttr = mo.key===focusMonthKey ? " open" : "";
+    html += '<details class="agenda-month"'+openAttr+'>'+
+      '<summary>'+mo.year+'年 '+MONTH_NAMES[mo.month]+'<span class="m-count">'+doneCount+' / '+mo.rows.length+'</span></summary>'+
+      '<div class="agenda-rows">';
+    for(var k2=0;k2<mo.rows.length;k2++){
+      var idx=mo.rows[k2];
+      var dayNum=idx+1;
+      var d2=dates[idx];
+      var done=!!ps.completed[dayNum];
+      html += '<div class="agenda-row'+(done?" done":"")+'" data-day="'+dayNum+'">'+
+        '<span class="agenda-check">'+iconSvg("ic-check")+'</span>'+
+        '<span class="agenda-date">'+(d2.getMonth()+1)+"/"+d2.getDate()+' ('+WD_NAMES[d2.getDay()]+')</span>'+
+        '<span class="agenda-refs">'+plan.days[idx].join("　")+'</span>'+
+      '</div>';
+    }
+    html += '</div></details>';
+  }
+  el.innerHTML=html;
+
+  el.querySelectorAll(".agenda-row").forEach(function(row){
+    row.querySelector(".agenda-check").addEventListener("click", function(){
+      toggleDay(planId, parseInt(row.getAttribute("data-day"),10));
+    });
+  });
+}
+
+/* ============================== RESET ============================== */
+
+document.getElementById("resetPlanBtn").addEventListener("click", function(){
+  if(!state.active) return;
+  var plan=PLAN_DEFS[state.active];
+  if(window.confirm('「'+plan.title+'」の読書記録をリセットします。よろしいですか？')){
+    state.plans[state.active]={startDate: state.plans[state.active].startDate, completed:{}, completedAt:{}};
+    saveState();
+    renderDashboard();
+    renderTopNav();
+  }
+});
+
+/* ============================== TOASTS & CONFETTI ============================== */
+
+function showToast(text, isBadge){
+  var layer=document.getElementById("toastLayer");
+  var t=document.createElement("div");
+  t.className="toast"+(isBadge?" badge-toast":"");
+  t.textContent=text;
+  layer.appendChild(t);
+  setTimeout(function(){
+    t.style.transition="opacity .4s ease";
+    t.style.opacity="0";
+    setTimeout(function(){ t.remove(); }, 400);
+  }, 2600);
+}
+
+var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var confettiCanvas=document.getElementById("confettiCanvas");
+var cctx=confettiCanvas.getContext("2d");
+var confettiParticles=[];
+var confettiRunning=false;
+function resizeCanvas(){ confettiCanvas.width=window.innerWidth; confettiCanvas.height=window.innerHeight; }
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+var CONFETTI_COLORS=["#AC7C24","#D9AE5C","#586B49","#2E4459","#8B8570"];
+function burstConfetti(){
+  if(reduceMotion) return;
+  var cx=window.innerWidth/2, cy=window.innerHeight*0.35;
+  for(var i=0;i<46;i++){
+    confettiParticles.push({
+      x:cx+(Math.random()-0.5)*120, y:cy,
+      vx:(Math.random()-0.5)*6, vy:-(Math.random()*6+3),
+      size:4+Math.random()*4, color:CONFETTI_COLORS[i%CONFETTI_COLORS.length],
+      rot:Math.random()*Math.PI, vr:(Math.random()-0.5)*0.3, life:0
+    });
+  }
+  if(!confettiRunning){ confettiRunning=true; requestAnimationFrame(stepConfetti); }
+}
+function stepConfetti(){
+  cctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+  var alive=[];
+  for(var i=0;i<confettiParticles.length;i++){
+    var p=confettiParticles[i];
+    p.vy += 0.18; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.life++;
+    if(p.y < confettiCanvas.height+20 && p.life<260){
+      alive.push(p);
+      cctx.save();
+      cctx.translate(p.x,p.y); cctx.rotate(p.rot);
+      cctx.fillStyle=p.color;
+      cctx.fillRect(-p.size/2,-p.size/2,p.size,p.size*0.6);
+      cctx.restore();
+    }
+  }
+  confettiParticles=alive;
+  if(confettiParticles.length>0){ requestAnimationFrame(stepConfetti); }
+  else { confettiRunning=false; cctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height); }
+}
+
+/* ============================== INIT ============================== */
+
+showView(state.active ? "dashboard" : "onboarding");
+
+})();
+</script>
