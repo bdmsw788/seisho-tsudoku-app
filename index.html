@@ -222,8 +222,6 @@ button{font-family:inherit;}
 }
 .eyebrow-streak .icon{width:12px;height:12px;}
 .today-card .eyebrow .icon{width:13px;height:13px;}
-.today-card .eyebrow-citation{font-family:var(--font-accent);font-size:.76rem;color:var(--gold);letter-spacing:0;display:inline-flex;align-items:center;gap:4px;margin-left:2px;}
-.today-card .eyebrow-citation .icon{width:11px;height:11px;}
 .today-card h2{font-size:1.28rem;margin-bottom:4px;}
 .today-card .date-line{font-size:.82rem;color:var(--ink-faint);margin-bottom:12px;}
 .refs-list{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-direction:column;gap:7px;}
@@ -260,13 +258,19 @@ button{font-family:inherit;}
   font-family:var(--font-accent);font-size:.9rem;color:var(--ink-soft);
   border-top:1px dashed var(--line);margin-top:12px;padding-top:11px;
 }
-.quote-callout{
-  background:var(--gold-tint);border-radius:var(--radius-sm);
-  padding:9px 13px;margin-bottom:12px;
-  font-family:var(--font-accent);font-size:.88rem;color:var(--ink);
-  display:flex;align-items:center;gap:8px;
+.verse-callout{
+  background:var(--indigo-tint);border-radius:var(--radius-sm);
+  padding:14px 16px;margin-bottom:14px;
 }
-.quote-callout .icon{width:14px;height:14px;color:var(--gold);flex:none;}
+.verse-label{
+  font-size:.68rem;color:var(--indigo);letter-spacing:.08em;font-weight:700;
+  margin-bottom:7px;display:flex;align-items:center;gap:5px;
+}
+.verse-label .icon{width:11px;height:11px;}
+.verse-text{font-family:var(--font-display);font-size:1.02rem;line-height:1.65;color:var(--ink);}
+.verse-text::before{content:"「";}
+.verse-text::after{content:"」";}
+.verse-ref{display:block;margin-top:8px;font-family:var(--font-accent);font-size:.76rem;color:var(--indigo-soft);text-align:right;}
 
 .week-rhythm{padding:15px 18px;}
 .week-rhythm-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:11px;}
@@ -665,6 +669,23 @@ var QUOTES=[
 "今日のひとことが、明日のあなたを支える。","読むたびに、心のページも増えていく。",
 "止まってもいい。また開けば、そこから続きになる。","毎日じゃなくても、また開けばそれでいい。",
 "今日開いたその一冊が、あなたの一年をつくる。","急がず、比べず、自分のペースで。"
+];
+
+var VERSES=[
+{t:"強く、雄々しくあれ。あなたの神が、どこへ行くにも共にいてくださる。",r:"ヨシュア記 1:9"},
+{t:"主を待ち望む者は新たな力を得て、鷲のように翼を張って上る。",r:"イザヤ書 40:31"},
+{t:"神の言葉は、歩む足もとを照らす灯りとなる。",r:"詩篇 119:105"},
+{t:"わたしを強くしてくださる方によって、どんなことでもできる。",r:"ピリピ人への手紙 4:13"},
+{t:"主のあわれみは朝ごとに新しく、その真実は絶えることがない。",r:"哀歌 3:22-23"},
+{t:"たとい遅くなっても、なお待ち望め。それは必ず来る。",r:"ハバクク書 2:3"},
+{t:"あなたがたの労苦は、主にあって決してむだにはならない。",r:"コリント人への第一の手紙 15:58"},
+{t:"たゆまず善を行おう。飽きずに続ければ、やがて実を刈り取る時が来る。",r:"ガラテヤ人への手紙 6:9"},
+{t:"心を尽くして主に信頼せよ。自分の知恵に頼るな。",r:"箴言 3:5"},
+{t:"求めよ、そうすれば与えられる。尋ねよ、そうすれば見出す。",r:"マタイの福音書 7:7"},
+{t:"主はあなたに平安を計画しておられる。災いではなく、将来と希望を与えるために。",r:"エレミヤ書 29:11"},
+{t:"すべてのことにおいて、神は益となるように共に働かせてくださる。",r:"ローマ人への手紙 8:28"},
+{t:"わたしは世の光である。わたしに従う者は暗闇を歩まない。",r:"ヨハネの福音書 8:12"},
+{t:"聖書はすべて神の霊感を受けたもので、教え、戒め、人を正しくするために有益である。",r:"テモテへの第二の手紙 3:16"}
 ];
 
 var LEVELS=[
@@ -1339,31 +1360,36 @@ function renderTodayCard(){
   var planId=state.active, plan=PLAN_DEFS[planId], ps=state.plans[planId];
   var f=findFocusDay(planId);
   var quote=QUOTES[dayOfYearSeed()%QUOTES.length];
+  var verse=VERSES[dayOfYearSeed()%VERSES.length];
   var dates=planDatesArray(plan, ps.startDate);
 
   var streak=currentActivityStreak();
   var eyebrow = '<div class="eyebrow">'+
-    '<span class="eyebrow-left">'+iconSvg("ic-book")+plan.title+'<span class="eyebrow-citation">'+iconSvg("ic-feather")+plan.citation+'</span></span>'+
+    '<span class="eyebrow-left">'+iconSvg("ic-book")+plan.title+'</span>'+
     (streak>0 ? '<span class="eyebrow-streak">'+iconSvg("ic-flame")+streak+'日</span>' : '')+
   '</div>';
 
-  var quoteCallout = '<p class="quote-callout">'+iconSvg("ic-star")+quote+'</p>';
+  var verseCallout = '<div class="verse-callout">'+
+    '<div class="verse-label">'+iconSvg("ic-feather")+'今日のみことば</div>'+
+    '<p class="verse-text">'+verse.t+'</p>'+
+    '<span class="verse-ref">'+verse.r+'</span>'+
+  '</div>';
   var quoteLine = '<p class="quote-line">'+quote+'</p>';
 
-  var body="";
+  var body=verseCallout;
   if(f.status==="future"){
-    body = eyebrow+
+    body += eyebrow+
       '<h2>まもなく始まります</h2>'+
       '<p class="date-line">'+formatDateJp(dates[0])+' から読み始める予定です</p>'+
       quoteLine;
   } else if(f.status==="finished"){
-    body = eyebrow+
+    body += eyebrow+
       '<h2>すべての予定日を読み終えました</h2>'+
       '<p class="all-caught-up">お疲れさまでした。下の一覧からいつでも読み返せます。</p>'+
       quoteLine;
   } else if(f.status==="caught-up"){
     var nd = dates[f.nextIdx-1];
-    body = eyebrow+
+    body += eyebrow+
       '<h2>今日の分は読み終えています</h2>'+
       '<p class="all-caught-up">次は '+formatDateJp(nd)+'（'+plan.days[f.nextIdx-1].length+'箇所）の予定です</p>'+
       quoteLine;
@@ -1374,12 +1400,11 @@ function renderTodayCard(){
     var done=doneRefsForDay(planId,idx);
     var doneCount=doneRefCount(planId,idx);
     var isBehind = idx < f.todayIdx || (idx===f.todayIdx && f.backlog>1);
-    body = eyebrow+
+    body += eyebrow+
       '<h2>'+(isBehind ? formatDateJp(d)+"の分" : "今日の通読")+'</h2>'+
       '<p class="date-line">'+formatDateJp(d)+'（'+WD_NAMES[d.getDay()]+'）'+
         (f.backlog>1 ? ' <span class="backlog-note">たまっている分：あと'+(f.backlog-1)+'日</span>' : '')+
       '</p>'+
-      quoteCallout+
       '<ul class="refs-list">'+refs.map(function(r,ri){
         var isDone=!!done[ri];
         return '<li class="ref-item'+(isDone?" done":"")+'" data-ref="'+ri+'">'+
@@ -1390,7 +1415,8 @@ function renderTodayCard(){
       '<div class="today-actions">'+
         '<span class="today-progress">'+doneCount+' / '+refs.length+' 箇所</span>'+
         (doneCount<refs.length ? '<button class="btn-text" id="markAllBtn">すべてチェック</button>' : '')+
-      '</div>';
+      '</div>'+
+      quoteLine;
   }
   el.innerHTML = '<div class="today-card-banner">'+planBannerSvg(planId)+'</div><div class="today-card-body">'+body+'</div>';
 
