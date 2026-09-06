@@ -115,18 +115,18 @@ button{font-family:inherit;}
 .brand-text h1{font-size:1.5rem;color:var(--ink);letter-spacing:.02em;}
 .brand-text p{font-size:.78rem;color:var(--ink-faint);margin-top:2px;letter-spacing:.05em;}
 
-.plan-tabs{display:flex;flex-wrap:wrap;gap:8px;}
+.plan-tabs{display:flex;flex-wrap:wrap;gap:6px;}
 .plan-tab{
-  display:flex;align-items:center;gap:7px;
-  padding:7px 14px 7px 10px;border-radius:999px;border:1px solid var(--line);
-  background:var(--paper-raised);color:var(--ink-soft);
-  font-size:.82rem;cursor:pointer;transition:border-color .15s,color .15s,background .15s;
+  display:flex;align-items:center;gap:5px;
+  padding:4px 10px 4px 8px;border-radius:999px;border:1px solid transparent;
+  background:none;color:var(--ink-faint);
+  font-size:.72rem;cursor:pointer;transition:border-color .15s,color .15s,background .15s;
 }
-.plan-tab .ring{width:20px;height:20px;flex:none;}
-.plan-tab:hover{border-color:var(--line-strong);color:var(--ink);}
-.plan-tab.active{background:var(--indigo);border-color:var(--indigo);color:var(--paper-raised);}
-.plan-tab.active .ring{color:var(--paper-raised);}
-.plan-tab.add{color:var(--indigo);border-style:dashed;background:transparent;}
+.plan-tab .ring{width:14px;height:14px;flex:none;}
+.plan-tab:hover{border-color:var(--line);color:var(--ink-soft);}
+.plan-tab.active{background:var(--paper-sunken);border-color:var(--line);color:var(--indigo);font-weight:700;}
+.plan-tab.active .ring{color:var(--indigo);}
+.plan-tab.add{color:var(--indigo);border-style:dashed;border-color:var(--line);background:transparent;}
 :root[data-theme="dark"] .plan-tab.add,
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .plan-tab.add{color:var(--indigo);}}
 
@@ -192,7 +192,7 @@ button{font-family:inherit;}
 .xp-bar > span{display:block;height:100%;background:linear-gradient(90deg,var(--gold-soft),var(--gold));border-radius:99px;}
 
 .today-card{padding:0;position:relative;overflow:hidden;}
-.today-card-banner{width:100%;height:104px;display:block;background:var(--paper-sunken);}
+.today-card-banner{width:100%;height:46px;display:block;background:var(--paper-sunken);}
 .today-card-banner svg{width:100%;height:100%;display:block;}
 .today-card-body{padding:16px 24px 18px;}
 .today-card .eyebrow{font-size:.74rem;color:var(--indigo);letter-spacing:.08em;display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap;justify-content:space-between;}
@@ -242,6 +242,37 @@ button{font-family:inherit;}
   font-family:var(--font-accent);font-size:.9rem;color:var(--ink-soft);
   border-top:1px dashed var(--line);margin-top:12px;padding-top:11px;
 }
+.quote-callout{
+  background:var(--gold-tint);border-radius:var(--radius-sm);
+  padding:9px 13px;margin-bottom:12px;
+  font-family:var(--font-accent);font-size:.88rem;color:var(--ink);
+  display:flex;align-items:center;gap:8px;
+}
+.quote-callout .icon{width:14px;height:14px;color:var(--gold);flex:none;}
+
+.week-rhythm{padding:15px 18px;}
+.week-rhythm-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:11px;}
+.week-rhythm-head h3{font-size:.88rem;font-family:var(--font-display);color:var(--ink-soft);}
+.week-rhythm-range{font-size:.66rem;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
+.week-rhythm-row{display:flex;gap:6px;justify-content:space-between;}
+.wr-cell{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
+  cursor:pointer;padding:2px;border-radius:10px;background:none;border:none;font-family:inherit;
+}
+.wr-cell .wr-label{font-size:.64rem;color:var(--ink-faint);}
+.wr-cell .wr-dot{
+  width:28px;height:28px;border-radius:50%;
+  border:1.6px solid var(--line);background:var(--paper-sunken);
+  display:flex;align-items:center;justify-content:center;color:transparent;
+}
+.wr-cell .wr-dot .icon{width:13px;height:13px;}
+.wr-cell.done .wr-dot{background:var(--sage);border-color:var(--sage);color:var(--paper-raised);}
+.wr-cell.today .wr-dot{box-shadow:0 0 0 2px var(--gold);}
+.wr-cell.overdue .wr-dot{background:var(--gold-tint);border-color:var(--gold-soft);}
+.wr-cell.future{cursor:default;}
+.wr-cell.future .wr-dot{opacity:.5;}
+.wr-cell.empty{visibility:hidden;}
+.wr-cell .wr-date{font-size:.6rem;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
 
 .split-row{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
 @media(max-width:680px){.split-row{grid-template-columns:1fr;}}
@@ -440,6 +471,7 @@ footer.appfoot{text-align:center;color:var(--ink-faint);font-size:.72rem;padding
 
   <main id="dashboard" class="dashboard" hidden>
     <section class="card today-card" id="todayCard"></section>
+    <section class="card week-rhythm" id="weekRhythm"></section>
     <section class="stat-strip" id="statStrip"></section>
     <div class="split-row">
       <section class="card growth-panel" id="growthPanel"></section>
@@ -1022,11 +1054,10 @@ function renderTopNav(){
     var id=PLAN_ORDER[i];
     if(!state.plans[id]) continue;
     var plan=PLAN_DEFS[id];
-    var pct=Math.round(planRatio(id)*100);
     var active = state.active===id ? " active" : "";
     html += '<button class="plan-tab'+active+'" data-plan="'+id+'">'+
       '<svg class="ring"><use href="#'+plan.icon+'"/></svg>'+
-      '<span>'+plan.title+' ・ '+pct+'%</span></button>';
+      '<span>'+plan.title+'</span></button>';
   }
   html += '<button class="plan-tab add" id="addPlanTab">'+iconSvg("ic-plus")+'<span>プランを追加</span></button>';
   wrap.innerHTML=html;
@@ -1135,6 +1166,7 @@ function renderDashboard(){
   if(!state.active || !state.plans[state.active]) return;
   renderStatStrip();
   renderTodayCard();
+  renderWeekRhythm();
   renderGrowthPanel();
   renderBadgePanel();
   renderHeatmap();
@@ -1175,6 +1207,56 @@ function renderStatStrip(){
     '</div>';
 }
 
+var WD_SHORT_MON=["月","火","水","木","金","土","日"];
+function startOfWeek(d){
+  var day=d.getDay();
+  var diff=(day===0) ? -6 : 1-day;
+  return addDays(d,diff);
+}
+
+function renderWeekRhythm(){
+  var el=document.getElementById("weekRhythm");
+  var planId=state.active, plan=PLAN_DEFS[planId], ps=state.plans[planId];
+  var dates=planDatesArray(plan, ps.startDate);
+  var today=todayDate();
+  var monday=startOfWeek(today);
+  var t=todayStr();
+
+  var dateToIdx={};
+  for(var i=0;i<dates.length;i++){ dateToIdx[isoDate(dates[i])]=i+1; }
+
+  var cellsHtml="";
+  for(var c=0;c<7;c++){
+    var d=addDays(monday,c);
+    var iso=isoDate(d);
+    var dayNum=dateToIdx[iso];
+    if(!dayNum){
+      cellsHtml += '<div class="wr-cell empty"><span class="wr-label">'+WD_SHORT_MON[c]+'</span><span class="wr-dot"></span><span class="wr-date">・</span></div>';
+      continue;
+    }
+    var cls="wr-cell";
+    if(isDayDone(planId,dayNum)) cls+=" done";
+    else if(iso<t) cls+=" overdue";
+    else if(iso>t) cls+=" future";
+    if(iso===t) cls+=" today";
+    cellsHtml += '<button type="button" class="'+cls+'" data-day="'+dayNum+'" title="'+formatDateJp(d)+'">'+
+      '<span class="wr-label">'+WD_SHORT_MON[c]+'</span>'+
+      '<span class="wr-dot">'+iconSvg("ic-check")+'</span>'+
+      '<span class="wr-date">'+d.getDate()+'</span>'+
+    '</button>';
+  }
+
+  el.innerHTML =
+    '<div class="week-rhythm-head"><h3>今週のリズム</h3><span class="week-rhythm-range">'+formatDateJp(monday)+'〜'+formatDateJp(addDays(monday,6))+'</span></div>'+
+    '<div class="week-rhythm-row">'+cellsHtml+'</div>';
+
+  el.querySelectorAll(".wr-cell:not(.empty):not(.future)").forEach(function(cell){
+    cell.addEventListener("click", function(){
+      bulkToggleDay(planId, parseInt(this.getAttribute("data-day"),10));
+    });
+  });
+}
+
 function findFocusDay(planId){
   var plan=PLAN_DEFS[planId], ps=state.plans[planId];
   var todayIdx=currentScheduledIndex(planId);
@@ -1209,20 +1291,26 @@ function renderTodayCard(){
     (streak>0 ? '<span class="eyebrow-streak">'+iconSvg("ic-flame")+streak+'日</span>' : '')+
   '</div>';
 
+  var quoteCallout = '<p class="quote-callout">'+iconSvg("ic-star")+quote+'</p>';
+  var quoteLine = '<p class="quote-line">'+quote+'</p>';
+
   var body="";
   if(f.status==="future"){
     body = eyebrow+
       '<h2>まもなく始まります</h2>'+
-      '<p class="date-line">'+formatDateJp(dates[0])+' から読み始める予定です</p>';
+      '<p class="date-line">'+formatDateJp(dates[0])+' から読み始める予定です</p>'+
+      quoteLine;
   } else if(f.status==="finished"){
     body = eyebrow+
       '<h2>すべての予定日を読み終えました</h2>'+
-      '<p class="all-caught-up">お疲れさまでした。下の一覧からいつでも読み返せます。</p>';
+      '<p class="all-caught-up">お疲れさまでした。下の一覧からいつでも読み返せます。</p>'+
+      quoteLine;
   } else if(f.status==="caught-up"){
     var nd = dates[f.nextIdx-1];
     body = eyebrow+
       '<h2>今日の分は読み終えています</h2>'+
-      '<p class="all-caught-up">次は '+formatDateJp(nd)+'（'+plan.days[f.nextIdx-1].length+'箇所）の予定です</p>';
+      '<p class="all-caught-up">次は '+formatDateJp(nd)+'（'+plan.days[f.nextIdx-1].length+'箇所）の予定です</p>'+
+      quoteLine;
   } else {
     var idx=f.focus;
     var d=dates[idx-1];
@@ -1235,6 +1323,7 @@ function renderTodayCard(){
       '<p class="date-line">'+formatDateJp(d)+'（'+WD_NAMES[d.getDay()]+'）'+
         (f.backlog>1 ? ' <span class="backlog-note">たまっている分：あと'+(f.backlog-1)+'日</span>' : '')+
       '</p>'+
+      quoteCallout+
       '<ul class="refs-list">'+refs.map(function(r,ri){
         var isDone=!!done[ri];
         return '<li class="ref-item'+(isDone?" done":"")+'" data-ref="'+ri+'">'+
@@ -1247,7 +1336,6 @@ function renderTodayCard(){
         (doneCount<refs.length ? '<button class="btn-text" id="markAllBtn">すべてチェック</button>' : '')+
       '</div>';
   }
-  body += '<p class="quote-line">'+quote+'</p>';
   el.innerHTML = '<div class="today-card-banner">'+planBannerSvg(planId)+'</div><div class="today-card-body">'+body+'</div>';
 
   var focusIdx = (f.status==="focus") ? f.focus : null;
