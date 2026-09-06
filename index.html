@@ -95,7 +95,7 @@ button{font-family:inherit;}
 .icon{width:1em;height:1em;display:inline-block;vertical-align:-0.15em;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
 .icon.filled{fill:currentColor;stroke:none;}
 
-.app{max-width:920px;margin:0 auto;padding:0 20px 80px;}
+.app{max-width:920px;margin:0 auto;padding:0 20px 100px;}
 
 /* ---------- Topbar ---------- */
 .topbar{
@@ -174,6 +174,7 @@ button{font-family:inherit;}
 .card{
   background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--radius);
   box-shadow:var(--shadow);
+  scroll-margin-top:16px;
 }
 
 .stat-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;}
@@ -356,7 +357,23 @@ button{font-family:inherit;}
 .badge-modal-text .bt-desc{font-size:.7rem;color:var(--ink-faint);margin-top:2px;}
 .badge-modal-item.locked{opacity:.55;}
 
-.toast-layer{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;gap:8px;align-items:center;}
+.bottom-nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;
+  display:flex;justify-content:space-around;align-items:stretch;
+  background:var(--paper-raised);border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom);
+  box-shadow:0 -2px 14px -8px rgba(43,42,34,0.2);
+}
+.bn-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  background:none;border:none;color:var(--ink-faint);padding:9px 4px 7px;cursor:pointer;
+  font-size:.64rem;font-family:var(--font-body);letter-spacing:.02em;transition:color .15s;
+}
+.bn-item .icon{width:20px;height:20px;}
+.bn-item.active{color:var(--indigo);}
+.bn-item:active{opacity:.7;}
+
+.toast-layer{position:fixed;bottom:calc(78px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;gap:8px;align-items:center;}
 .toast{
   background:var(--indigo);color:var(--paper-raised);padding:12px 20px;border-radius:999px;
   font-size:.85rem;box-shadow:var(--shadow);display:flex;align-items:center;gap:8px;
@@ -428,6 +445,14 @@ footer.appfoot{text-align:center;color:var(--ink-faint);font-size:.72rem;padding
 
   <footer class="appfoot">今日開いた一冊が、あなたの一年をつくる。</footer>
 </div>
+
+<nav class="bottom-nav" id="bottomNav" hidden>
+  <button class="bn-item" data-target="todayCard"><svg class="icon"><use href="#ic-check"/></svg><span>今日</span></button>
+  <button class="bn-item" data-target="growthPanel"><svg class="icon"><use href="#ic-leaf"/></svg><span>成長</span></button>
+  <button class="bn-item" data-target="badgePanel"><svg class="icon"><use href="#ic-medal"/></svg><span>バッジ</span></button>
+  <button class="bn-item" data-target="heatmapPanel"><svg class="icon"><use href="#ic-calendar"/></svg><span>カレンダー</span></button>
+  <button class="bn-item" data-target="agendaPanel"><svg class="icon"><use href="#ic-book"/></svg><span>一覧</span></button>
+</nav>
 
 <div class="toast-layer" id="toastLayer" aria-live="polite"></div>
 <canvas class="confetti-canvas" id="confettiCanvas"></canvas>
@@ -1015,12 +1040,15 @@ function renderTopNav(){
 function showView(view){
   var onb=document.getElementById("onboarding");
   var dash=document.getElementById("dashboard");
+  var bottomNav=document.getElementById("bottomNav");
   if(view==="onboarding" || !state.active){
     onb.hidden=false; dash.hidden=true;
+    bottomNav.hidden=true;
     document.getElementById("onbHeading").textContent = startedPlanCount()>0 ? "他のプランを追加する" : "プランを選んで、はじめましょう";
     renderOnboarding();
   } else {
     onb.hidden=true; dash.hidden=false;
+    bottomNav.hidden=false;
     renderDashboard();
   }
   renderTopNav();
@@ -1512,8 +1540,44 @@ function stepConfetti(){
   else { confettiRunning=false; cctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height); }
 }
 
+/* ============================== BOTTOM NAV ============================== */
+
+function initBottomNav(){
+  var nav=document.getElementById("bottomNav");
+  var items=nav.querySelectorAll(".bn-item");
+  var sectionIds=["todayCard","growthPanel","badgePanel","heatmapPanel","agendaPanel"];
+
+  items.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var target=document.getElementById(this.getAttribute("data-target"));
+      if(target) target.scrollIntoView({behavior: reduceMotion?"auto":"smooth", block:"start"});
+    });
+  });
+
+  var threshold=140;
+  var ticking=false;
+  function updateActive(){
+    ticking=false;
+    if(document.getElementById("dashboard").hidden) return;
+    var currentId=sectionIds[0];
+    for(var i=0;i<sectionIds.length;i++){
+      var el=document.getElementById(sectionIds[i]);
+      if(!el) continue;
+      if(el.getBoundingClientRect().top<=threshold) currentId=sectionIds[i];
+    }
+    items.forEach(function(btn){
+      btn.classList.toggle("active", btn.getAttribute("data-target")===currentId);
+    });
+  }
+  window.addEventListener("scroll", function(){
+    if(!ticking){ ticking=true; requestAnimationFrame(updateActive); }
+  }, {passive:true});
+  updateActive();
+}
+
 /* ============================== INIT ============================== */
 
+initBottomNav();
 showView(state.active ? "dashboard" : "onboarding");
 
 })();
