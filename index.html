@@ -195,17 +195,23 @@ button{font-family:inherit;}
   scroll-margin-top:16px;
 }
 
-.stat-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;}
-.stat{
+.stat-strip{
+  display:flex;align-items:center;flex-wrap:wrap;
   background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--radius-sm);
-  padding:14px 16px;display:flex;flex-direction:column;gap:6px;
+  padding:9px 4px;
 }
-.stat .label{font-size:.72rem;color:var(--ink-faint);letter-spacing:.04em;display:flex;align-items:center;gap:5px;}
-.stat .label .icon{width:14px;height:14px;}
-.stat .value{font-family:var(--font-display);font-size:1.55rem;font-variant-numeric:tabular-nums;color:var(--ink);}
-.stat .value small{font-family:var(--font-body);font-size:.62em;color:var(--ink-faint);font-weight:500;margin-left:2px;}
-.stat.flame .value{color:var(--gold);}
-.stat .sub{font-size:.72rem;color:var(--ink-faint);}
+.stat-chip{
+  display:flex;align-items:center;gap:5px;font-size:.74rem;color:var(--ink-soft);
+  padding:2px 13px;position:relative;white-space:nowrap;
+}
+.stat-chip:not(:first-child)::before{
+  content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:1px;height:14px;background:var(--line);
+}
+.stat-chip .icon{width:13px;height:13px;color:var(--ink-faint);flex:none;}
+.stat-chip-value{font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;}
+.stat-chip.flame .icon{color:var(--gold);}
+.stat-chip.flame .stat-chip-value{color:var(--gold);}
 .xp-bar{height:6px;border-radius:99px;background:var(--paper-sunken);overflow:hidden;margin-top:2px;}
 .xp-bar > span{display:block;height:100%;background:linear-gradient(90deg,var(--gold-soft),var(--gold));border-radius:99px;}
 
@@ -296,10 +302,7 @@ button{font-family:inherit;}
 .wr-cell.empty{visibility:hidden;}
 .wr-cell .wr-date{font-size:.6rem;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
 
-.split-row{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
-@media(max-width:680px){.split-row{grid-template-columns:1fr;}}
-
-.growth-panel,.badge-panel{padding:20px 22px;}
+.growth-panel{padding:20px 22px;}
 .panel-head{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
 .panel-head .icon-badge{
   width:30px;height:30px;border-radius:50%;flex:none;
@@ -308,8 +311,6 @@ button{font-family:inherit;}
 }
 .panel-head .icon-badge .icon{width:15px;height:15px;}
 .panel-head h3{font-size:1rem;}
-.badge-panel .panel-head .icon-badge{background:var(--gold-tint);color:var(--gold);}
-.heatmap-panel .panel-head .icon-badge{background:var(--indigo-tint);color:var(--indigo);}
 .agenda-panel .panel-head .icon-badge{background:var(--gold-tint);color:var(--gold);}
 .level-title{font-family:var(--font-accent);font-size:1.1rem;color:var(--sage);margin:2px 0 14px;}
 
@@ -323,35 +324,21 @@ button{font-family:inherit;}
 .tree-stage.on{opacity:1;transform:scale(1);}
 @media(prefers-reduced-motion:reduce){.tree-stage{transition:none;}}
 
-.badge-shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:10px;margin-top:10px;}
-.badge-item{display:flex;flex-direction:column;align-items:center;gap:5px;background:none;border:none;cursor:pointer;color:inherit;padding:2px;}
-.badge-medal{
-  width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  background:var(--paper-sunken);color:var(--ink-faint);border:2px solid var(--line);
+.level-path{
+  display:flex;gap:14px;overflow-x:auto;margin-top:18px;padding:16px 4px 6px;
+  border-top:1px dashed var(--line);
 }
-.badge-item.unlocked .badge-medal{background:var(--gold-tint);color:var(--gold);border-color:var(--gold-soft);}
-.badge-medal .icon{width:22px;height:22px;}
-.badge-item .b-label{font-size:.63rem;color:var(--ink-faint);text-align:center;line-height:1.25;}
-.badge-item.unlocked .b-label{color:var(--ink-soft);}
-.badge-more{font-size:.75rem;color:var(--indigo);text-decoration:underline;background:none;border:none;cursor:pointer;margin-top:12px;padding:0;}
-
-.heatmap-panel{padding:20px 22px;}
-.heatmap-rows{display:flex;flex-direction:column;gap:4px;margin-top:12px;overflow-x:auto;padding-bottom:4px;}
-.heatmap-row{display:flex;align-items:center;gap:8px;}
-.heatmap-row .row-label{font-size:.66rem;color:var(--ink-faint);width:52px;flex:none;font-variant-numeric:tabular-nums;}
-.heatmap-cells{display:flex;gap:4px;}
-.hm-cell{
-  width:16px;height:16px;border-radius:4px;background:var(--paper-sunken);border:1px solid var(--line);
-  cursor:pointer;flex:none;transition:transform .1s;
+.level-path-item{display:flex;flex-direction:column;align-items:center;gap:6px;flex:none;width:52px;}
+.level-path-dot{
+  width:30px;height:30px;border-radius:50%;flex:none;
+  border:1.6px solid var(--line);background:var(--paper-sunken);color:var(--ink-faint);
+  display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;font-variant-numeric:tabular-nums;
 }
-.hm-cell:hover{transform:scale(1.25);}
-.hm-cell.done{background:var(--sage);border-color:var(--sage);}
-.hm-cell.today{box-shadow:0 0 0 2px var(--gold);}
-.hm-cell.overdue{background:var(--gold-tint);border-color:var(--gold-soft);}
-.hm-cell.future{opacity:.45;cursor:default;}
-.heatmap-legend{display:flex;gap:16px;font-size:.68rem;color:var(--ink-faint);margin-top:10px;flex-wrap:wrap;}
-.heatmap-legend span{display:inline-flex;align-items:center;gap:5px;}
-.legend-swatch{width:10px;height:10px;border-radius:3px;display:inline-block;}
+.level-path-item.done .level-path-dot{background:var(--sage);border-color:var(--sage);color:var(--paper-raised);}
+.level-path-item.current .level-path-dot{background:var(--gold);border-color:var(--gold);color:var(--paper-raised);box-shadow:0 0 0 4px var(--gold-tint);}
+.level-path-label{font-size:.62rem;color:var(--ink-faint);text-align:center;line-height:1.25;}
+.level-path-item.current .level-path-label{color:var(--ink);font-weight:700;}
+.level-path-item.done .level-path-label{color:var(--ink-soft);}
 
 .agenda-panel{padding:20px 22px;}
 .agenda-month{border:none;margin-bottom:6px;}
@@ -408,14 +395,6 @@ button{font-family:inherit;}
   background:var(--paper);color:var(--ink);font-family:inherit;font-size:.9rem;margin-bottom:18px;
 }
 .modal-actions{display:flex;justify-content:flex-end;gap:10px;}
-
-.badge-modal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:6px;max-height:60vh;overflow-y:auto;}
-.badge-modal-item{display:flex;gap:10px;align-items:flex-start;padding:10px;border-radius:10px;background:var(--paper-sunken);}
-.badge-modal-item .badge-medal{width:38px;height:38px;flex:none;}
-.badge-modal-item .badge-medal .icon{width:18px;height:18px;}
-.badge-modal-text .bt-title{font-size:.82rem;font-weight:700;font-family:var(--font-accent);}
-.badge-modal-text .bt-desc{font-size:.7rem;color:var(--ink-faint);margin-top:2px;}
-.badge-modal-item.locked{opacity:.55;}
 
 .bottom-nav{
   position:fixed;left:0;right:0;bottom:0;z-index:40;
@@ -499,11 +478,7 @@ footer.appfoot{text-align:center;color:var(--ink-faint);font-size:.72rem;padding
     <section class="card today-card" id="todayCard"></section>
     <section class="card week-rhythm" id="weekRhythm"></section>
     <section class="stat-strip" id="statStrip"></section>
-    <div class="split-row">
-      <section class="card growth-panel" id="growthPanel"></section>
-      <section class="card badge-panel" id="badgePanel"></section>
-    </div>
-    <section class="card heatmap-panel" id="heatmapPanel"></section>
+    <section class="card growth-panel" id="growthPanel"></section>
     <section class="card agenda-panel" id="agendaPanel"></section>
     <div class="reset-row"><button class="btn-text" id="resetPlanBtn">このプランの記録をリセット</button></div>
   </main>
@@ -514,8 +489,6 @@ footer.appfoot{text-align:center;color:var(--ink-faint);font-size:.72rem;padding
 <nav class="bottom-nav" id="bottomNav" hidden>
   <button class="bn-item" data-target="todayCard"><svg class="icon"><use href="#ic-check"/></svg><span>今日</span></button>
   <button class="bn-item" data-target="growthPanel"><svg class="icon"><use href="#ic-leaf"/></svg><span>成長</span></button>
-  <button class="bn-item" data-target="badgePanel"><svg class="icon"><use href="#ic-medal"/></svg><span>バッジ</span></button>
-  <button class="bn-item" data-target="heatmapPanel"><svg class="icon"><use href="#ic-calendar"/></svg><span>カレンダー</span></button>
   <button class="bn-item" data-target="agendaPanel"><svg class="icon"><use href="#ic-book"/></svg><span>一覧</span></button>
 </nav>
 
@@ -530,17 +503,6 @@ footer.appfoot{text-align:center;color:var(--ink-faint);font-size:.72rem;padding
     <div class="modal-actions">
       <button class="btn btn-ghost" id="startModalCancel">キャンセル</button>
       <button class="btn btn-primary" id="startModalConfirm"><svg class="icon"><use href="#ic-check"/></svg>はじめる</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal-backdrop" id="badgeModalBackdrop" hidden>
-  <div class="modal" style="max-width:560px;">
-    <h3>実績バッジ</h3>
-    <p>読書を続けるほど、庭にバッジが増えていきます。</p>
-    <div class="badge-modal-grid" id="badgeModalGrid"></div>
-    <div class="modal-actions" style="margin-top:16px;">
-      <button class="btn btn-ghost" id="badgeModalClose">閉じる</button>
     </div>
   </div>
 </div>
@@ -695,20 +657,6 @@ var LEVELS=[
 {lv:10,title:"結実",xp:1900},{lv:11,title:"豊かな実り",xp:2600},{lv:12,title:"大樹",xp:3500}
 ];
 
-var BADGES=[
-  {id:"first",icon:"ic-seed",tier:"seed",title:"種まき",desc:"はじめての1日を読み終えた"},
-  {id:"streak7",icon:"ic-drop",tier:"bronze",title:"一週間の水やり",desc:"7日連続で読書を記録した"},
-  {id:"streak30",icon:"ic-drop",tier:"silver",title:"ひと月の恵み",desc:"30日連続で読書を記録した"},
-  {id:"streak100",icon:"ic-drop",tier:"gold",title:"揺るがぬ根",desc:"100日連続で読書を記録した"},
-  {id:"q25",icon:"ic-medal",tier:"bronze",title:"四分の一の道のり",desc:"いずれかのプランを25%達成"},
-  {id:"half",icon:"ic-medal",tier:"silver",title:"折り返し地点",desc:"いずれかのプランを50%達成"},
-  {id:"q75",icon:"ic-medal",tier:"silver",title:"あと少し",desc:"いずれかのプランを75%達成"},
-  {id:"complete",icon:"ic-star",tier:"gold",title:"読了",desc:"いずれかのプランを完走した"},
-  {id:"twoplans",icon:"ic-sprout2",tier:"bronze",title:"二毛作",desc:"2つ目のプランを始めた"},
-  {id:"earlybird",icon:"ic-sun",tier:"bronze",title:"早起きの実",desc:"朝7時前に読書を記録した"},
-  {id:"nightowl",icon:"ic-moon",tier:"bronze",title:"夜更けの灯",desc:"夜10時以降に読書を記録した"}
-];
-
 /* ============================== STORAGE ============================== */
 
 var STORAGE_KEY="seisho-tsudoku-niwa-v1";
@@ -723,8 +671,6 @@ function loadState(){
 function normalizeState(s){
   s.active = s.active || null;
   s.plans = s.plans || {};
-  s.badges = s.badges || {};
-  s.flags = s.flags || {earlybird:false, nightowl:false};
   s.bestStreakEver = s.bestStreakEver || 0;
   s.activity = s.activity || {};
   for(var planId in s.plans){
@@ -878,33 +824,6 @@ function currentScheduledIndex(planId){
   return idx; /* 1-indexed day number, 0 = not started yet */
 }
 
-/* ============================== BADGES ============================== */
-
-function evaluateBadges(){
-  var newly=[];
-  var checks={
-    first: totalCompletedAllPlans()>=1,
-    streak7: Math.max(currentActivityStreak(),state.bestStreakEver)>=7,
-    streak30: Math.max(currentActivityStreak(),state.bestStreakEver)>=30,
-    streak100: Math.max(currentActivityStreak(),state.bestStreakEver)>=100,
-    q25: maxPlanRatio()>=0.25,
-    half: maxPlanRatio()>=0.5,
-    q75: maxPlanRatio()>=0.75,
-    complete: maxPlanRatio()>=1,
-    twoplans: startedPlanCount()>=2,
-    earlybird: !!state.flags.earlybird,
-    nightowl: !!state.flags.nightowl
-  };
-  for(var i=0;i<BADGES.length;i++){
-    var b=BADGES[i];
-    if(checks[b.id] && !state.badges[b.id]){
-      state.badges[b.id]=new Date().toISOString();
-      newly.push(b);
-    }
-  }
-  return newly;
-}
-
 /* ============================== TOGGLING ============================== */
 
 function markActivity(){
@@ -912,15 +831,7 @@ function markActivity(){
   state.bestStreakEver=Math.max(state.bestStreakEver, currentActivityStreak(), bestActivityStreak());
 }
 
-function markRefEngagement(){
-  markActivity();
-  var hour=new Date().getHours();
-  if(hour<7) state.flags.earlybird=true;
-  if(hour>=22) state.flags.nightowl=true;
-}
-
 function afterProgressChange(dayJustCompleted, prevXP){
-  var newBadges = dayJustCompleted ? evaluateBadges() : [];
   saveState();
   renderDashboard();
   if(dayJustCompleted){
@@ -928,14 +839,6 @@ function afterProgressChange(dayJustCompleted, prevXP){
     var lvBefore=levelFor(prevXP), lvAfter=levelFor(globalXP());
     if(lvAfter.lv>lvBefore.lv){
       showToast("レベルアップ！「"+lvAfter.title+"」になりました", true);
-    }
-    for(var i=0;i<newBadges.length;i++){
-      (function(b,delay){
-        setTimeout(function(){
-          showToast("バッジ獲得：「"+b.title+"」", true);
-          burstConfetti();
-        }, delay);
-      })(newBadges[i], 450+i*650);
     }
   }
 }
@@ -951,7 +854,7 @@ function toggleRef(planId, dayIndex, refIndex){
   if(nowSet){
     ps.completed[dayIndex][key]=true;
     ps.completedAt[dayIndex]=new Date().toISOString();
-    markRefEngagement();
+    markActivity();
   } else {
     delete ps.completed[dayIndex][key];
     if(Object.keys(ps.completed[dayIndex]).length===0) delete ps.completed[dayIndex];
@@ -973,7 +876,7 @@ function bulkToggleDay(planId, dayIndex){
     for(var i=0;i<refs.length;i++) obj[i]=true;
     ps.completed[dayIndex]=obj;
     ps.completedAt[dayIndex]=new Date().toISOString();
-    markRefEngagement();
+    markActivity();
   }
   var nowDayDone = isDayDone(planId, dayIndex);
   afterProgressChange(!wasDayDone && nowDayDone, prevXP);
@@ -1245,8 +1148,6 @@ function renderDashboard(){
   renderTodayCard();
   renderWeekRhythm();
   renderGrowthPanel();
-  renderBadgePanel();
-  renderHeatmap();
   renderAgenda();
 }
 
@@ -1255,33 +1156,14 @@ function renderStatStrip(){
   var streak=currentActivityStreak();
   var xp=globalXP();
   var info=nextLevelInfo(xp);
-  var plan=PLAN_DEFS[state.active];
   var pct=Math.round(planRatio(state.active)*100);
   var totalDays=totalCompletedAllPlans();
 
-  var xpBarPct = info.next ? Math.round(info.ratio*100) : 100;
-
   el.innerHTML =
-    '<div class="stat flame">'+
-      '<div class="label">'+iconSvg("ic-flame")+'現在の連続記録</div>'+
-      '<div class="value">'+streak+'<small>日</small></div>'+
-      '<div class="sub">自己ベスト '+Math.max(state.bestStreakEver,bestActivityStreak())+'日</div>'+
-    '</div>'+
-    '<div class="stat">'+
-      '<div class="label">'+iconSvg("ic-calendar")+'これまでの読了日数</div>'+
-      '<div class="value">'+totalDays+'<small>日</small></div>'+
-      '<div class="sub">全プラン合計</div>'+
-    '</div>'+
-    '<div class="stat">'+
-      '<div class="label">'+iconSvg("ic-book")+'このプランの進捗</div>'+
-      '<div class="value">'+pct+'<small>%</small></div>'+
-      '<div class="sub">'+plan.title+'</div>'+
-    '</div>'+
-    '<div class="stat">'+
-      '<div class="label">'+iconSvg("ic-leaf")+'成長レベル</div>'+
-      '<div class="value">Lv.'+info.cur.lv+'<small> '+info.cur.title+'</small></div>'+
-      '<div class="xp-bar"><span style="width:'+xpBarPct+'%"></span></div>'+
-    '</div>';
+    '<span class="stat-chip flame">'+iconSvg("ic-flame")+'<span class="stat-chip-value">'+streak+'</span>日連続</span>'+
+    '<span class="stat-chip">'+iconSvg("ic-calendar")+'通算<span class="stat-chip-value">'+totalDays+'</span>日</span>'+
+    '<span class="stat-chip">'+iconSvg("ic-book")+'進捗<span class="stat-chip-value">'+pct+'</span>%</span>'+
+    '<span class="stat-chip">'+iconSvg("ic-leaf")+'<span class="stat-chip-value">Lv.'+info.cur.lv+'</span> '+info.cur.title+'</span>';
 }
 
 var WD_SHORT_MON=["月","火","水","木","金","土","日"];
@@ -1448,6 +1330,19 @@ function renderGrowthPanel(){
   var xp=globalXP();
   var info=nextLevelInfo(xp);
   var stage=Math.min(6, Math.ceil(info.cur.lv/2));
+
+  var pathHtml="";
+  for(var i=0;i<LEVELS.length;i++){
+    var lv=LEVELS[i];
+    var cls="level-path-item";
+    if(lv.lv<info.cur.lv) cls+=" done";
+    else if(lv.lv===info.cur.lv) cls+=" current";
+    pathHtml += '<div class="'+cls+'" title="Lv.'+lv.lv+' '+lv.title+'（'+lv.xp+'XP〜）">'+
+      '<span class="level-path-dot">'+lv.lv+'</span>'+
+      '<span class="level-path-label">'+lv.title+'</span>'+
+    '</div>';
+  }
+
   el.innerHTML =
     panelHead("ic-leaf","庭の成長")+
     '<div class="level-title">Lv.'+info.cur.lv+' 「'+info.cur.title+'」</div>'+
@@ -1455,9 +1350,10 @@ function renderGrowthPanel(){
       treeSvg(stage)+
       '<div class="tree-info">'+
         '<div class="lv-line">全プラン合計 '+totalCompletedAllPlans()+'日分の読書 ＝ '+xp+'XP</div>'+
-        (info.next ? '<div class="xp-bar"><span style="width:'+Math.round(info.ratio*100)+'%"></span></div><div class="xp-line">次のレベル「'+info.next.title+'」まで '+(info.next.xp-xp)+'XP</div>' : '<div class="xp-line">最高レベルに到達しました</div>')+
+        (info.next ? '<div class="xp-bar"><span style="width:'+Math.round(info.ratio*100)+'%"></span></div><div class="xp-line">次のレベル「'+info.next.title+'」まであと'+Math.ceil((info.next.xp-xp)/10)+'日分</div>' : '<div class="xp-line">最高レベルに到達しました</div>')+
       '</div>'+
-    '</div>';
+    '</div>'+
+    '<div class="level-path">'+pathHtml+'</div>';
 }
 
 function treeSvg(stage){
@@ -1488,97 +1384,7 @@ function treeSvg(stage){
   return html;
 }
 
-/* ---------- badges ---------- */
 
-function renderBadgePanel(){
-  var el=document.getElementById("badgePanel");
-  var shown=BADGES.slice(0,8);
-  var html=panelHead("ic-medal","実績バッジ")+
-    '<div style="font-size:.78rem;color:var(--ink-faint);">'+Object.keys(state.badges).length+' / '+BADGES.length+' 個獲得</div>'+
-    '<div class="badge-shelf">';
-  for(var i=0;i<shown.length;i++){
-    var b=shown[i];
-    var unlocked=!!state.badges[b.id];
-    html += '<button class="badge-item'+(unlocked?" unlocked":"")+'" data-badge="'+b.id+'" title="'+b.desc+'">'+
-      '<span class="badge-medal">'+iconSvg(b.icon)+'</span>'+
-      '<span class="b-label">'+b.title+'</span></button>';
-  }
-  html += '</div><button class="badge-more" id="badgeMoreBtn">すべてのバッジを見る</button>';
-  el.innerHTML=html;
-  document.getElementById("badgeMoreBtn").addEventListener("click", openBadgeModal);
-  el.querySelectorAll(".badge-item").forEach(function(item){
-    item.addEventListener("click", openBadgeModal);
-  });
-}
-
-function openBadgeModal(){
-  var grid=document.getElementById("badgeModalGrid");
-  var html="";
-  for(var i=0;i<BADGES.length;i++){
-    var b=BADGES[i];
-    var unlocked=!!state.badges[b.id];
-    html += '<div class="badge-modal-item'+(unlocked?"":" locked")+'">'+
-      '<span class="badge-medal">'+iconSvg(b.icon)+'</span>'+
-      '<div class="badge-modal-text"><div class="bt-title">'+b.title+'</div><div class="bt-desc">'+b.desc+'</div></div>'+
-    '</div>';
-  }
-  grid.innerHTML=html;
-  document.getElementById("badgeModalBackdrop").hidden=false;
-}
-document.getElementById("badgeModalClose").addEventListener("click", function(){
-  document.getElementById("badgeModalBackdrop").hidden=true;
-});
-document.getElementById("badgeModalBackdrop").addEventListener("click", function(e){
-  if(e.target===this) this.hidden=true;
-});
-
-/* ---------- heatmap ---------- */
-
-function renderHeatmap(){
-  var el=document.getElementById("heatmapPanel");
-  var planId=state.active, plan=PLAN_DEFS[planId], ps=state.plans[planId];
-  var dates=planDatesArray(plan, ps.startDate);
-  var cols = plan.schedule==="weekday" ? 5 : 7;
-  var t=todayStr();
-
-  var rowsHtml="";
-  for(var r=0; r*cols<dates.length; r++){
-    var startIdx=r*cols;
-    var rowDate=dates[startIdx];
-    var label=MONTH_NAMES[rowDate.getMonth()]+" "+rowDate.getDate()+"日";
-    var cellsHtml="";
-    for(var c=0;c<cols;c++){
-      var idx=startIdx+c;
-      if(idx>=dates.length) break;
-      var d=dates[idx];
-      var dayNum=idx+1;
-      var iso=isoDate(d);
-      var cls="hm-cell";
-      if(isDayDone(planId,dayNum)) cls+=" done";
-      else if(iso<t) cls+=" overdue";
-      else if(iso>t) cls+=" future";
-      if(iso===t) cls+=" today";
-      cellsHtml += '<div class="'+cls+'" data-day="'+dayNum+'" title="'+formatDateJp(d)+'：'+plan.days[idx].join("／")+'"></div>';
-    }
-    rowsHtml += '<div class="heatmap-row"><span class="row-label">'+label+'</span><div class="heatmap-cells">'+cellsHtml+'</div></div>';
-  }
-
-  el.innerHTML =
-    panelHead("ic-calendar","スタンプカレンダー")+
-    '<div class="heatmap-rows">'+rowsHtml+'</div>'+
-    '<div class="heatmap-legend">'+
-      '<span><span class="legend-swatch" style="background:var(--sage)"></span>読了</span>'+
-      '<span><span class="legend-swatch" style="background:var(--gold-tint);border:1px solid var(--gold-soft)"></span>未読了（予定日超過）</span>'+
-      '<span><span class="legend-swatch" style="background:var(--paper-sunken);border:1px solid var(--line)"></span>これから</span>'+
-    '</div>';
-
-  el.querySelectorAll(".hm-cell").forEach(function(cell){
-    cell.addEventListener("click", function(){
-      if(this.classList.contains("future")) return;
-      bulkToggleDay(planId, parseInt(this.getAttribute("data-day"),10));
-    });
-  });
-}
 
 /* ---------- agenda ---------- */
 
@@ -1726,7 +1532,7 @@ function stepConfetti(){
 function initBottomNav(){
   var nav=document.getElementById("bottomNav");
   var items=nav.querySelectorAll(".bn-item");
-  var sectionIds=["todayCard","growthPanel","badgePanel","heatmapPanel","agendaPanel"];
+  var sectionIds=["todayCard","growthPanel","agendaPanel"];
 
   items.forEach(function(btn){
     btn.addEventListener("click", function(){
