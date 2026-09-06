@@ -100,9 +100,9 @@ button{font-family:inherit;}
 /* ---------- Topbar ---------- */
 .topbar{
   display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-end;justify-content:space-between;
-  padding:32px 0 18px;
+  padding:18px 0 14px;
   border-bottom:1px solid var(--line);
-  margin-bottom:28px;
+  margin-bottom:18px;
 }
 .brand{display:flex;align-items:center;gap:12px;}
 .brand-mark{
@@ -192,16 +192,23 @@ button{font-family:inherit;}
 .xp-bar > span{display:block;height:100%;background:linear-gradient(90deg,var(--gold-soft),var(--gold));border-radius:99px;}
 
 .today-card{padding:0;position:relative;overflow:hidden;}
-.today-card-banner{width:100%;height:130px;display:block;background:var(--paper-sunken);}
+.today-card-banner{width:100%;height:104px;display:block;background:var(--paper-sunken);}
 .today-card-banner svg{width:100%;height:100%;display:block;}
-.today-card-body{padding:20px 24px 22px;}
-.today-card .eyebrow{font-size:.74rem;color:var(--indigo);letter-spacing:.08em;display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap;}
+.today-card-body{padding:16px 24px 18px;}
+.today-card .eyebrow{font-size:.74rem;color:var(--indigo);letter-spacing:.08em;display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap;justify-content:space-between;}
+.eyebrow-left{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.eyebrow-streak{
+  display:inline-flex;align-items:center;gap:4px;font-family:var(--font-body);letter-spacing:0;
+  font-weight:700;color:var(--gold);background:var(--gold-tint);border-radius:999px;padding:3px 10px 3px 8px;
+  font-size:.78rem;
+}
+.eyebrow-streak .icon{width:12px;height:12px;}
 .today-card .eyebrow .icon{width:13px;height:13px;}
 .today-card .eyebrow-citation{font-family:var(--font-accent);font-size:.76rem;color:var(--gold);letter-spacing:0;display:inline-flex;align-items:center;gap:4px;margin-left:2px;}
 .today-card .eyebrow-citation .icon{width:11px;height:11px;}
 .today-card h2{font-size:1.28rem;margin-bottom:4px;}
-.today-card .date-line{font-size:.82rem;color:var(--ink-faint);margin-bottom:14px;}
-.refs-list{list-style:none;margin:0 0 16px;padding:0;display:flex;flex-direction:column;gap:8px;}
+.today-card .date-line{font-size:.82rem;color:var(--ink-faint);margin-bottom:12px;}
+.refs-list{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-direction:column;gap:7px;}
 .ref-item{
   background:var(--paper-sunken);border-radius:var(--radius-sm);padding:10px 14px;
   font-size:.94rem;color:var(--ink);
@@ -232,8 +239,8 @@ button{font-family:inherit;}
 .backlog-note{font-size:.78rem;color:var(--gold);background:var(--gold-tint);border-radius:999px;padding:5px 12px;}
 .all-caught-up{color:var(--ink-soft);font-size:.9rem;}
 .quote-line{
-  font-family:var(--font-accent);font-size:.95rem;color:var(--ink-soft);
-  border-top:1px dashed var(--line);margin-top:16px;padding-top:14px;
+  font-family:var(--font-accent);font-size:.9rem;color:var(--ink-soft);
+  border-top:1px dashed var(--line);margin-top:12px;padding-top:11px;
 }
 
 .split-row{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
@@ -432,8 +439,8 @@ footer.appfoot{text-align:center;color:var(--ink-faint);font-size:.72rem;padding
   </main>
 
   <main id="dashboard" class="dashboard" hidden>
-    <section class="stat-strip" id="statStrip"></section>
     <section class="card today-card" id="todayCard"></section>
+    <section class="stat-strip" id="statStrip"></section>
     <div class="split-row">
       <section class="card growth-panel" id="growthPanel"></section>
       <section class="card badge-panel" id="badgePanel"></section>
@@ -1196,7 +1203,11 @@ function renderTodayCard(){
   var quote=QUOTES[dayOfYearSeed()%QUOTES.length];
   var dates=planDatesArray(plan, ps.startDate);
 
-  var eyebrow = '<div class="eyebrow">'+iconSvg("ic-book")+plan.title+'<span class="eyebrow-citation">'+iconSvg("ic-feather")+plan.citation+'</span></div>';
+  var streak=currentActivityStreak();
+  var eyebrow = '<div class="eyebrow">'+
+    '<span class="eyebrow-left">'+iconSvg("ic-book")+plan.title+'<span class="eyebrow-citation">'+iconSvg("ic-feather")+plan.citation+'</span></span>'+
+    (streak>0 ? '<span class="eyebrow-streak">'+iconSvg("ic-flame")+streak+'日</span>' : '')+
+  '</div>';
 
   var body="";
   if(f.status==="future"){
