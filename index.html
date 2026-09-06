@@ -99,36 +99,54 @@ button{font-family:inherit;}
 
 /* ---------- Topbar ---------- */
 .topbar{
-  display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-end;justify-content:space-between;
-  padding:18px 0 14px;
-  border-bottom:1px solid var(--line);
-  margin-bottom:18px;
+  display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;
+  padding:12px 16px;
+  margin:14px 0 14px;
+  border-radius:var(--radius);
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(circle at 88% 18%, var(--gold-soft) 0 1.6px, transparent 2.4px),
+    radial-gradient(circle at 94% 62%, var(--gold-soft) 0 1.2px, transparent 2px),
+    radial-gradient(circle at 80% 82%, var(--gold-soft) 0 1.2px, transparent 2px),
+    radial-gradient(circle at 68% 12%, var(--gold-soft) 0 1px, transparent 1.8px),
+    linear-gradient(120deg, var(--indigo-tint) 0%, transparent 65%);
+  background-color:var(--paper-sunken);
 }
-.brand{display:flex;align-items:center;gap:12px;}
+.brand{display:flex;align-items:center;gap:10px;}
 .brand-mark{
-  width:42px;height:42px;border-radius:50%;
+  width:34px;height:34px;border-radius:50%;
   background:var(--indigo);color:var(--paper-raised);
   display:flex;align-items:center;justify-content:center;
   flex:none;
 }
-.brand-mark .icon{width:22px;height:22px;}
-.brand-text h1{font-size:1.5rem;color:var(--ink);letter-spacing:.02em;}
-.brand-text p{font-size:.78rem;color:var(--ink-faint);margin-top:2px;letter-spacing:.05em;}
+.brand-mark .icon{width:18px;height:18px;}
+.brand-text h1{font-size:1.08rem;color:var(--ink);letter-spacing:.02em;line-height:1.2;}
+.brand-text p{font-size:.66rem;color:var(--ink-faint);margin-top:0;letter-spacing:.05em;}
 
-.plan-tabs{display:flex;flex-wrap:wrap;gap:6px;}
-.plan-tab{
-  display:flex;align-items:center;gap:5px;
-  padding:4px 10px 4px 8px;border-radius:999px;border:1px solid transparent;
-  background:none;color:var(--ink-faint);
-  font-size:.72rem;cursor:pointer;transition:border-color .15s,color .15s,background .15s;
+.plan-switcher{
+  display:flex;align-items:center;gap:6px;
+  padding:5px 10px;border-radius:999px;border:1px solid var(--line);
+  background:var(--paper-raised);color:var(--ink-soft);
+  font-size:.7rem;font-family:var(--font-body);cursor:pointer;
+  max-width:150px;
 }
-.plan-tab .ring{width:14px;height:14px;flex:none;}
-.plan-tab:hover{border-color:var(--line);color:var(--ink-soft);}
-.plan-tab.active{background:var(--paper-sunken);border-color:var(--line);color:var(--indigo);font-weight:700;}
-.plan-tab.active .ring{color:var(--indigo);}
-.plan-tab.add{color:var(--indigo);border-style:dashed;border-color:var(--line);background:transparent;}
-:root[data-theme="dark"] .plan-tab.add,
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .plan-tab.add{color:var(--indigo);}}
+.plan-switcher .ring{width:13px;height:13px;flex:none;color:var(--indigo);}
+.plan-switcher span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.plan-switcher .chevron{width:11px;height:11px;flex:none;transform:rotate(180deg);color:var(--ink-faint);}
+.plan-switcher:hover{border-color:var(--line-strong);}
+
+.settings-plan-list{display:flex;flex-direction:column;gap:8px;margin:14px 0;}
+.settings-plan-row{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;
+  border:1px solid var(--line);background:var(--paper-sunken);cursor:pointer;text-align:left;
+  color:inherit;font-family:inherit;
+}
+.settings-plan-row.active{border-color:var(--indigo);background:var(--indigo-tint);}
+.settings-plan-row .ring{width:20px;height:20px;flex:none;color:var(--indigo);}
+.settings-plan-info{flex:1;display:flex;flex-direction:column;gap:2px;}
+.settings-plan-title{font-size:.9rem;font-weight:700;color:var(--ink);}
+.settings-plan-pct{font-size:.7rem;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
+.settings-plan-current{font-size:.66rem;color:var(--sage);background:var(--sage-tint);border-radius:999px;padding:3px 9px;flex:none;}
 
 /* ---------- Onboarding ---------- */
 .hero-scene{
@@ -457,7 +475,11 @@ footer.appfoot{text-align:center;color:var(--ink-faint);font-size:.72rem;padding
         <p>聖書通読トラッカー</p>
       </div>
     </div>
-    <nav class="plan-tabs" id="planTabs"></nav>
+    <button class="plan-switcher" id="planSwitcher" hidden>
+      <svg class="ring"><use href="#ic-book"/></svg>
+      <span id="planSwitcherLabel"></span>
+      <svg class="chevron"><use href="#ic-chevronup"/></svg>
+    </button>
   </header>
 
   <main id="onboarding" class="onboarding" hidden>
@@ -515,6 +537,17 @@ footer.appfoot{text-align:center;color:var(--ink-faint);font-size:.72rem;padding
     <div class="badge-modal-grid" id="badgeModalGrid"></div>
     <div class="modal-actions" style="margin-top:16px;">
       <button class="btn btn-ghost" id="badgeModalClose">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="planSwitchBackdrop" hidden>
+  <div class="modal">
+    <h3>プランを切り替える</h3>
+    <div class="settings-plan-list" id="settingsPlanList"></div>
+    <div class="modal-actions" style="justify-content:space-between;">
+      <button class="btn-text" id="settingsBrowseBtn">他のプランを見る</button>
+      <button class="btn btn-ghost" id="settingsCloseBtn">閉じる</button>
     </div>
   </div>
 </div>
@@ -1048,32 +1081,55 @@ function planBannerSvg(planId){
 }
 
 function renderTopNav(){
-  var wrap=document.getElementById("planTabs");
+  var btn=document.getElementById("planSwitcher");
+  if(startedPlanCount()===0){
+    btn.hidden=true;
+    return;
+  }
+  btn.hidden=false;
+  var plan = state.active ? PLAN_DEFS[state.active] : null;
+  document.getElementById("planSwitcherLabel").textContent = plan ? plan.title : "プラン";
+  btn.querySelector(".ring use").setAttribute("href", "#"+(plan?plan.icon:"ic-book"));
+}
+
+function openPlanSwitchModal(){
+  var list=document.getElementById("settingsPlanList");
   var html="";
   for(var i=0;i<PLAN_ORDER.length;i++){
     var id=PLAN_ORDER[i];
     if(!state.plans[id]) continue;
     var plan=PLAN_DEFS[id];
-    var active = state.active===id ? " active" : "";
-    html += '<button class="plan-tab'+active+'" data-plan="'+id+'">'+
+    var pct=Math.round(planRatio(id)*100);
+    var active=state.active===id;
+    html += '<button class="settings-plan-row'+(active?" active":"")+'" data-plan="'+id+'">'+
       '<svg class="ring"><use href="#'+plan.icon+'"/></svg>'+
-      '<span>'+plan.title+'</span></button>';
+      '<span class="settings-plan-info"><span class="settings-plan-title">'+plan.title+'</span><span class="settings-plan-pct">'+pct+'% 完了</span></span>'+
+      (active ? '<span class="settings-plan-current">読書中</span>' : '')+
+    '</button>';
   }
-  html += '<button class="plan-tab add" id="addPlanTab">'+iconSvg("ic-plus")+'<span>プランを追加</span></button>';
-  wrap.innerHTML=html;
-
-  var tabs=wrap.querySelectorAll(".plan-tab[data-plan]");
-  tabs.forEach(function(btn){
-    btn.addEventListener("click", function(){
+  list.innerHTML=html;
+  list.querySelectorAll(".settings-plan-row").forEach(function(row){
+    row.addEventListener("click", function(){
       state.active=this.getAttribute("data-plan");
       saveState();
+      closePlanSwitchModal();
       showView("dashboard");
     });
   });
-  document.getElementById("addPlanTab").addEventListener("click", function(){
-    showView("onboarding");
-  });
+  document.getElementById("planSwitchBackdrop").hidden=false;
 }
+function closePlanSwitchModal(){
+  document.getElementById("planSwitchBackdrop").hidden=true;
+}
+document.getElementById("planSwitcher").addEventListener("click", openPlanSwitchModal);
+document.getElementById("settingsCloseBtn").addEventListener("click", closePlanSwitchModal);
+document.getElementById("settingsBrowseBtn").addEventListener("click", function(){
+  closePlanSwitchModal();
+  showView("onboarding");
+});
+document.getElementById("planSwitchBackdrop").addEventListener("click", function(e){
+  if(e.target===this) closePlanSwitchModal();
+});
 
 function showView(view){
   var onb=document.getElementById("onboarding");
