@@ -349,6 +349,15 @@ button{font-family:inherit;}
 .level-path-item.done .level-path-label{color:var(--ink-soft);}
 
 .agenda-panel{padding:20px 22px;}
+.backlog-section{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px;}
+.backlog-section summary{
+  cursor:pointer;list-style:none;display:flex;align-items:center;gap:6px;
+  font-size:.84rem;color:var(--gold);font-weight:700;padding:2px 0;
+}
+.backlog-section summary::-webkit-details-marker{display:none;}
+.backlog-section summary .icon{width:14px;height:14px;}
+.backlog-days{display:flex;flex-direction:column;gap:2px;margin-top:8px;}
+
 .agenda-month{border:none;margin-bottom:6px;}
 .agenda-month + .agenda-month{border-top:1px solid var(--line);padding-top:6px;}
 .agenda-month summary{
@@ -1268,18 +1277,18 @@ function renderWeekRhythm(){
 }
 
 function findFocusDay(planId){
-  var plan=PLAN_DEFS[planId], ps=state.plans[planId];
+  var plan=PLAN_DEFS[planId];
   var todayIdx=currentScheduledIndex(planId);
   if(todayIdx===0) return {status:"future", todayIdx:0};
-  var backlog=0, focus=null;
-  for(var i=1;i<=todayIdx;i++){
-    if(!isDayDone(planId,i)){ if(focus===null) focus=i; backlog++; }
+  var backlogDays=[];
+  for(var i=1;i<todayIdx;i++){
+    if(!isDayDone(planId,i)) backlogDays.push(i);
   }
-  if(focus===null){
-    if(todayIdx>=plan.days.length) return {status:"finished", todayIdx:todayIdx};
-    return {status:"caught-up", todayIdx:todayIdx, nextIdx:todayIdx+1};
+  var todayDone=isDayDone(planId,todayIdx);
+  if(todayIdx>=plan.days.length && todayDone && backlogDays.length===0){
+    return {status:"finished", todayIdx:todayIdx};
   }
-  return {status:"focus", todayIdx:todayIdx, focus:focus, backlog:backlog};
+  return {status:"normal", todayIdx:todayIdx, todayDone:todayDone, backlogDays:backlogDays};
 }
 
 function dayOfYearSeed(){
@@ -1309,6 +1318,9 @@ function renderTodayCard(){
   '</div>';
   var quoteLine = '<p class="quote-line">'+quote+'</p>';
 
+  var existingBacklog = el.querySelector(".backlog-section");
+  var backlogWasOpen = existingBacklog ? existingBacklog.open : false;
+
   var body=verseCallout;
   if(f.status==="future"){
     body += eyebrow+
@@ -1320,24 +1332,16 @@ function renderTodayCard(){
       '<h2>すべての予定日を読み終えました</h2>'+
       '<p class="all-caught-up">お疲れさまでした。下の一覧からいつでも読み返せます。</p>'+
       quoteLine;
-  } else if(f.status==="caught-up"){
-    var nd = dates[f.nextIdx-1];
-    body += eyebrow+
-      '<h2>今日の分は読み終えています</h2>'+
-      '<p class="all-caught-up">次は '+formatDateJp(nd)+'（'+plan.days[f.nextIdx-1].length+'箇所）の予定です</p>'+
-      quoteLine;
   } else {
-    var idx=f.focus;
+    var idx=f.todayIdx;
     var d=dates[idx-1];
     var refs=plan.days[idx-1];
     var done=doneRefsForDay(planId,idx);
     var doneCount=doneRefCount(planId,idx);
-    var isBehind = idx < f.todayIdx || (idx===f.todayIdx && f.backlog>1);
+    var isToday = isoDate(d)===todayStr();
     body += eyebrow+
-      '<h2>'+(isBehind ? formatDateJp(d)+"の分" : "今日の通読")+'</h2>'+
-      '<p class="date-line">'+formatDateJp(d)+'（'+WD_NAMES[d.getDay()]+'）'+
-        (f.backlog>1 ? ' <span class="backlog-note">たまっている分：あと'+(f.backlog-1)+'日</span>' : '')+
-      '</p>'+
+      '<h2>'+(isToday ? "今日の通読" : formatDateJp(d)+"の分")+'</h2>'+
+      '<p class="date-line">'+formatDateJp(d)+'（'+WD_NAMES[d.getDay()]+'）</p>'+
       '<ul class="refs-list">'+refs.map(function(r,ri){
         var isDone=!!done[ri];
         var url=passageUrl(r);
@@ -1350,28 +1354,70 @@ function renderTodayCard(){
       '<div class="today-actions">'+
         '<span class="today-progress">'+doneCount+' / '+refs.length+' 箇所</span>'+
         (doneCount<refs.length ? '<button class="btn-text" id="markAllBtn">すべてチェック</button>' : '')+
-      '</div>'+
-      quoteLine;
+      '</div>';
+
+    if(f.backlogDays.length>0){
+      var openAttr = backlogWasOpen ? " open" : "";
+      body += '<details class="backlog-section"'+openAttr+'>'+
+        '<summary>'+iconSvg("ic-calendar")+'たまっている分（'+f.backlogDays.length+'日）</summary>'+
+        '<div class="backlog-days">'+
+          f.backlogDays.map(function(bi){
+            var bd=dates[bi-1];
+            var brefs=plan.days[bi-1];
+            var bdone=doneRefsForDay(planId,bi);
+            var bCount=doneRefCount(planId,bi);
+            return '<div class="agenda-day">'+
+              '<div class="agenda-day-head" data-day="'+bi+'">'+
+                '<span class="agenda-date">'+formatDateJp(bd)+'（'+WD_NAMES[bd.getDay()]+'）</span>'+
+                '<span class="agenda-day-progress'+(bCount===brefs.length?" done":"")+'">'+bCount+' / '+brefs.length+'</span>'+
+              '</div>'+
+              '<div class="agenda-refrows">'+
+                brefs.map(function(r,ri){
+                  var isDone=!!bdone[ri];
+                  var url=passageUrl(r);
+                  return '<div class="agenda-ref-row'+(isDone?" done":"")+'" data-day="'+bi+'" data-ref="'+ri+'">'+
+                    '<span class="agenda-check">'+iconSvg("ic-check")+'</span>'+
+                    '<span class="agenda-ref-text">'+r+'</span>'+
+                    (url ? '<a class="ref-open" href="'+url+'" target="_blank" rel="noopener" title="新改訳2017で読む">'+iconSvg("ic-external")+'</a>' : '')+
+                  '</div>';
+                }).join("")+
+              '</div>'+
+            '</div>';
+          }).join("")+
+        '</div>'+
+      '</details>';
+    }
+    body += quoteLine;
   }
   el.innerHTML = '<div class="today-card-banner">'+planBannerSvg(planId)+'</div><div class="today-card-body">'+body+'</div>';
 
-  var focusIdx = (f.status==="focus") ? f.focus : null;
-  if(focusIdx!==null){
-    el.querySelectorAll(".ref-item").forEach(function(item){
+  if(f.status==="normal"){
+    var todayIdx=f.todayIdx;
+    el.querySelectorAll(".refs-list .ref-item").forEach(function(item){
       item.addEventListener("click", function(){
-        toggleRef(planId, focusIdx, parseInt(this.getAttribute("data-ref"),10));
+        toggleRef(planId, todayIdx, parseInt(this.getAttribute("data-ref"),10));
       });
-    });
-    el.querySelectorAll(".ref-open").forEach(function(a){
-      a.addEventListener("click", function(e){ e.stopPropagation(); });
     });
     var markAllBtn=document.getElementById("markAllBtn");
     if(markAllBtn){
       markAllBtn.addEventListener("click", function(e){
         e.stopPropagation();
-        bulkToggleDay(planId, focusIdx);
+        bulkToggleDay(planId, todayIdx);
       });
     }
+    el.querySelectorAll(".backlog-section .agenda-ref-row").forEach(function(row){
+      row.addEventListener("click", function(){
+        toggleRef(planId, parseInt(this.getAttribute("data-day"),10), parseInt(this.getAttribute("data-ref"),10));
+      });
+    });
+    el.querySelectorAll(".backlog-section .agenda-day-progress").forEach(function(badge){
+      badge.addEventListener("click", function(){
+        bulkToggleDay(planId, parseInt(this.parentElement.getAttribute("data-day"),10));
+      });
+    });
+    el.querySelectorAll(".ref-open").forEach(function(a){
+      a.addEventListener("click", function(e){ e.stopPropagation(); });
+    });
   }
 }
 
