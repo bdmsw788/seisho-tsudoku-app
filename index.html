@@ -243,8 +243,16 @@ button{font-family:inherit;}
   display:flex;align-items:center;justify-content:center;color:transparent;
 }
 .ref-check .icon{width:12px;height:12px;}
+.ref-text{flex:1;}
 .ref-item.done .ref-check{background:var(--sage);border-color:var(--sage);color:var(--paper-raised);}
 .ref-item.done .ref-text{text-decoration:line-through;text-decoration-color:var(--line-strong);color:var(--ink-faint);}
+.ref-open{
+  display:flex;align-items:center;justify-content:center;flex:none;
+  width:26px;height:26px;border-radius:50%;color:var(--indigo);
+  margin:-4px;
+}
+.ref-open:hover{background:var(--indigo-tint);}
+.ref-open .icon{width:14px;height:14px;}
 .today-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between;}
 .today-progress{font-size:.78rem;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
 .btn{
@@ -447,6 +455,7 @@ footer.appfoot{text-align:center;color:var(--ink-faint);font-size:.72rem;padding
       <symbol id="ic-wave" viewBox="0 0 24 24"><path d="M2 8c2-2 4-2 6 0s4 2 6 0 4-2 6 0M2 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0M2 20c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></symbol>
       <symbol id="ic-chevronup" viewBox="0 0 24 24"><path d="M4 18l8-8 8 8M4 11l8-8 8 8"/></symbol>
       <symbol id="ic-feather" viewBox="0 0 24 24"><path d="M20 4C11 4 5 10 5 19h2C7 12 12 7 20 4z"/><path d="M9.5 14.5L18 6M8 17l3-3M6.5 19l2-2"/></symbol>
+      <symbol id="ic-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4L10 14"/><path d="M17 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h6"/></symbol>
     </defs>
   </svg>
 
@@ -544,6 +553,48 @@ var GOSPELS=[["マタイ",28],["マルコ",16],["ルカ",24],["ヨハネ",21]];
 var FULL_BIBLE=OT_BOOKS.concat(NT_BOOKS);
 
 function counterFor(name){ return name==="詩篇" ? "篇" : "章"; }
+
+/* book-name variants (both this app's own naming and the imported schedule's naming) -> */
+/* prs.app (「ともに聴く聖書」新改訳2017) USFM-style book codes */
+var BOOK_CODE_MAP={
+"創世記":"gen","出エジプト記":"exo","レビ記":"lev","民数記":"num","申命記":"deu",
+"ヨシュア記":"jos","士師記":"jdg","ルツ記":"rut","サムエル記第一":"1sa","サムエル記第二":"2sa",
+"列王記第一":"1ki","列王記第二":"2ki","歴代誌第一":"1ch","歴代誌第二":"2ch","エズラ記":"ezr",
+"ネヘミヤ記":"neh","エステル記":"est","ヨブ記":"job","詩篇":"psa","箴言":"pro",
+"伝道者の書":"ecc","雅歌":"sng","イザヤ書":"isa","エレミヤ書":"jer","哀歌":"lam",
+"エゼキエル書":"ezk","ダニエル書":"dan","ホセア書":"hos","ヨエル書":"jol","アモス書":"amo",
+"オバデヤ書":"oba","ヨナ書":"jon","ミカ書":"mic","ナホム書":"nam","ハバクク書":"hab",
+"ゼパニヤ書":"zep","ハガイ書":"hag","ゼカリヤ書":"zec","マラキ書":"mal",
+"マタイ":"mat","マルコ":"mrk","ルカ":"luk","ヨハネ":"jhn",
+"使徒":"act","使徒行伝":"act",
+"ローマ":"rom","ローマ書":"rom",
+"コリント第一":"1co","コリント第二":"2co",
+"ガラテヤ":"gal","ガラテヤ書":"gal",
+"エペソ":"eph","エペソ書":"eph",
+"ピリピ":"php","ピリピ書":"php",
+"コロサイ":"col","コロサイ書":"col",
+"テサロニケ第一":"1th","テサロニケ第二":"2th",
+"テモテ第一":"1ti","テモテ第二":"2ti",
+"テトス":"tit","テトス書":"tit",
+"フィレモン":"phm","ピレモン書":"phm",
+"ヘブル":"heb","ヘブル書":"heb",
+"ヤコブ":"jas","ヤコブ書":"jas",
+"ペテロ第一":"1pe","ペテロ第二":"2pe",
+"ヨハネ第一":"1jn","ヨハネ第二":"2jn","ヨハネ第三":"3jn",
+"ユダ":"jud","ユダ書":"jud",
+"黙示録":"rev"
+};
+
+function passageUrl(ref){
+  var m = ref.match(/^(.+?)\s+([\d,\s\-]+)(?:章|篇)$/);
+  if(!m) return null;
+  var bookKey = m[1].replace(/\s+/g,"");
+  var code = BOOK_CODE_MAP[bookKey];
+  if(!code) return null;
+  var chMatch = m[2].match(/\d+/);
+  if(!chMatch) return null;
+  return "https://prs.app/ja/bible/"+code+"."+chMatch[0]+".jdb";
+}
 
 function flattenBooks(list){
   var flat=[];
@@ -1289,9 +1340,11 @@ function renderTodayCard(){
       '</p>'+
       '<ul class="refs-list">'+refs.map(function(r,ri){
         var isDone=!!done[ri];
+        var url=passageUrl(r);
         return '<li class="ref-item'+(isDone?" done":"")+'" data-ref="'+ri+'">'+
           '<span class="ref-check">'+iconSvg("ic-check")+'</span>'+
           '<span class="ref-text">'+r+'</span>'+
+          (url ? '<a class="ref-open" href="'+url+'" target="_blank" rel="noopener" title="新改訳2017で読む">'+iconSvg("ic-external")+'</a>' : '')+
         '</li>';
       }).join("")+'</ul>'+
       '<div class="today-actions">'+
@@ -1308,6 +1361,9 @@ function renderTodayCard(){
       item.addEventListener("click", function(){
         toggleRef(planId, focusIdx, parseInt(this.getAttribute("data-ref"),10));
       });
+    });
+    el.querySelectorAll(".ref-open").forEach(function(a){
+      a.addEventListener("click", function(e){ e.stopPropagation(); });
     });
     var markAllBtn=document.getElementById("markAllBtn");
     if(markAllBtn){
@@ -1440,9 +1496,11 @@ function renderAgenda(){
         '<div class="agenda-refrows">'+
           refs.map(function(r,ri){
             var isDone=!!done[ri];
+            var url=passageUrl(r);
             return '<div class="agenda-ref-row'+(isDone?" done":"")+'" data-day="'+dayNum+'" data-ref="'+ri+'">'+
               '<span class="agenda-check">'+iconSvg("ic-check")+'</span>'+
               '<span class="agenda-ref-text">'+r+'</span>'+
+              (url ? '<a class="ref-open" href="'+url+'" target="_blank" rel="noopener" title="新改訳2017で読む">'+iconSvg("ic-external")+'</a>' : '')+
             '</div>';
           }).join("")+
         '</div>'+
@@ -1456,6 +1514,9 @@ function renderAgenda(){
     row.addEventListener("click", function(){
       toggleRef(planId, parseInt(this.getAttribute("data-day"),10), parseInt(this.getAttribute("data-ref"),10));
     });
+  });
+  el.querySelectorAll(".ref-open").forEach(function(a){
+    a.addEventListener("click", function(e){ e.stopPropagation(); });
   });
   el.querySelectorAll(".agenda-day-progress").forEach(function(badge){
     badge.addEventListener("click", function(){
