@@ -140,16 +140,27 @@ button{font-family:inherit;}
 
 .settings-plan-list{display:flex;flex-direction:column;gap:8px;margin:14px 0;}
 .settings-plan-row{
-  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;
-  border:1px solid var(--line);background:var(--paper-sunken);cursor:pointer;text-align:left;
-  color:inherit;font-family:inherit;
+  display:flex;align-items:center;gap:4px;padding:6px 6px 6px 12px;border-radius:10px;
+  border:1px solid var(--line);background:var(--paper-sunken);
 }
 .settings-plan-row.active{border-color:var(--indigo);background:var(--indigo-tint);}
+.settings-plan-main{
+  flex:1;display:flex;align-items:center;gap:10px;min-width:0;
+  background:none;border:none;cursor:pointer;color:inherit;font-family:inherit;text-align:left;padding:4px 0;
+}
 .settings-plan-row .ring{width:20px;height:20px;flex:none;color:var(--indigo);}
-.settings-plan-info{flex:1;display:flex;flex-direction:column;gap:2px;}
+.settings-plan-info{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0;}
 .settings-plan-title{font-size:.9rem;font-weight:700;color:var(--ink);}
 .settings-plan-pct{font-size:.7rem;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
 .settings-plan-current{font-size:.66rem;color:var(--sage);background:var(--sage-tint);border-radius:999px;padding:3px 9px;flex:none;}
+.settings-plan-actions{display:flex;gap:2px;flex:none;}
+.plan-action-btn{
+  width:32px;height:32px;border-radius:50%;border:none;background:none;color:var(--ink-faint);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;
+}
+.plan-action-btn:hover{background:var(--paper-raised);color:var(--ink);}
+.plan-action-btn.danger:hover{background:rgba(192,57,43,.14);color:#c0392b;}
+.plan-action-btn .icon{width:16px;height:16px;}
 
 /* ---------- Onboarding ---------- */
 .hero-scene{
@@ -469,6 +480,7 @@ footer.appfoot{text-align:center;color:var(--ink-faint);font-size:.72rem;padding
       <symbol id="ic-chevronup" viewBox="0 0 24 24"><path d="M4 18l8-8 8 8M4 11l8-8 8 8"/></symbol>
       <symbol id="ic-feather" viewBox="0 0 24 24"><path d="M20 4C11 4 5 10 5 19h2C7 12 12 7 20 4z"/><path d="M9.5 14.5L18 6M8 17l3-3M6.5 19l2-2"/></symbol>
       <symbol id="ic-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4L10 14"/><path d="M17 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h6"/></symbol>
+      <symbol id="ic-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/><path d="M10 11v6M14 11v6"/></symbol>
     </defs>
   </svg>
 
@@ -520,11 +532,11 @@ footer.appfoot{text-align:center;color:var(--ink-faint);font-size:.72rem;padding
 <div class="modal-backdrop" id="startModalBackdrop" hidden>
   <div class="modal">
     <h3 id="startModalTitle">プランを始める</h3>
-    <p>いつから読み始めますか？あとから変更はできません。</p>
+    <p id="startModalDesc">いつから読み始めますか？開始日はあとからいつでも変更できます。</p>
     <input type="date" id="startDateInput">
     <div class="modal-actions">
       <button class="btn btn-ghost" id="startModalCancel">キャンセル</button>
-      <button class="btn btn-primary" id="startModalConfirm"><svg class="icon"><use href="#ic-check"/></svg>はじめる</button>
+      <button class="btn btn-primary" id="startModalConfirm"><svg class="icon"><use href="#ic-check"/></svg><span id="startModalConfirmLabel">はじめる</span></button>
     </div>
   </div>
 </div>
@@ -1089,25 +1101,59 @@ function openPlanSwitchModal(){
     var plan=PLAN_DEFS[id];
     var pct=Math.round(planRatio(id)*100);
     var active=state.active===id;
-    html += '<button class="settings-plan-row'+(active?" active":"")+'" data-plan="'+id+'">'+
-      '<svg class="ring"><use href="#'+plan.icon+'"/></svg>'+
-      '<span class="settings-plan-info"><span class="settings-plan-title">'+plan.title+'</span><span class="settings-plan-pct">'+pct+'% 完了</span></span>'+
-      (active ? '<span class="settings-plan-current">読書中</span>' : '')+
-    '</button>';
+    html += '<div class="settings-plan-row'+(active?" active":"")+'">'+
+      '<button class="settings-plan-main" data-plan="'+id+'">'+
+        '<svg class="ring"><use href="#'+plan.icon+'"/></svg>'+
+        '<span class="settings-plan-info"><span class="settings-plan-title">'+plan.title+'</span><span class="settings-plan-pct">'+pct+'% 完了</span></span>'+
+        (active ? '<span class="settings-plan-current">読書中</span>' : '')+
+      '</button>'+
+      '<div class="settings-plan-actions">'+
+        '<button class="plan-action-btn" data-action="editdate" data-plan="'+id+'" title="開始日を変更">'+iconSvg("ic-calendar")+'</button>'+
+        '<button class="plan-action-btn danger" data-action="delete" data-plan="'+id+'" title="プランをやめる">'+iconSvg("ic-trash")+'</button>'+
+      '</div>'+
+    '</div>';
   }
   list.innerHTML=html;
-  list.querySelectorAll(".settings-plan-row").forEach(function(row){
-    row.addEventListener("click", function(){
+  list.querySelectorAll(".settings-plan-main").forEach(function(btn){
+    btn.addEventListener("click", function(){
       state.active=this.getAttribute("data-plan");
       saveState();
       closePlanSwitchModal();
       showView("dashboard");
     });
   });
+  list.querySelectorAll('.plan-action-btn[data-action="editdate"]').forEach(function(btn){
+    btn.addEventListener("click", function(){
+      openStartModal(this.getAttribute("data-plan"), true);
+    });
+  });
+  list.querySelectorAll('.plan-action-btn[data-action="delete"]').forEach(function(btn){
+    btn.addEventListener("click", function(){
+      deletePlanFlow(this.getAttribute("data-plan"));
+    });
+  });
   document.getElementById("planSwitchBackdrop").hidden=false;
 }
 function closePlanSwitchModal(){
   document.getElementById("planSwitchBackdrop").hidden=true;
+}
+function deletePlanFlow(planId){
+  var plan=PLAN_DEFS[planId];
+  if(!window.confirm('「'+plan.title+'」をやめますか？これまでの読書記録もすべて削除されます。')) return;
+  delete state.plans[planId];
+  if(state.active===planId){
+    var nextActive=null;
+    for(var i=0;i<PLAN_ORDER.length;i++){ if(state.plans[PLAN_ORDER[i]]){ nextActive=PLAN_ORDER[i]; break; } }
+    state.active=nextActive;
+  }
+  saveState();
+  if(!state.active){
+    closePlanSwitchModal();
+    showView("onboarding");
+  } else {
+    showView("dashboard");
+    openPlanSwitchModal();
+  }
 }
 document.getElementById("planSwitcher").addEventListener("click", openPlanSwitchModal);
 document.getElementById("settingsCloseBtn").addEventListener("click", closePlanSwitchModal);
@@ -1177,15 +1223,21 @@ function renderOnboarding(){
 /* ============================== START MODAL ============================== */
 
 var pendingPlanId=null;
-function openStartModal(planId){
+var pendingIsEdit=false;
+function openStartModal(planId, isEdit){
   pendingPlanId=planId;
-  document.getElementById("startModalTitle").textContent = "「"+PLAN_DEFS[planId].title+"」を始める";
-  document.getElementById("startDateInput").value = todayStr();
+  pendingIsEdit=!!isEdit;
+  var plan=PLAN_DEFS[planId];
+  document.getElementById("startModalTitle").textContent = pendingIsEdit ? "「"+plan.title+"」の開始日を変更" : "「"+plan.title+"」を始める";
+  document.getElementById("startModalDesc").textContent = pendingIsEdit ? "新しい開始日を選んでください。読んだ記録はそのまま引き継がれます。" : "いつから読み始めますか？開始日はあとからいつでも変更できます。";
+  document.getElementById("startDateInput").value = pendingIsEdit ? state.plans[planId].startDate : todayStr();
+  document.getElementById("startModalConfirmLabel").textContent = pendingIsEdit ? "変更する" : "はじめる";
   document.getElementById("startModalBackdrop").hidden=false;
 }
 function closeStartModal(){
   document.getElementById("startModalBackdrop").hidden=true;
   pendingPlanId=null;
+  pendingIsEdit=false;
 }
 document.getElementById("startModalCancel").addEventListener("click", closeStartModal);
 document.getElementById("startModalBackdrop").addEventListener("click", function(e){
@@ -1194,14 +1246,23 @@ document.getElementById("startModalBackdrop").addEventListener("click", function
 document.getElementById("startModalConfirm").addEventListener("click", function(){
   if(!pendingPlanId) return;
   var dateVal=document.getElementById("startDateInput").value || todayStr();
-  state.plans[pendingPlanId]={startDate:dateVal, completed:{}, completedAt:{}};
-  state.active=pendingPlanId;
-  saveState();
   var id=pendingPlanId;
-  closeStartModal();
-  showView("dashboard");
-  showToast("「"+PLAN_DEFS[id].title+"」を始めました。ようこそ庭へ。", false);
-  burstConfetti();
+  if(pendingIsEdit){
+    state.plans[id].startDate=dateVal;
+    saveState();
+    closeStartModal();
+    if(state.active){ showView("dashboard"); }
+    showToast("「"+PLAN_DEFS[id].title+"」の開始日を変更しました", false);
+    openPlanSwitchModal();
+  } else {
+    state.plans[id]={startDate:dateVal, completed:{}, completedAt:{}};
+    state.active=id;
+    saveState();
+    closeStartModal();
+    showView("dashboard");
+    showToast("「"+PLAN_DEFS[id].title+"」を始めました。ようこそ庭へ。", false);
+    burstConfetti();
+  }
 });
 
 /* ============================== RENDER: DASHBOARD ============================== */
