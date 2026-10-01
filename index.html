@@ -162,6 +162,22 @@ button{font-family:inherit;}
 .plan-action-btn.danger:hover{background:rgba(192,57,43,.14);color:#c0392b;}
 .plan-action-btn .icon{width:16px;height:16px;}
 
+.settings-backup-box{
+  margin:14px 0 16px;padding:12px;border-radius:10px;
+  background:var(--paper-sunken);border:1px solid var(--line);
+}
+.settings-backup-title{
+  font-size:.76rem;font-weight:700;color:var(--ink-soft);margin-bottom:8px;letter-spacing:.02em;
+}
+.settings-backup-buttons{display:flex;gap:8px;flex-wrap:wrap;}
+.btn-sub{
+  display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:8px;
+  border:1px solid var(--line-strong);background:var(--paper-raised);color:var(--ink-soft);
+  font-size:.76rem;cursor:pointer;font-family:inherit;font-weight:500;
+}
+.btn-sub:hover{border-color:var(--indigo);color:var(--ink);}
+.btn-sub .icon{width:13px;height:13px;}
+
 /* ---------- Onboarding ---------- */
 .hero-scene{
   width:100%;height:auto;display:block;border-radius:var(--radius);
@@ -545,9 +561,28 @@ footer.appfoot{text-align:center;color:var(--ink-faint);font-size:.72rem;padding
   <div class="modal">
     <h3>プランを切り替える</h3>
     <div class="settings-plan-list" id="settingsPlanList"></div>
+    <div class="settings-backup-box">
+      <div class="settings-backup-title">データのバックアップ・引き継ぎ</div>
+      <div class="settings-backup-buttons">
+        <button type="button" class="btn-sub" id="exportDataBtn"><svg class="icon"><use href="#ic-feather"/></svg>引き継ぎコードをコピー</button>
+        <button type="button" class="btn-sub" id="importDataBtn"><svg class="icon"><use href="#ic-book"/></svg>コードを読み込む</button>
+      </div>
+    </div>
     <div class="modal-actions" style="justify-content:space-between;">
       <button class="btn-text" id="settingsBrowseBtn">他のプランを見る</button>
       <button class="btn btn-ghost" id="settingsCloseBtn">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="importModalBackdrop" hidden>
+  <div class="modal">
+    <h3>引き継ぎコードの読み込み</h3>
+    <p>コピーした引き継ぎコードを貼り付けてください。現在の記録に上書きされます。</p>
+    <textarea id="importCodeInput" rows="4" style="width:100%;border-radius:8px;border:1px solid var(--line-strong);background:var(--paper);color:var(--ink);font-family:monospace;font-size:.78rem;padding:8px;box-sizing:border-box;margin-bottom:14px;resize:vertical;" placeholder="引き継ぎコードをここに貼り付け"></textarea>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="importModalCancel">キャンセル</button>
+      <button class="btn btn-primary" id="importModalConfirm"><svg class="icon"><use href="#ic-check"/></svg>復元する</button>
     </div>
   </div>
 </div>
@@ -1163,6 +1198,92 @@ document.getElementById("settingsBrowseBtn").addEventListener("click", function(
 });
 document.getElementById("planSwitchBackdrop").addEventListener("click", function(e){
   if(e.target===this) closePlanSwitchModal();
+});
+
+/* ============================== BACKUP & RESTORE ============================== */
+
+function exportStateCode(){
+  try{
+    var json=JSON.stringify(state);
+    var code=btoa(encodeURIComponent(json));
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(code).then(function(){
+        showToast("引き継ぎコードをコピーしました", false);
+      }).catch(function(){
+        fallbackCopyText(code);
+      });
+    } else {
+      fallbackCopyText(code);
+    }
+  }catch(e){
+    alert("コードの作成に失敗しました: "+e.message);
+  }
+}
+
+function fallbackCopyText(text){
+  var ta=document.createElement("textarea");
+  ta.value=text;
+  ta.style.position="fixed";
+  ta.style.opacity="0";
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  try{
+    document.execCommand("copy");
+    showToast("引き継ぎコードをコピーしました", false);
+  }catch(e){
+    prompt("以下のコードを全選択してコピーしてください:", text);
+  }
+  document.body.removeChild(ta);
+}
+
+function openImportModal(){
+  document.getElementById("importCodeInput").value="";
+  document.getElementById("importModalBackdrop").hidden=false;
+}
+function closeImportModal(){
+  document.getElementById("importModalBackdrop").hidden=true;
+}
+
+function importStateCode(rawCode){
+  rawCode=(rawCode||"").trim();
+  if(!rawCode){ alert("引き継ぎコードを入力してください。"); return false; }
+  try{
+    var json;
+    try{
+      json=decodeURIComponent(atob(rawCode));
+    }catch(e){
+      json=rawCode;
+    }
+    var parsed=JSON.parse(json);
+    if(!parsed || typeof parsed!=="object" || !parsed.plans){
+      throw new Error("無効なデータ形式です");
+    }
+    if(!window.confirm("記録を復元してよろしいですか？現在の端末の記録は上書きされます。")){
+      return false;
+    }
+    state=normalizeState(parsed);
+    saveState();
+    closeImportModal();
+    closePlanSwitchModal();
+    showView(state.active ? "dashboard" : "onboarding");
+    showToast("記録を復元しました！", false);
+    burstConfetti();
+    return true;
+  }catch(e){
+    alert("コードの読み込みに失敗しました。正しいコードかご確認ください。");
+    return false;
+  }
+}
+
+document.getElementById("exportDataBtn").addEventListener("click", exportStateCode);
+document.getElementById("importDataBtn").addEventListener("click", openImportModal);
+document.getElementById("importModalCancel").addEventListener("click", closeImportModal);
+document.getElementById("importModalBackdrop").addEventListener("click", function(e){
+  if(e.target===this) closeImportModal();
+});
+document.getElementById("importModalConfirm").addEventListener("click", function(){
+  importStateCode(document.getElementById("importCodeInput").value);
 });
 
 function showView(view){
