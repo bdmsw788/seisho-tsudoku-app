@@ -1,0 +1,18 @@
+name = "seisho-tsudoku-notifications"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[triggers]
+crons = ["* * * * *"]
+
+[vars]
+DEFAULT_TIMEZONE = "Asia/Tokyo"
+VAPID_SUBJECT = "https://seisho-tsudoku-app.vercel.app"
+ALLOWED_ORIGINS = "https://seisho-tsudoku-app.vercel.app,https://bdmsw788.github.io"
+APP_URL = "https://seisho-tsudoku-app.vercel.app/"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "seisho-tsudoku-notifications"
+database_id = "8eac30c1-3c29-41b9-8d0b-65f3f57b1e15"
+migrations_dir = "migrations"

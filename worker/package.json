@@ -1,0 +1,21 @@
+{
+  "name": "seisho-tsudoku-push-worker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node --test test/*.test.mjs",
+    "db:migrate:local": "wrangler d1 migrations apply seisho-tsudoku-notifications --local",
+    "db:migrate:remote": "wrangler d1 migrations apply seisho-tsudoku-notifications --remote",
+    "vapid:local": "node scripts/setup-vapid.mjs --local",
+    "vapid:remote": "node scripts/setup-vapid.mjs --remote"
+  },
+  "dependencies": {
+    "@pushforge/builder": "^2.0.5"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

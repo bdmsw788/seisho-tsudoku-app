@@ -1,0 +1,5 @@
+# Cloudflare Workers ローカル開発用の環境変数テンプレート
+# 実際の値は .dev.vars に設定し、本番では `wrangler secret put` で登録してください。
+# npx @pushforge/builder vapid で生成した鍵を使用します。
+VAPID_PRIVATE_KEY=
+VAPID_PUBLIC_KEY=
