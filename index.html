@@ -208,6 +208,10 @@ button{font-family:inherit;}
   background:var(--paper-sunken);display:flex;flex-direction:column;gap:8px;
 }
 .notif-slot-card.is-off{opacity:.72;}
+.notif-slot-card.is-dirty{border-color:var(--indigo);background:var(--paper-raised);}
+.notif-dirty-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:8px;border-top:1px dashed var(--line);}
+.notif-dirty-label{font-size:.74rem;font-weight:700;color:var(--indigo);}
+.notif-dirty-actions{display:flex;gap:6px;}
 .notif-slot-top{display:flex;align-items:center;gap:10px;}
 .notif-name-input{
   flex:1;min-width:0;border:1px solid transparent;border-radius:7px;
@@ -2399,6 +2403,13 @@ function renderNotifBody(){
             '<input type="time" class="notif-time-input" value="'+escapeHtml(s.time_hhmm)+'" aria-label="'+escapeHtml(s.name)+'の通知時刻"'+(notifState.busy?' disabled':'')+'>'+
             '<button type="button" class="notif-del-btn" aria-label="'+escapeHtml(s.name)+'を削除"'+(notifState.busy?' disabled':'')+'>'+iconSvg("ic-trash")+'削除</button>'+
           '</div>'+
+          '<div class="notif-dirty-bar" hidden>'+
+            '<span class="notif-dirty-label">未保存の変更</span>'+
+            '<div class="notif-dirty-actions">'+
+              '<button type="button" class="btn btn-ghost btn-sm notif-revert-btn"'+(notifState.busy?' disabled':'')+'>戻す</button>'+
+              '<button type="button" class="btn btn-primary btn-sm notif-save-btn"'+(notifState.busy?' disabled':'')+'>保存</button>'+
+            '</div>'+
+          '</div>'+
         '</div>';
     }
     listHtml += '</div>';
@@ -2443,32 +2454,64 @@ function bindNotifSlotEvents(slots){
     if(!slot) return;
 
     var nameInput = card.querySelector(".notif-name-input");
-    nameInput.addEventListener("change", function(){
-      var nextName = this.value.trim();
-      if(!nextName){
-        this.value = slot.name;
-        showToast("通知名を入力してください", false);
-        return;
-      }
-      if(nextName === slot.name) return;
-      patchNotifSlot(id, { name: nextName }, "通知名を更新しました");
-    });
-
     var timeInput = card.querySelector(".notif-time-input");
-    timeInput.addEventListener("change", function(){
-      var nextTime = (this.value || "").trim();
-      if(!/^([01]\d|2[0-3]):([0-5]\d)$/.test(nextTime)){
-        this.value = slot.time_hhmm;
-        return;
-      }
-      if(nextTime === slot.time_hhmm) return;
-      patchNotifSlot(id, { time_hhmm: nextTime }, "時刻を" + nextTime + "に変更しました");
-    });
+    var dirtyBar = card.querySelector(".notif-dirty-bar");
+    var saveBtn = card.querySelector(".notif-save-btn");
+    var revertBtn = card.querySelector(".notif-revert-btn");
+
+    function syncDirty(){
+      var curName = nameInput.value.trim();
+      var curTime = (timeInput.value || "").trim();
+      var isDirty = (curName !== slot.name) || (curTime !== slot.time_hhmm);
+      card.classList.toggle("is-dirty", isDirty);
+      if(dirtyBar) dirtyBar.hidden = !isDirty;
+    }
+
+    nameInput.addEventListener("input", syncDirty);
+    nameInput.addEventListener("change", syncDirty);
+    timeInput.addEventListener("input", syncDirty);
+    timeInput.addEventListener("change", syncDirty);
+
+    if(saveBtn){
+      saveBtn.addEventListener("click", function(){
+        var nextName = nameInput.value.trim();
+        var nextTime = (timeInput.value || "").trim();
+        if(!nextName){
+          showToast("通知名を入力してください", false);
+          nameInput.focus();
+          return;
+        }
+        if(!/^([01]\d|2[0-3]):([0-5]\d)$/.test(nextTime)){
+          showToast("時刻を正しく指定してください", false);
+          return;
+        }
+        var patch = {};
+        if(nextName !== slot.name) patch.name = nextName;
+        if(nextTime !== slot.time_hhmm) patch.time_hhmm = nextTime;
+        if(Object.keys(patch).length > 0){
+          patchNotifSlot(id, patch, "通知設定を保存しました");
+        }
+      });
+    }
+
+    if(revertBtn){
+      revertBtn.addEventListener("click", function(){
+        nameInput.value = slot.name;
+        timeInput.value = slot.time_hhmm;
+        syncDirty();
+      });
+    }
 
     var switchBtn = card.querySelector(".notif-switch");
     switchBtn.addEventListener("click", function(){
       var nextEnabled = !slot.enabled;
-      patchNotifSlot(id, { enabled: nextEnabled }, "「" + slot.name + "」を" + (nextEnabled ? "ON" : "OFF") + "にしました");
+      var patch = { enabled: nextEnabled };
+      var curName = nameInput.value.trim();
+      var curTime = (timeInput.value || "").trim();
+      if(curName && curName !== slot.name) patch.name = curName;
+      if(/^([01]\d|2[0-3]):([0-5]\d)$/.test(curTime) && curTime !== slot.time_hhmm) patch.time_hhmm = curTime;
+      var labelName = patch.name || slot.name;
+      patchNotifSlot(id, patch, "「" + labelName + "」を" + (nextEnabled ? "ON" : "OFF") + "にしました");
     });
 
     var delBtn = card.querySelector(".notif-del-btn");
@@ -2525,6 +2568,9 @@ function openNotifModal(){
 }
 
 function closeNotifModal(){
+  if(document.querySelector("#notifBody .notif-slot-card.is-dirty")){
+    if(!window.confirm("保存していない変更があります。保存せずに閉じますか？")) return;
+  }
   document.getElementById("notifModalBackdrop").hidden = true;
 }
 
