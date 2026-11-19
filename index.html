@@ -370,9 +370,10 @@ button{font-family:inherit;}
 .ref-item{
   background:var(--paper-sunken);border-radius:var(--radius-sm);padding:10px 14px;
   font-size:.94rem;color:var(--ink);
-  display:flex;align-items:center;gap:12px;cursor:pointer;transition:background .12s;
+  display:flex;flex-direction:column;gap:8px;transition:background .12s;
 }
-.ref-item:hover{background:var(--paper-sunken);filter:brightness(0.97);}
+.ref-main{display:flex;align-items:center;gap:12px;width:100%;cursor:pointer;}
+.ref-main:hover .ref-text{color:var(--indigo);}
 .ref-check{
   width:22px;height:22px;border-radius:50%;flex:none;
   border:1.6px solid var(--line-strong);background:var(--paper-raised);
@@ -380,8 +381,32 @@ button{font-family:inherit;}
 }
 .ref-check .icon{width:12px;height:12px;}
 .ref-text{flex:1;}
+.ref-item.partial .ref-check{border-color:var(--sage);background:var(--sage-tint);}
 .ref-item.done .ref-check{background:var(--sage);border-color:var(--sage);color:var(--paper-raised);}
 .ref-item.done .ref-text{text-decoration:line-through;text-decoration-color:var(--line-strong);color:var(--ink-faint);}
+.ref-subcount{
+  font-size:.7rem;font-weight:700;color:var(--sage);background:var(--sage-tint);
+  border-radius:999px;padding:2px 8px;font-variant-numeric:tabular-nums;flex:none;
+}
+.chapter-chips{display:flex;flex-wrap:wrap;gap:6px;padding-left:34px;}
+.chapter-chips.compact{padding-left:31px;gap:5px;}
+.chapter-chip{
+  display:inline-flex;align-items:center;gap:4px;min-height:32px;padding:4px 10px;
+  border-radius:999px;border:1px solid var(--line-strong);background:var(--paper-raised);
+  color:var(--ink-soft);font-family:inherit;font-size:.78rem;font-weight:500;
+  font-variant-numeric:tabular-nums;cursor:pointer;
+  transition:background .12s,border-color .12s,color .12s,transform .1s;
+}
+.chapter-chips.compact .chapter-chip{min-height:28px;padding:3px 9px;font-size:.74rem;}
+.chapter-chip .ch-dot{
+  width:13px;height:13px;border-radius:50%;border:1.4px solid var(--line-strong);
+  display:inline-flex;align-items:center;justify-content:center;color:transparent;
+  flex:none;background:var(--paper);
+}
+.chapter-chip .ch-dot .icon{width:9px;height:9px;}
+.chapter-chip.done{background:var(--sage-tint);border-color:var(--sage);color:var(--sage);font-weight:700;}
+.chapter-chip.done .ch-dot{background:var(--sage);border-color:var(--sage);color:var(--paper-raised);}
+.chapter-chip:active{transform:scale(.96);}
 .ref-open{
   display:flex;align-items:center;justify-content:center;flex:none;
   width:26px;height:26px;border-radius:50%;color:var(--indigo);
@@ -516,7 +541,10 @@ button{font-family:inherit;}
 .agenda-day-progress:hover{border-color:var(--line-strong);}
 .agenda-refrows{display:flex;flex-direction:column;gap:1px;}
 .agenda-ref-row{
-  display:flex;align-items:center;gap:12px;padding:6px 6px 6px 20px;border-radius:8px;cursor:pointer;
+  display:flex;flex-direction:column;align-items:stretch;gap:6px;padding:6px 6px 6px 20px;border-radius:8px;
+}
+.agenda-ref-main{
+  display:flex;align-items:center;gap:12px;width:100%;cursor:pointer;
 }
 .agenda-ref-row:hover{background:var(--paper-sunken);}
 .agenda-ref-row.done{opacity:.6;}
@@ -525,6 +553,7 @@ button{font-family:inherit;}
   flex:none;background:var(--paper-raised);
   display:flex;align-items:center;justify-content:center;color:transparent;
 }
+.agenda-ref-row.partial .agenda-check{border-color:var(--sage);background:var(--sage-tint);}
 .agenda-ref-row.done .agenda-check{background:var(--sage);border-color:var(--sage);color:var(--paper-raised);}
 .agenda-check .icon{width:11px;height:11px;}
 .agenda-ref-text{flex:1;font-size:.84rem;line-height:1.6;}
@@ -770,15 +799,40 @@ var BOOK_CODE_MAP={
 "黙示録":"rev"
 };
 
-function passageUrl(ref){
-  var m = ref.match(/^(.+?)\s+([\d,\s\-]+)(?:章|篇)$/);
-  if(!m) return null;
-  var bookKey = m[1].replace(/\s+/g,"");
+function parseRefChapters(ref){
+  var m = String(ref || "").match(/^(.+?)\s+([\d,\s\-]+)(章|篇)$/);
+  if(!m) return { book: String(ref || ""), unit: "章", chapters: [] };
+  var book = m[1];
+  var part = m[2];
+  var unit = m[3];
+  var chapters = [];
+  var segs = part.split(",");
+  for(var i=0;i<segs.length;i++){
+    var s = segs[i].trim();
+    if(!s) continue;
+    var rm = s.match(/^(\d+)\s*-\s*(\d+)$/);
+    if(rm){
+      var a = parseInt(rm[1], 10), b = parseInt(rm[2], 10);
+      if(a <= b){
+        for(var c=a; c<=b; c++) chapters.push(c);
+      } else {
+        for(var c2=a; c2>=b; c2--) chapters.push(c2);
+      }
+    } else if(/^\d+$/.test(s)){
+      chapters.push(parseInt(s, 10));
+    }
+  }
+  return { book: book, unit: unit, chapters: chapters };
+}
+
+function passageUrl(ref, chapterOverride){
+  var parsed = parseRefChapters(ref);
+  if(parsed.chapters.length === 0) return null;
+  var bookKey = parsed.book.replace(/\s+/g,"");
   var code = BOOK_CODE_MAP[bookKey];
   if(!code) return null;
-  var chMatch = m[2].match(/\d+/);
-  if(!chMatch) return null;
-  return "https://prs.app/ja/bible/"+code+"."+chMatch[0]+".jdb";
+  var ch = (typeof chapterOverride === "number" && chapterOverride > 0) ? chapterOverride : parsed.chapters[0];
+  return "https://prs.app/ja/bible/"+code+"."+ch+".jdb";
 }
 
 function flattenBooks(list){
@@ -922,7 +976,31 @@ function normalizeState(s){
         for(var i=0;i<refs.length;i++) obj[i]=true;
         migrated[key]=obj;
       } else if(val && typeof val==="object"){
-        migrated[key]=val;
+        var dayRefs=plan.days[parseInt(key,10)-1]||[];
+        var dayClean={};
+        for(var rk in val){
+          var rVal=val[rk];
+          if(rVal===true){
+            dayClean[rk]=true;
+          } else if(rVal && typeof rVal==="object"){
+            var chList=parseRefChapters(dayRefs[parseInt(rk,10)]||"").chapters;
+            var chClean={};
+            var chCount=0;
+            for(var ck in rVal){
+              if(rVal[ck]===true){
+                var ci=parseInt(ck,10);
+                if(chList.length===0 || (ci>=0 && ci<chList.length)){
+                  chClean[String(ci)]=true;
+                  chCount++;
+                }
+              }
+            }
+            if(chCount>0){
+              dayClean[rk] = (chList.length>0 && chCount>=chList.length) ? true : chClean;
+            }
+          }
+        }
+        if(Object.keys(dayClean).length>0) migrated[key]=dayClean;
       }
     }
     ps.completed=migrated;
@@ -1021,14 +1099,69 @@ function doneRefsForDay(planId, dayIndex){
   var ps=state.plans[planId];
   return (ps && ps.completed[dayIndex]) || {};
 }
+function chaptersForRef(ref){
+  return parseRefChapters(ref).chapters;
+}
+function refCompletionValue(planId, dayIndex, refIndex){
+  var done = doneRefsForDay(planId, dayIndex);
+  return done[String(refIndex)] !== undefined ? done[String(refIndex)] : done[refIndex];
+}
+function isChapterDone(planId, dayIndex, refIndex, chIndex){
+  var val = refCompletionValue(planId, dayIndex, refIndex);
+  if(val === true) return true;
+  if(val && typeof val === "object"){
+    return !!(val[String(chIndex)] || val[chIndex]);
+  }
+  return false;
+}
+function doneChapterCount(planId, dayIndex, refIndex){
+  var refs = refsForDay(planId, dayIndex);
+  var chapters = chaptersForRef(refs[refIndex] || "");
+  if(chapters.length === 0) return isRefDone(planId, dayIndex, refIndex) ? 1 : 0;
+  var val = refCompletionValue(planId, dayIndex, refIndex);
+  if(val === true) return chapters.length;
+  var count = 0;
+  for(var i=0;i<chapters.length;i++){
+    if(isChapterDone(planId, dayIndex, refIndex, i)) count++;
+  }
+  return count;
+}
+function isRefDone(planId, dayIndex, refIndex){
+  var val = refCompletionValue(planId, dayIndex, refIndex);
+  if(val === true) return true;
+  if(val && typeof val === "object"){
+    var refs = refsForDay(planId, dayIndex);
+    var chapters = chaptersForRef(refs[refIndex] || "");
+    if(chapters.length === 0) return false;
+    for(var i=0;i<chapters.length;i++){
+      if(!(val[String(i)] || val[i])) return false;
+    }
+    return true;
+  }
+  return false;
+}
+function firstUnreadChapter(planId, dayIndex, refIndex){
+  var refs = refsForDay(planId, dayIndex);
+  var chapters = chaptersForRef(refs[refIndex] || "");
+  if(chapters.length === 0) return null;
+  if(isRefDone(planId, dayIndex, refIndex)) return chapters[0];
+  for(var i=0;i<chapters.length;i++){
+    if(!isChapterDone(planId, dayIndex, refIndex, i)) return chapters[i];
+  }
+  return chapters[0];
+}
 function doneRefCount(planId, dayIndex){
-  return Object.keys(doneRefsForDay(planId,dayIndex)).length;
+  var refs = refsForDay(planId, dayIndex);
+  var count = 0;
+  for(var i=0;i<refs.length;i++){
+    if(isRefDone(planId, dayIndex, i)) count++;
+  }
+  return count;
 }
 function isDayDone(planId, dayIndex){
   var refs=refsForDay(planId,dayIndex);
   if(refs.length===0) return false;
-  var done=doneRefsForDay(planId,dayIndex);
-  for(var i=0;i<refs.length;i++){ if(!done[i]) return false; }
+  for(var i=0;i<refs.length;i++){ if(!isRefDone(planId, dayIndex, i)) return false; }
   return true;
 }
 function planCompletedCount(planId){
@@ -1084,17 +1217,71 @@ function toggleRef(planId, dayIndex, refIndex){
   if(!ps) return;
   var prevXP=globalXP();
   var wasDayDone = isDayDone(planId, dayIndex);
+  var wasRefDone = isRefDone(planId, dayIndex, refIndex);
   ps.completed[dayIndex] = ps.completed[dayIndex] || {};
   var key=String(refIndex);
-  var nowSet = !ps.completed[dayIndex][key];
-  if(nowSet){
+  if(wasRefDone){
+    delete ps.completed[dayIndex][key];
+    if(Object.keys(ps.completed[dayIndex]).length===0) delete ps.completed[dayIndex];
+  } else {
     ps.completed[dayIndex][key]=true;
     ps.completedAt[dayIndex]=new Date().toISOString();
     markActivity();
-  } else {
-    delete ps.completed[dayIndex][key];
-    if(Object.keys(ps.completed[dayIndex]).length===0) delete ps.completed[dayIndex];
   }
+  var nowDayDone = isDayDone(planId, dayIndex);
+  afterProgressChange(!wasDayDone && nowDayDone, prevXP);
+}
+
+function toggleChapter(planId, dayIndex, refIndex, chIndex){
+  var ps=state.plans[planId];
+  if(!ps) return;
+  var refs=refsForDay(planId, dayIndex);
+  var chapters=chaptersForRef(refs[refIndex] || "");
+  if(chapters.length<=1){
+    toggleRef(planId, dayIndex, refIndex);
+    return;
+  }
+  var prevXP=globalXP();
+  var wasDayDone = isDayDone(planId, dayIndex);
+  ps.completed[dayIndex] = ps.completed[dayIndex] || {};
+  var key=String(refIndex);
+  var cur=ps.completed[dayIndex][key];
+  var chKey=String(chIndex);
+
+  if(cur===true){
+    var split={};
+    for(var i=0;i<chapters.length;i++){
+      if(i!==chIndex) split[String(i)]=true;
+    }
+    if(Object.keys(split).length===0) delete ps.completed[dayIndex][key];
+    else ps.completed[dayIndex][key]=split;
+  } else {
+    var nextMap={};
+    if(cur && typeof cur==="object"){
+      for(var k in cur){ if(cur[k]) nextMap[String(k)]=true; }
+    }
+    if(nextMap[chKey]){
+      delete nextMap[chKey];
+    } else {
+      nextMap[chKey]=true;
+      ps.completedAt[dayIndex]=new Date().toISOString();
+      markActivity();
+    }
+    var allDone=true;
+    for(var j=0;j<chapters.length;j++){
+      if(!nextMap[String(j)]){ allDone=false; break; }
+    }
+    if(allDone){
+      ps.completed[dayIndex][key]=true;
+      ps.completedAt[dayIndex]=new Date().toISOString();
+    } else if(Object.keys(nextMap).length===0){
+      delete ps.completed[dayIndex][key];
+    } else {
+      ps.completed[dayIndex][key]=nextMap;
+    }
+  }
+
+  if(Object.keys(ps.completed[dayIndex]).length===0) delete ps.completed[dayIndex];
   var nowDayDone = isDayDone(planId, dayIndex);
   afterProgressChange(!wasDayDone && nowDayDone, prevXP);
 }
@@ -1608,6 +1795,61 @@ function dayOfYearSeed(){
   return Math.floor((t-start)/86400000);
 }
 
+function renderChapterChipsHtml(planId, dayIndex, refIndex, ref, compact){
+  var parsed = parseRefChapters(ref);
+  if(parsed.chapters.length <= 1) return "";
+  var html = '<div class="chapter-chips'+(compact ? ' compact' : '')+'">';
+  for(var i=0;i<parsed.chapters.length;i++){
+    var chDone = isChapterDone(planId, dayIndex, refIndex, i);
+    html += '<button type="button" class="chapter-chip'+(chDone ? ' done' : '')+'" data-day="'+dayIndex+'" data-ref="'+refIndex+'" data-ch="'+i+'" aria-pressed="'+(chDone ? 'true' : 'false')+'">'+
+      '<span class="ch-dot">'+iconSvg("ic-check")+'</span>'+
+      '<span>'+parsed.chapters[i]+parsed.unit+'</span>'+
+    '</button>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderAgendaRefRowHtml(planId, dayNum, ri, r){
+  var isDone = isRefDone(planId, dayNum, ri);
+  var chCount = chaptersForRef(r).length;
+  var chDone = chCount > 1 ? doneChapterCount(planId, dayNum, ri) : 0;
+  var isPartial = !isDone && chDone > 0;
+  var url = passageUrl(r, firstUnreadChapter(planId, dayNum, ri));
+  return '<div class="agenda-ref-row'+(isDone?" done":"")+(isPartial?" partial":"")+'">'+
+    '<div class="agenda-ref-main" data-day="'+dayNum+'" data-ref="'+ri+'">'+
+      '<span class="agenda-check">'+iconSvg("ic-check")+'</span>'+
+      '<span class="agenda-ref-text">'+r+'</span>'+
+      (isPartial ? '<span class="ref-subcount">'+chDone+'/'+chCount+'</span>' : '')+
+      (url ? '<a class="ref-open" href="'+url+'" target="_blank" rel="noopener" title="新改訳2017で読む">'+iconSvg("ic-external")+'</a>' : '')+
+    '</div>'+
+    renderChapterChipsHtml(planId, dayNum, ri, r, true)+
+  '</div>';
+}
+
+function bindAgendaRefEvents(scopeEl, planId){
+  if(!scopeEl) return;
+  scopeEl.querySelectorAll(".agenda-ref-main").forEach(function(row){
+    row.addEventListener("click", function(){
+      toggleRef(planId, parseInt(this.getAttribute("data-day"),10), parseInt(this.getAttribute("data-ref"),10));
+    });
+  });
+  scopeEl.querySelectorAll(".chapter-chip").forEach(function(chip){
+    chip.addEventListener("click", function(e){
+      e.stopPropagation();
+      toggleChapter(planId, parseInt(this.getAttribute("data-day"),10), parseInt(this.getAttribute("data-ref"),10), parseInt(this.getAttribute("data-ch"),10));
+    });
+  });
+  scopeEl.querySelectorAll(".agenda-day-progress").forEach(function(badge){
+    badge.addEventListener("click", function(){
+      bulkToggleDay(planId, parseInt(this.parentElement.getAttribute("data-day"),10));
+    });
+  });
+  scopeEl.querySelectorAll(".ref-open").forEach(function(a){
+    a.addEventListener("click", function(e){ e.stopPropagation(); });
+  });
+}
+
 function renderTodayCard(){
   var el=document.getElementById("todayCard");
   var planId=state.active, plan=PLAN_DEFS[planId], ps=state.plans[planId];
@@ -1647,19 +1889,25 @@ function renderTodayCard(){
     var idx=f.todayIdx;
     var d=dates[idx-1];
     var refs=plan.days[idx-1];
-    var done=doneRefsForDay(planId,idx);
     var doneCount=doneRefCount(planId,idx);
     var isToday = isoDate(d)===todayStr();
     body += eyebrow+
       '<h2>'+(isToday ? "今日の通読" : formatDateJp(d)+"の分")+'</h2>'+
       '<p class="date-line">'+formatDateJp(d)+'（'+WD_NAMES[d.getDay()]+'）</p>'+
       '<ul class="refs-list">'+refs.map(function(r,ri){
-        var isDone=!!done[ri];
-        var url=passageUrl(r);
-        return '<li class="ref-item'+(isDone?" done":"")+'" data-ref="'+ri+'">'+
-          '<span class="ref-check">'+iconSvg("ic-check")+'</span>'+
-          '<span class="ref-text">'+r+'</span>'+
-          (url ? '<a class="ref-open" href="'+url+'" target="_blank" rel="noopener" title="新改訳2017で読む">'+iconSvg("ic-external")+'</a>' : '')+
+        var isDone=isRefDone(planId,idx,ri);
+        var chCount=chaptersForRef(r).length;
+        var chDone=chCount>1 ? doneChapterCount(planId,idx,ri) : 0;
+        var isPartial=!isDone && chDone>0;
+        var url=passageUrl(r, firstUnreadChapter(planId,idx,ri));
+        return '<li class="ref-item'+(isDone?" done":"")+(isPartial?" partial":"")+'">'+
+          '<div class="ref-main" data-ref="'+ri+'">'+
+            '<span class="ref-check">'+iconSvg("ic-check")+'</span>'+
+            '<span class="ref-text">'+r+'</span>'+
+            (isPartial ? '<span class="ref-subcount">'+chDone+'/'+chCount+'</span>' : '')+
+            (url ? '<a class="ref-open" href="'+url+'" target="_blank" rel="noopener" title="新改訳2017で読む">'+iconSvg("ic-external")+'</a>' : '')+
+          '</div>'+
+          renderChapterChipsHtml(planId,idx,ri,r,false)+
         '</li>';
       }).join("")+'</ul>'+
       '<div class="today-actions">'+
@@ -1675,7 +1923,6 @@ function renderTodayCard(){
           f.backlogDays.map(function(bi){
             var bd=dates[bi-1];
             var brefs=plan.days[bi-1];
-            var bdone=doneRefsForDay(planId,bi);
             var bCount=doneRefCount(planId,bi);
             return '<div class="agenda-day">'+
               '<div class="agenda-day-head" data-day="'+bi+'">'+
@@ -1683,15 +1930,7 @@ function renderTodayCard(){
                 '<span class="agenda-day-progress'+(bCount===brefs.length?" done":"")+'">'+bCount+' / '+brefs.length+'</span>'+
               '</div>'+
               '<div class="agenda-refrows">'+
-                brefs.map(function(r,ri){
-                  var isDone=!!bdone[ri];
-                  var url=passageUrl(r);
-                  return '<div class="agenda-ref-row'+(isDone?" done":"")+'" data-day="'+bi+'" data-ref="'+ri+'">'+
-                    '<span class="agenda-check">'+iconSvg("ic-check")+'</span>'+
-                    '<span class="agenda-ref-text">'+r+'</span>'+
-                    (url ? '<a class="ref-open" href="'+url+'" target="_blank" rel="noopener" title="新改訳2017で読む">'+iconSvg("ic-external")+'</a>' : '')+
-                  '</div>';
-                }).join("")+
+                brefs.map(function(r,ri){ return renderAgendaRefRowHtml(planId,bi,ri,r); }).join("")+
               '</div>'+
             '</div>';
           }).join("")+
@@ -1704,10 +1943,19 @@ function renderTodayCard(){
 
   if(f.status==="normal"){
     var todayIdx=f.todayIdx;
-    el.querySelectorAll(".refs-list .ref-item").forEach(function(item){
-      item.addEventListener("click", function(){
+    el.querySelectorAll(".refs-list .ref-main").forEach(function(row){
+      row.addEventListener("click", function(){
         toggleRef(planId, todayIdx, parseInt(this.getAttribute("data-ref"),10));
       });
+    });
+    el.querySelectorAll(".refs-list .chapter-chip").forEach(function(chip){
+      chip.addEventListener("click", function(e){
+        e.stopPropagation();
+        toggleChapter(planId, todayIdx, parseInt(this.getAttribute("data-ref"),10), parseInt(this.getAttribute("data-ch"),10));
+      });
+    });
+    el.querySelectorAll(".refs-list .ref-open").forEach(function(a){
+      a.addEventListener("click", function(e){ e.stopPropagation(); });
     });
     var markAllBtn=document.getElementById("markAllBtn");
     if(markAllBtn){
@@ -1716,19 +1964,7 @@ function renderTodayCard(){
         bulkToggleDay(planId, todayIdx);
       });
     }
-    el.querySelectorAll(".backlog-section .agenda-ref-row").forEach(function(row){
-      row.addEventListener("click", function(){
-        toggleRef(planId, parseInt(this.getAttribute("data-day"),10), parseInt(this.getAttribute("data-ref"),10));
-      });
-    });
-    el.querySelectorAll(".backlog-section .agenda-day-progress").forEach(function(badge){
-      badge.addEventListener("click", function(){
-        bulkToggleDay(planId, parseInt(this.parentElement.getAttribute("data-day"),10));
-      });
-    });
-    el.querySelectorAll(".ref-open").forEach(function(a){
-      a.addEventListener("click", function(e){ e.stopPropagation(); });
-    });
+    bindAgendaRefEvents(el.querySelector(".backlog-section"), planId);
   }
 }
 
@@ -1843,7 +2079,6 @@ function renderAgenda(){
       var dayNum=idx+1;
       var d2=dates[idx];
       var refs=plan.days[idx];
-      var done=doneRefsForDay(planId,dayNum);
       var dCount=doneRefCount(planId,dayNum);
       html += '<div class="agenda-day">'+
         '<div class="agenda-day-head" data-day="'+dayNum+'">'+
@@ -1851,15 +2086,7 @@ function renderAgenda(){
           '<span class="agenda-day-progress'+(dCount===refs.length?" done":"")+'">'+dCount+' / '+refs.length+'</span>'+
         '</div>'+
         '<div class="agenda-refrows">'+
-          refs.map(function(r,ri){
-            var isDone=!!done[ri];
-            var url=passageUrl(r);
-            return '<div class="agenda-ref-row'+(isDone?" done":"")+'" data-day="'+dayNum+'" data-ref="'+ri+'">'+
-              '<span class="agenda-check">'+iconSvg("ic-check")+'</span>'+
-              '<span class="agenda-ref-text">'+r+'</span>'+
-              (url ? '<a class="ref-open" href="'+url+'" target="_blank" rel="noopener" title="新改訳2017で読む">'+iconSvg("ic-external")+'</a>' : '')+
-            '</div>';
-          }).join("")+
+          refs.map(function(r,ri){ return renderAgendaRefRowHtml(planId,dayNum,ri,r); }).join("")+
         '</div>'+
       '</div>';
     }
@@ -1867,19 +2094,7 @@ function renderAgenda(){
   }
   el.innerHTML=html;
 
-  el.querySelectorAll(".agenda-ref-row").forEach(function(row){
-    row.addEventListener("click", function(){
-      toggleRef(planId, parseInt(this.getAttribute("data-day"),10), parseInt(this.getAttribute("data-ref"),10));
-    });
-  });
-  el.querySelectorAll(".ref-open").forEach(function(a){
-    a.addEventListener("click", function(e){ e.stopPropagation(); });
-  });
-  el.querySelectorAll(".agenda-day-progress").forEach(function(badge){
-    badge.addEventListener("click", function(){
-      bulkToggleDay(planId, parseInt(this.parentElement.getAttribute("data-day"),10));
-    });
-  });
+  bindAgendaRefEvents(el, planId);
 }
 
 /* ============================== RESET ============================== */
