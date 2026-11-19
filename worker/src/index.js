@@ -15,6 +15,7 @@ import {
 } from "./lib/crypto.js";
 import { buildTestNotificationPayload, sendWebPush } from "./lib/push.js";
 import { runScheduledNotifications } from "./lib/scheduler.js";
+import { handleBackupRoute } from "./lib/backup.js";
 
 function isAllowedOrigin(origin, env) {
   if (!origin) return false;
@@ -30,7 +31,7 @@ function isAllowedOrigin(origin, env) {
 function corsHeaders(request, env) {
   const origin = request.headers.get("Origin");
   const headers = {
-    "Access-Control-Allow-Methods": "GET, POST, PATCH, DELETE, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
     "Access-Control-Max-Age": "86400",
     Vary: "Origin",
@@ -248,6 +249,17 @@ export async function handleRequest(request, env, { fetchImpl = fetch } = {}) {
         },
         201
       );
+    }
+
+    // クラウドバックアップ＆メールOTP認証・ライセンス確認エンドポイント
+    const backupResponse = await handleBackupRoute(request, env, pathname, method, {
+      jsonResponse,
+      extractBearerToken,
+      readJsonBody,
+      fetchImpl,
+    });
+    if (backupResponse) {
+      return backupResponse;
     }
 
     // 以下はすべて端末認証が必須

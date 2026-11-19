@@ -31,24 +31,30 @@ Antigravity
 - 複雑な聖書箇所（章またぎ）で外部リンク（prs.app）が最初の章のみを開く仕様
 
 ## Tests
-- Worker 自動テスト（`cd worker && npm test`）: 全4スイート合格
-- Wrangler ローカル / リモート D1 マイグレーション（`0001_init.sql`）: 成功
-- Cloudflare Worker 本番 `/api/health`, `/api/vapid-public-key`, CORS プリフライト疎通確認: 合格
-- `index.html` `<script>` 構文チェック・`sw.js` 構文チェック・`manifest.json` / `icon-180.png` (180x180 PNG) 検証: すべて合格
+- Worker 自動テスト（`cd worker && npm test`）: 通知4スイート＋クラウドバックアップ・OTP認証・買い切り／教会ライセンス4スイート（計8スイート）すべて合格
+- Wrangler ローカル D1 マイグレーション（`0001_init.sql`, `0002_cloud_backup.sql`）および `wrangler deploy --dry-run`: 成功
+- `index.html` Node VM 統合検証（構文チェック・全66巻メタデータ・節目達成カードCanvas生成・今日の一言メモ保存／削除・`mergeAppStates` 部分章マージ＆自動昇格・教会専用スタートリンク `?church=...&invite=...`・セーフエリア／下部ピルバー保持確認）: すべて合格
 
 ## Important Decisions
 - 通知枠は固定カラム・固定配列にせず、D1 の `notification_slots` テーブルで1枠1レコードの動的管理とし、0件〜自由増減・時刻順自動整理を採用
-- フロントエンドは既存の Vercel URL（`https://seisho-tsudoku-app.vercel.app/`）を維持し、通知バックエンドのみ Cloudflare Workers + D1 を追加
-- 既存の通読進捗は引き続き `localStorage`（`seisho-tsudoku-niwa-v1`）のみで管理し、完了状態のサーバー連携・通読データ全体のクラウド同期は行わない（通知設定認証のみ別キー `seisho-tsudoku-notif-v1` に保存）
-- 既存のセーフエリア（`env(safe-area-inset-top)`）および下部浮遊ピルバー（`.bottom-nav`）は一切変更しない
+- フロントエンドは既存の Vercel URL（`https://seisho-tsudoku-app.vercel.app/`）を維持し、通知・自動クラウドバックアップ・ライセンス認証 API を Cloudflare Workers + D1 で提供
+- **節目ごとの「和紙調・達成カード画像」（Phase 1）**：連続日数・1巻読破・レベルアップ・プラン完走時に 1080×1080 PNG カード（和紙／夜庭テーマ）を Canvas 生成し、Web Share API（LINE／Instagram等）や画像保存に対応。「庭の成長」からもいつでも生成可能。教会名が設定されている場合はカード下部に教会名クレジットを自動印字
+- **「今日の一言メモ」＋「自動クラウドバックアップ」＋「買い切り／教会ライセンス」（Phase 2）**：
+  - 今日の通読カード内に最大500文字の一言メモ欄と「過去のメモ一覧」モーダルを追加（`state.notes`）
+  - パスワード不要の6桁メール OTP 認証（Resend または Google Apps Script Gmail 中継の両対応）と D1 `user_backups` による自動バックアップ・3択マージ復元（`mergeAppStates`）を実装
+  - 一人運営で手間ゼロの有料化として、`invite_codes` テーブルによる **個人買い切り解放コード** と **教会ライセンス（共通コード＋教会名入り専用スタートリンク `?church=教会名&invite=コード`）** に対応。一度登録したメールアドレスは機種変更時にコード再入力不要で復元可能。`npm run license:create` で即時発行可能
+- 既存のセーフエリア（`env(safe-area-inset-top)`）、下部浮遊ピルバー（`.bottom-nav`）、手動の「引き継ぎコード」機能は一切壊さず維持
 
 ## Files Changed
-- `index.html` (局所編集：manifest リンク・通知設定ボタン＆モーダル・iPhone 専用 Push 設定ロジック追加)
-- `manifest.json` (新規作成)
-- `sw.js` (新規作成)
-- `icon-180.png` (新規作成)
-- `.gitignore` / `.vercelignore` (更新：`worker/` およびローカル設定・秘密情報の除外)
-- `worker/` 配下一式 (新規作成：Cloudflare Worker・D1 マイグレーション・VAPID セットアップスクリプト・テスト)
+- `index.html` (局所編集：和紙調・達成カード生成モーダル、今日の一言メモ＆履歴モーダル、自動クラウドバックアップ＆解放コード／教会専用リンク対応)
+- `worker/migrations/0002_cloud_backup.sql` (新規作成：`invite_codes`, `users`, `auth_codes`, `user_sessions`, `user_backups` テーブル定義＆初期シード)
+- `worker/src/lib/mailer.js` (新規作成：Resend / GAS Gmail 中継デュアルアダプタ)
+- `worker/src/lib/backup.js` (新規作成：6桁メール OTP 認証、買い切り／教会ライセンス検証、クラウドバックアップ CRUD)
+- `worker/src/index.js` (更新：CORS `PUT` 許可および `/api/auth/*`, `/api/backup`, `/api/license/check` ルーティング追加)
+- `worker/scripts/gas-mail-relay.gs` (新規作成：Google Apps Script メール中継スクリプト)
+- `worker/scripts/manage-license.mjs` / `worker/package.json` (新規作成・更新：買い切りコード・教会ライセンス＆専用スタートリンク発行 CLI)
+- `worker/.dev.vars.example` (更新：メール設定の環境変数項目名追記)
+- `worker/test/backup.test.mjs` (新規作成：OTP・レート制限・ライセンス検証・バックアップ統合テスト)
 - `docs/SESSION.md` (更新)
 
 ## Notes for Next Agent

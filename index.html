@@ -284,6 +284,136 @@ button{font-family:inherit;}
 .notif-cta-wrap{display:flex;flex-direction:column;gap:10px;margin-top:12px;}
 .btn-sm{padding:8px 14px;font-size:.82rem;min-height:40px;}
 
+/* ---------- Share Milestone Card ---------- */
+.growth-share-row{margin-top:14px;display:flex;justify-content:flex-end;}
+.modal.modal-card{
+  max-width:440px;max-height:90vh;display:flex;flex-direction:column;padding:20px;
+}
+.modal.modal-card h3{margin-bottom:4px;}
+.modal.modal-card p{margin-bottom:10px;font-size:.82rem;}
+.card-modal-scroll{
+  overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;min-height:0;
+  padding-right:2px;margin-bottom:12px;
+}
+.card-chip-group{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+.card-pill{
+  display:inline-flex;align-items:center;gap:4px;min-height:34px;padding:5px 12px;
+  border-radius:999px;border:1px solid var(--line-strong);background:var(--paper-sunken);
+  color:var(--ink-soft);font-family:inherit;font-size:.76rem;font-weight:600;cursor:pointer;
+  transition:background .12s,border-color .12s,color .12s;
+}
+.card-pill.active{background:var(--indigo);border-color:var(--indigo);color:var(--paper-raised);}
+.card-preview-wrap{
+  width:100%;aspect-ratio:1/1;border-radius:12px;overflow:hidden;
+  border:1px solid var(--line);background:var(--paper-sunken);
+  margin:8px 0 12px;box-shadow:var(--shadow);
+  display:flex;align-items:center;justify-content:center;
+}
+.card-preview-img{width:100%;height:100%;display:block;object-fit:contain;}
+.card-share-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+.card-share-actions .btn{flex:1;justify-content:center;min-height:44px;}
+.card-hint{font-size:.74rem;color:var(--ink-faint);margin-top:8px;text-align:center;}
+
+/* ---------- Today's Memo & Memo History ---------- */
+.today-memo-box{
+  margin-top:16px;padding:12px 14px;border-radius:var(--radius-sm);
+  background:var(--bg-sunken);border:1px solid var(--line);
+}
+.today-memo-head{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;
+}
+.today-memo-label{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.82rem;font-weight:700;color:var(--ink-soft);
+}
+.today-memo-label .icon{width:15px;height:15px;color:var(--accent);}
+.today-memo-input{
+  width:100%;box-sizing:border-box;border-radius:8px;
+  border:1px solid var(--line-strong);background:var(--paper);color:var(--ink);
+  font-family:var(--font-sans);font-size:16px;line-height:1.55;
+  padding:9px 11px;resize:vertical;min-height:60px;
+}
+.today-memo-input:focus{outline:2px solid var(--accent);border-color:transparent;}
+.today-memo-foot{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;flex-wrap:wrap;
+}
+.today-memo-status{font-size:.75rem;color:var(--ink-faint);}
+.today-memo-status.saved{color:var(--accent);font-weight:600;}
+.memo-history-scroll{
+  max-height:58vh;overflow-y:auto;margin:10px 0 14px;padding-right:2px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.memo-history-item{
+  padding:12px 14px;border-radius:var(--radius-sm);
+  background:var(--bg-sunken);border:1px solid var(--line);
+}
+.memo-history-head{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;
+}
+.memo-history-date{font-size:.78rem;font-weight:700;color:var(--accent);}
+.memo-history-del{
+  border:0;background:transparent;color:var(--ink-faint);font-size:.74rem;
+  cursor:pointer;padding:2px 6px;border-radius:6px;
+}
+.memo-history-del:hover{color:var(--warn);background:var(--warn-soft);}
+.memo-history-text{
+  font-size:.88rem;line-height:1.6;color:var(--ink);white-space:pre-wrap;word-break:break-word;margin:0;
+}
+.memo-history-empty{
+  padding:28px 14px;text-align:center;color:var(--ink-faint);font-size:.86rem;
+}
+
+/* ---------- Cloud Backup & License Modal ---------- */
+.settings-cloud-card{
+  padding:11px 12px;border-radius:10px;margin-bottom:10px;
+  background:linear-gradient(135deg, var(--accent-soft), var(--paper));
+  border:1px solid var(--line-strong);
+  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+}
+.settings-cloud-info{display:flex;flex-direction:column;gap:2px;}
+.settings-cloud-title{font-size:.84rem;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:6px;}
+.settings-cloud-sub{font-size:.74rem;color:var(--ink-soft);}
+.cloud-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 8px;border-radius:999px;font-size:.7rem;font-weight:700;
+  background:var(--bg-sunken);color:var(--ink-soft);border:1px solid var(--line);
+}
+.cloud-badge.active{background:var(--accent-soft);color:var(--accent);border-color:var(--accent);}
+.cloud-church-banner{
+  padding:9px 12px;border-radius:8px;margin-bottom:12px;
+  background:var(--gold-soft);border:1px solid var(--gold);
+  font-size:.8rem;color:var(--ink);font-weight:600;
+}
+.cloud-field{margin-bottom:12px;}
+.cloud-field label{
+  display:block;font-size:.78rem;font-weight:700;color:var(--ink-soft);margin-bottom:4px;
+}
+.cloud-input{
+  width:100%;box-sizing:border-box;padding:10px 12px;border-radius:8px;
+  border:1px solid var(--line-strong);background:var(--paper);color:var(--ink);
+  font-family:var(--font-sans);font-size:16px;
+}
+.cloud-input.code-otp{
+  text-align:center;letter-spacing:.28em;font-weight:700;font-size:20px;
+}
+.cloud-help{font-size:.74rem;color:var(--ink-faint);margin-top:4px;line-height:1.5;}
+.cloud-status-panel{
+  padding:12px;border-radius:10px;background:var(--bg-sunken);border:1px solid var(--line);
+  margin-bottom:12px;font-size:.82rem;line-height:1.6;
+}
+.cloud-conflict-box{
+  padding:12px;border-radius:10px;background:var(--warn-soft);border:1px solid var(--warn);
+  margin-top:10px;
+}
+.cloud-conflict-actions{
+  display:flex;flex-direction:column;gap:8px;margin-top:10px;
+}
+.cloud-msg{
+  font-size:.8rem;padding:8px 10px;border-radius:8px;margin-bottom:10px;
+}
+.cloud-msg.error{background:var(--warn-soft);color:var(--warn);}
+.cloud-msg.ok{background:var(--accent-soft);color:var(--accent);}
+
 /* ---------- Onboarding ---------- */
 .hero-scene{
   width:100%;height:auto;display:block;border-radius:var(--radius);
@@ -633,6 +763,7 @@ footer.appfoot{text-align:center;color:var(--ink-faint);font-size:.72rem;padding
       <symbol id="ic-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4L10 14"/><path d="M17 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h6"/></symbol>
       <symbol id="ic-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/><path d="M10 11v6M14 11v6"/></symbol>
       <symbol id="ic-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></symbol>
+      <symbol id="ic-share" viewBox="0 0 24 24"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></symbol>
     </defs>
   </svg>
 
@@ -641,7 +772,7 @@ footer.appfoot{text-align:center;color:var(--ink-faint);font-size:.72rem;padding
       <span class="brand-mark"><svg class="icon"><use href="#ic-leaf"/></svg></span>
       <div class="brand-text">
         <h1>みことばの庭</h1>
-        <p>聖書通読トラッカー</p>
+        <p id="brandSubText">聖書通読トラッカー</p>
       </div>
     </div>
     <div class="topbar-actions">
@@ -704,6 +835,16 @@ footer.appfoot{text-align:center;color:var(--ink-faint);font-size:.72rem;padding
     <div class="settings-plan-list" id="settingsPlanList"></div>
     <div class="settings-backup-box">
       <div class="settings-backup-title">データのバックアップ・引き継ぎ</div>
+      <div class="settings-cloud-card">
+        <div class="settings-cloud-info">
+          <div class="settings-cloud-title">
+            <span>自動クラウドバックアップ</span>
+            <span class="cloud-badge" id="settingsCloudBadge">未設定</span>
+          </div>
+          <div class="settings-cloud-sub" id="settingsCloudSub">メール認証で通読記録と一言メモを自動保存</div>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm" id="openCloudBackupBtn">設定・復元</button>
+      </div>
       <div class="settings-backup-buttons">
         <button type="button" class="btn-sub" id="exportDataBtn"><svg class="icon"><use href="#ic-feather"/></svg>引き継ぎコードをコピー</button>
         <button type="button" class="btn-sub" id="importDataBtn"><svg class="icon"><use href="#ic-book"/></svg>コードを読み込む</button>
@@ -737,6 +878,50 @@ footer.appfoot{text-align:center;color:var(--ink-faint);font-size:.72rem;padding
     <div class="notif-scroll" id="notifBody"></div>
     <div class="modal-actions">
       <button type="button" class="btn btn-ghost" id="notifModalClose">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="shareCardBackdrop" hidden>
+  <div class="modal modal-card" role="dialog" aria-modal="true" aria-labelledby="shareCardHeading">
+    <h3 id="shareCardHeading">達成カード</h3>
+    <p id="shareCardSub">これまでの歩みを和紙調の画像にして、LINEやSNSで分かち合えます。</p>
+    <div class="card-modal-scroll">
+      <div class="card-chip-group" id="shareCardPresetRow"></div>
+      <div class="card-chip-group" id="shareCardThemeRow"></div>
+      <div class="card-preview-wrap">
+        <img id="shareCardPreview" class="card-preview-img" alt="達成カードプレビュー">
+      </div>
+      <div class="card-share-actions">
+        <button type="button" class="btn btn-primary" id="shareCardNativeBtn"><svg class="icon"><use href="#ic-share"/></svg>シェア / 保存する</button>
+        <button type="button" class="btn btn-ghost" id="shareCardDownloadBtn">PNGをダウンロード</button>
+      </div>
+      <div class="card-hint">※ 画像を長押しして「写真に保存」することもできます</div>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" id="shareCardCloseBtn">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="memoHistoryBackdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="memoHistoryTitle">
+    <h3 id="memoHistoryTitle">これまでの黙想・一言メモ</h3>
+    <p>日々の通読で心に残ったみことばや祈りの記録です。</p>
+    <div class="memo-history-scroll" id="memoHistoryList"></div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" id="memoHistoryCloseBtn">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="cloudBackupBackdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="cloudBackupTitle">
+    <h3 id="cloudBackupTitle">自動クラウドバックアップ</h3>
+    <p id="cloudBackupDesc">パスワード不要のメール認証で、機種変更しても通読記録と一言メモを自動で引き継げます。</p>
+    <div id="cloudBackupBody"></div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" id="cloudBackupCloseBtn">閉じる</button>
     </div>
   </div>
 </div>
@@ -798,6 +983,17 @@ var BOOK_CODE_MAP={
 "ユダ":"jud","ユダ書":"jud",
 "黙示録":"rev"
 };
+
+var BOOK_META_BY_CODE = (function(){
+  var map = {};
+  for(var i=0;i<FULL_BIBLE.length;i++){
+    var name = FULL_BIBLE[i][0], count = FULL_BIBLE[i][1];
+    var code = BOOK_CODE_MAP[name.replace(/\s+/g,"")];
+    if(code) map[code] = { code: code, name: name, totalChapters: count };
+  }
+  return map;
+})();
+var STREAK_MILESTONES = [3, 7, 14, 21, 30, 50, 75, 100, 150, 200, 300, 365];
 
 function parseRefChapters(ref){
   var m = String(ref || "").match(/^(.+?)\s+([\d,\s\-]+)(章|篇)$/);
@@ -963,6 +1159,28 @@ function normalizeState(s){
   s.plans = s.plans || {};
   s.bestStreakEver = s.bestStreakEver || 0;
   s.activity = s.activity || {};
+  s.celebrated = (s.celebrated && typeof s.celebrated === "object") ? s.celebrated : {};
+  var rawNotes = (s.notes && typeof s.notes === "object" && !Array.isArray(s.notes)) ? s.notes : {};
+  var cleanNotes = {};
+  for(var nk in rawNotes){
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(nk)) continue;
+    var nv = rawNotes[nk];
+    if(typeof nv === "string"){
+      var tStr = nv.trim().slice(0, 500);
+      if(tStr) cleanNotes[nk] = { text: tStr, updatedAt: nk + "T00:00:00.000Z" };
+    } else if(nv && typeof nv === "object" && typeof nv.text === "string"){
+      var tObj = nv.text.trim().slice(0, 500);
+      if(tObj){
+        cleanNotes[nk] = {
+          text: tObj,
+          updatedAt: (typeof nv.updatedAt === "string" && nv.updatedAt) ? nv.updatedAt : (nk + "T00:00:00.000Z")
+        };
+      }
+    }
+  }
+  s.notes = cleanNotes;
+  s.churchName = (typeof s.churchName === "string" && s.churchName.trim()) ? s.churchName.trim().slice(0, 80) : null;
+  s.inviteCode = (typeof s.inviteCode === "string" && s.inviteCode.trim()) ? s.inviteCode.trim().toUpperCase().slice(0, 64) : null;
   for(var planId in s.plans){
     var ps=s.plans[planId], plan=PLAN_DEFS[planId];
     if(!ps || !plan) continue;
@@ -1011,6 +1229,7 @@ function normalizeState(s){
 var state = loadState();
 function saveState(){
   try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+  if(typeof scheduleCloudAutoSave === "function") scheduleCloudAutoSave();
 }
 
 /* ============================== DATE HELPERS ============================== */
@@ -1200,22 +1419,156 @@ function markActivity(){
   state.bestStreakEver=Math.max(state.bestStreakEver, currentActivityStreak(), bestActivityStreak());
 }
 
-function afterProgressChange(dayJustCompleted, prevXP){
+function completedBooksForPlan(planId){
+  var plan = PLAN_DEFS[planId], ps = state.plans[planId];
+  if(!plan || !ps) return [];
+  var readChaptersByCode = {};
+  var orderSeen = [];
+  for(var d=0; d<plan.days.length; d++){
+    var dayIndex = d + 1;
+    var refs = plan.days[d];
+    for(var ri=0; ri<refs.length; ri++){
+      var parsed = parseRefChapters(refs[ri]);
+      var code = BOOK_CODE_MAP[parsed.book.replace(/\s+/g,"")];
+      if(!code || !BOOK_META_BY_CODE[code]) continue;
+      if(!readChaptersByCode[code]){
+        readChaptersByCode[code] = {};
+        orderSeen.push(code);
+      }
+      for(var ci=0; ci<parsed.chapters.length; ci++){
+        if(isChapterDone(planId, dayIndex, ri, ci)){
+          readChaptersByCode[code][parsed.chapters[ci]] = true;
+        }
+      }
+    }
+  }
+  var doneBooks = [];
+  for(var j=0; j<orderSeen.length; j++){
+    var c = orderSeen[j];
+    var meta = BOOK_META_BY_CODE[c];
+    if(Object.keys(readChaptersByCode[c]).length >= meta.totalChapters){
+      doneBooks.push(meta);
+    }
+  }
+  return doneBooks;
+}
+
+function captureMilestoneSnapshot(planId){
+  var xp = globalXP();
+  var lv = levelFor(xp);
+  var streak = currentActivityStreak();
+  var plan = PLAN_DEFS[planId];
+  var prevPlanDone = plan ? (planCompletedCount(planId) >= plan.days.length) : false;
+  var books = completedBooksForPlan(planId);
+  var prevBookCodes = {};
+  for(var i=0;i<books.length;i++){ prevBookCodes[books[i].code] = true; }
+  return {
+    prevXP: xp,
+    prevLv: lv,
+    prevStreak: streak,
+    prevPlanDone: prevPlanDone,
+    prevBookCodes: prevBookCodes
+  };
+}
+
+function detectNewMilestone(planId, snap){
+  if(!snap) return null;
+  state.celebrated = state.celebrated || {};
+  var candidates = [];
+  var plan = PLAN_DEFS[planId];
+
+  if(plan && !snap.prevPlanDone && planCompletedCount(planId) >= plan.days.length){
+    var pKey = "plan:" + planId;
+    if(!state.celebrated[pKey]){
+      candidates.push({
+        key: pKey, type: "plan",
+        label: "プラン完走", badge: "通読完走",
+        headline: "「" + plan.title + "」完走",
+        subline: plan.days.length + "日間の通読を達成しました",
+        shareText: "聖書通読プラン「" + plan.title + "」を完走しました！ #みことばの庭"
+      });
+    }
+  }
+
+  var nowBooks = completedBooksForPlan(planId);
+  for(var i=0;i<nowBooks.length;i++){
+    var b = nowBooks[i];
+    if(!snap.prevBookCodes[b.code]){
+      var bKey = "book:" + planId + ":" + b.code;
+      if(!state.celebrated[bKey]){
+        candidates.push({
+          key: bKey, type: "book",
+          label: b.name + " 読破", badge: "1巻読破",
+          headline: "「" + b.name + "」読破",
+          subline: "全" + b.totalChapters + counterFor(b.name) + "を読み終えました",
+          shareText: "聖書の「" + b.name + "」（全" + b.totalChapters + counterFor(b.name) + "）を読み終えました！ #みことばの庭"
+        });
+      }
+    }
+  }
+
+  var nowStreak = currentActivityStreak();
+  if(nowStreak > snap.prevStreak){
+    for(var si=STREAK_MILESTONES.length-1; si>=0; si--){
+      var sm = STREAK_MILESTONES[si];
+      if(snap.prevStreak < sm && nowStreak >= sm){
+        var sKey = "streak:" + sm;
+        if(!state.celebrated[sKey]){
+          candidates.push({
+            key: sKey, type: "streak",
+            label: sm + "日連続", badge: "連続記録",
+            headline: "連続 " + sm + "日達成",
+            subline: "毎日の積み重ねが実を結んでいます",
+            shareText: "聖書通読を連続" + sm + "日達成しました！ #みことばの庭"
+          });
+        }
+      }
+    }
+  }
+
+  var nowLv = levelFor(globalXP());
+  if(nowLv.lv > snap.prevLv.lv){
+    var lKey = "level:" + nowLv.lv;
+    if(!state.celebrated[lKey]){
+      candidates.push({
+        key: lKey, type: "level",
+        label: "Lv." + nowLv.lv + " " + nowLv.title, badge: "庭の成長",
+        headline: "Lv." + nowLv.lv + "「" + nowLv.title + "」",
+        subline: "みことばの庭が大きく育ちました",
+        shareText: "みことばの庭が Lv." + nowLv.lv + "「" + nowLv.title + "」に成長しました！ #みことばの庭"
+      });
+    }
+  }
+
+  if(candidates.length === 0) return null;
+  var today = todayStr();
+  for(var ci=0; ci<candidates.length; ci++){
+    state.celebrated[candidates[ci].key] = today;
+  }
+  return candidates[0];
+}
+
+function afterProgressChange(planId, dayJustCompleted, snap){
+  var lvAfter = levelFor(globalXP());
+  var leveledUp = snap && (lvAfter.lv > snap.prevLv.lv);
+  var milestone = snap ? detectNewMilestone(planId, snap) : null;
   saveState();
   renderDashboard();
-  if(dayJustCompleted){
+  if(dayJustCompleted || milestone){
     burstConfetti();
-    var lvBefore=levelFor(prevXP), lvAfter=levelFor(globalXP());
-    if(lvAfter.lv>lvBefore.lv){
-      showToast("レベルアップ！「"+lvAfter.title+"」になりました", true);
-    }
+  }
+  if(leveledUp){
+    showToast("レベルアップ！「"+lvAfter.title+"」になりました", true);
+  }
+  if(milestone && typeof openShareCardModal === "function"){
+    setTimeout(function(){ openShareCardModal(milestone); }, 280);
   }
 }
 
 function toggleRef(planId, dayIndex, refIndex){
   var ps=state.plans[planId];
   if(!ps) return;
-  var prevXP=globalXP();
+  var snap=captureMilestoneSnapshot(planId);
   var wasDayDone = isDayDone(planId, dayIndex);
   var wasRefDone = isRefDone(planId, dayIndex, refIndex);
   ps.completed[dayIndex] = ps.completed[dayIndex] || {};
@@ -1229,7 +1582,7 @@ function toggleRef(planId, dayIndex, refIndex){
     markActivity();
   }
   var nowDayDone = isDayDone(planId, dayIndex);
-  afterProgressChange(!wasDayDone && nowDayDone, prevXP);
+  afterProgressChange(planId, !wasDayDone && nowDayDone, snap);
 }
 
 function toggleChapter(planId, dayIndex, refIndex, chIndex){
@@ -1241,7 +1594,7 @@ function toggleChapter(planId, dayIndex, refIndex, chIndex){
     toggleRef(planId, dayIndex, refIndex);
     return;
   }
-  var prevXP=globalXP();
+  var snap=captureMilestoneSnapshot(planId);
   var wasDayDone = isDayDone(planId, dayIndex);
   ps.completed[dayIndex] = ps.completed[dayIndex] || {};
   var key=String(refIndex);
@@ -1283,13 +1636,13 @@ function toggleChapter(planId, dayIndex, refIndex, chIndex){
 
   if(Object.keys(ps.completed[dayIndex]).length===0) delete ps.completed[dayIndex];
   var nowDayDone = isDayDone(planId, dayIndex);
-  afterProgressChange(!wasDayDone && nowDayDone, prevXP);
+  afterProgressChange(planId, !wasDayDone && nowDayDone, snap);
 }
 
 function bulkToggleDay(planId, dayIndex){
   var ps=state.plans[planId];
   if(!ps) return;
-  var prevXP=globalXP();
+  var snap=captureMilestoneSnapshot(planId);
   var wasDayDone = isDayDone(planId, dayIndex);
   var refs=refsForDay(planId, dayIndex);
   if(wasDayDone){
@@ -1302,7 +1655,7 @@ function bulkToggleDay(planId, dayIndex){
     markActivity();
   }
   var nowDayDone = isDayDone(planId, dayIndex);
-  afterProgressChange(!wasDayDone && nowDayDone, prevXP);
+  afterProgressChange(planId, !wasDayDone && nowDayDone, snap);
 }
 
 /* ============================== RENDER: TOP NAV ============================== */
@@ -1873,6 +2226,32 @@ function renderTodayCard(){
 
   var existingBacklog = el.querySelector(".backlog-section");
   var backlogWasOpen = existingBacklog ? existingBacklog.open : false;
+  var existingMemoInput = document.getElementById("todayMemoInput");
+  var draftMemoDate = existingMemoInput ? existingMemoInput.getAttribute("data-date") : null;
+  var draftMemoText = existingMemoInput ? existingMemoInput.value : null;
+
+  var memoDateKey = todayStr();
+  if(f.status==="normal" && f.todayIdx && dates[f.todayIdx-1]){
+    memoDateKey = isoDate(dates[f.todayIdx-1]);
+  }
+  var savedNoteObj = (state.notes && state.notes[memoDateKey]) ? state.notes[memoDateKey] : null;
+  var memoTextToShow = (draftMemoDate === memoDateKey && draftMemoText !== null)
+    ? draftMemoText
+    : (savedNoteObj ? savedNoteObj.text : "");
+  var memoCount = Object.keys(state.notes || {}).length;
+  var isMemoToday = (memoDateKey === todayStr());
+  var memoTitleLabel = isMemoToday ? "今日の一言メモ" : (formatDateJp(parseIsoDate(memoDateKey)) + "の一言メモ");
+  var memoBoxHtml = '<div class="today-memo-box">'+
+    '<div class="today-memo-head">'+
+      '<span class="today-memo-label">'+iconSvg("ic-feather")+memoTitleLabel+'</span>'+
+      '<button type="button" class="btn-text" id="openMemoHistoryBtn">過去のメモ（'+memoCount+'件）</button>'+
+    '</div>'+
+    '<textarea id="todayMemoInput" class="today-memo-input" rows="2" maxlength="500" data-date="'+memoDateKey+'" placeholder="心に残ったみことばや感謝・祈りを一行でも…">'+escapeHtml(memoTextToShow)+'</textarea>'+
+    '<div class="today-memo-foot">'+
+      '<span class="today-memo-status'+(savedNoteObj ? ' saved' : '')+'" id="todayMemoStatus">'+(savedNoteObj ? '保存済み' : '最大500文字・自動バックアップ対象')+'</span>'+
+      '<button type="button" class="btn-sub" id="saveTodayMemoBtn">メモを保存</button>'+
+    '</div>'+
+  '</div>';
 
   var body=verseCallout;
   if(f.status==="future"){
@@ -1884,6 +2263,7 @@ function renderTodayCard(){
     body += eyebrow+
       '<h2>すべての予定日を読み終えました</h2>'+
       '<p class="all-caught-up">お疲れさまでした。下の一覧からいつでも読み返せます。</p>'+
+      memoBoxHtml+
       quoteLine;
   } else {
     var idx=f.todayIdx;
@@ -1937,9 +2317,31 @@ function renderTodayCard(){
         '</div>'+
       '</details>';
     }
+    body += memoBoxHtml;
     body += quoteLine;
   }
   el.innerHTML = '<div class="today-card-banner">'+planBannerSvg(planId)+'</div><div class="today-card-body">'+body+'</div>';
+
+  var memoInputEl = document.getElementById("todayMemoInput");
+  var saveMemoBtnEl = document.getElementById("saveTodayMemoBtn");
+  var openMemoHistoryBtnEl = document.getElementById("openMemoHistoryBtn");
+  if(saveMemoBtnEl && memoInputEl){
+    saveMemoBtnEl.addEventListener("click", function(){
+      saveMemoForDate(memoInputEl.getAttribute("data-date"), memoInputEl.value, false);
+    });
+    memoInputEl.addEventListener("blur", function(){
+      var dk = this.getAttribute("data-date");
+      var curSaved = (state.notes && state.notes[dk]) ? state.notes[dk].text : "";
+      if(this.value.trim() !== curSaved){
+        saveMemoForDate(dk, this.value, true);
+      }
+    });
+  }
+  if(openMemoHistoryBtnEl){
+    openMemoHistoryBtnEl.addEventListener("click", function(){
+      openMemoHistoryModal();
+    });
+  }
 
   if(f.status==="normal"){
     var todayIdx=f.todayIdx;
@@ -2002,7 +2404,14 @@ function renderGrowthPanel(){
         (info.next ? '<div class="xp-bar"><span style="width:'+Math.round(info.ratio*100)+'%"></span></div><div class="xp-line">次のレベル「'+info.next.title+'」まであと'+Math.ceil((info.next.xp-xp)/10)+'日分</div>' : '<div class="xp-line">最高レベルに到達しました</div>')+
       '</div>'+
     '</div>'+
-    '<div class="level-path">'+pathHtml+'</div>';
+    '<div class="level-path">'+pathHtml+'</div>'+
+    '<div class="growth-share-row"><button type="button" class="btn-sub" id="openGrowthCardBtn">'+iconSvg("ic-share")+'達成カードをつくる</button></div>';
+  var cardBtn = document.getElementById("openGrowthCardBtn");
+  if(cardBtn){
+    cardBtn.addEventListener("click", function(){
+      if(typeof openShareCardModal === "function") openShareCardModal(null);
+    });
+  }
 }
 
 function treeSvg(stage){
@@ -2795,8 +3204,1340 @@ document.getElementById("notifModalBackdrop").addEventListener("click", function
   if(e.target === this) closeNotifModal();
 });
 
+/* ============================== SHARE MILESTONE CARD ============================== */
+
+var shareCardState = {
+  presets: [],
+  selectedIndex: 0,
+  theme: "washi",
+  canvas: null,
+  dataUrl: ""
+};
+
+function defaultCardTheme(){
+  var attr = document.documentElement.getAttribute("data-theme");
+  if(attr === "dark") return "night";
+  if(attr === "light") return "washi";
+  if(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) return "night";
+  return "washi";
+}
+
+function buildCardPresets(planId, featuredMilestone){
+  var presets = [];
+  var seenKeys = {};
+  if(featuredMilestone){
+    presets.push(featuredMilestone);
+    if(featuredMilestone.key) seenKeys[featuredMilestone.key] = true;
+  }
+
+  var xp = globalXP();
+  var info = nextLevelInfo(xp);
+  var totalDays = totalCompletedAllPlans();
+  var streak = currentActivityStreak();
+  var plan = planId ? PLAN_DEFS[planId] : null;
+  var pct = plan ? Math.round(planRatio(planId) * 100) : 0;
+
+  presets.push({
+    key: null,
+    type: "summary",
+    label: "今の記録",
+    badge: plan ? plan.title : "みことばの庭",
+    headline: "Lv." + info.cur.lv + "「" + info.cur.title + "」",
+    subline: plan ? ("進捗 " + pct + "% ・ 通算 " + totalDays + "日") : ("通算 " + totalDays + "日の読書"),
+    shareText: "聖書通読アプリ「みことばの庭」で Lv." + info.cur.lv + "「" + info.cur.title + "」に育ちました（通算" + totalDays + "日） #みことばの庭"
+  });
+
+  if(plan && planCompletedCount(planId) >= plan.days.length){
+    var pKey = "plan:" + planId;
+    if(!seenKeys[pKey]){
+      seenKeys[pKey] = true;
+      presets.push({
+        key: pKey, type: "plan",
+        label: "プラン完走", badge: "通読完走",
+        headline: "「" + plan.title + "」完走",
+        subline: plan.days.length + "日間の通読を達成しました",
+        shareText: "聖書通読プラン「" + plan.title + "」を完走しました！ #みことばの庭"
+      });
+    }
+  }
+
+  var bestStreak = Math.max(state.bestStreakEver || 0, streak);
+  for(var si=STREAK_MILESTONES.length-1; si>=0; si--){
+    var sm = STREAK_MILESTONES[si];
+    if(bestStreak >= sm){
+      var sKey = "streak:" + sm;
+      if(!seenKeys[sKey]){
+        seenKeys[sKey] = true;
+        presets.push({
+          key: sKey, type: "streak",
+          label: sm + "日連続", badge: "連続記録",
+          headline: "連続 " + sm + "日達成",
+          subline: "毎日の積み重ねが実を結んでいます",
+          shareText: "聖書通読を連続" + sm + "日達成しました！ #みことばの庭"
+        });
+      }
+      break;
+    }
+  }
+
+  if(planId){
+    var books = completedBooksForPlan(planId);
+    var recentBooks = books.slice(-3).reverse();
+    for(var bi=0; bi<recentBooks.length; bi++){
+      var b = recentBooks[bi];
+      var bKey = "book:" + planId + ":" + b.code;
+      if(!seenKeys[bKey]){
+        seenKeys[bKey] = true;
+        presets.push({
+          key: bKey, type: "book",
+          label: b.name + " 読破", badge: "1巻読破",
+          headline: "「" + b.name + "」読破",
+          subline: "全" + b.totalChapters + counterFor(b.name) + "を読み終えました",
+          shareText: "聖書の「" + b.name + "」（全" + b.totalChapters + counterFor(b.name) + "）を読み終えました！ #みことばの庭"
+        });
+      }
+    }
+  }
+
+  return presets;
+}
+
+function drawRoundRectPath(ctx, x, y, w, h, r){
+  var rad = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + rad, y);
+  ctx.lineTo(x + w - rad, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + rad);
+  ctx.lineTo(x + w, y + h - rad);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - rad, y + h);
+  ctx.lineTo(x + rad, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - rad);
+  ctx.lineTo(x, y + rad);
+  ctx.quadraticCurveTo(x, y, x + rad, y);
+  ctx.closePath();
+}
+
+function drawCanvasEllipse(ctx, cx, cy, rx, ry, rotRad, fill){
+  ctx.save();
+  ctx.translate(cx, cy);
+  if(rotRad) ctx.rotate(rotRad);
+  ctx.beginPath();
+  ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2);
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawFourPointStar(ctx, cx, cy, size, fill){
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.beginPath();
+  ctx.moveTo(0, -size);
+  ctx.quadraticCurveTo(0, 0, size, 0);
+  ctx.quadraticCurveTo(0, 0, 0, size);
+  ctx.quadraticCurveTo(0, 0, -size, 0);
+  ctx.quadraticCurveTo(0, 0, 0, -size);
+  ctx.closePath();
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawWashiTree(ctx, cx, potTopY, stage, pal){
+  var aura = ctx.createRadialGradient(cx, potTopY - 80, 12, cx, potTopY - 80, 155);
+  aura.addColorStop(0, pal.auraInner);
+  aura.addColorStop(1, "rgba(0,0,0,0)");
+  ctx.fillStyle = aura;
+  ctx.beginPath();
+  ctx.arc(cx, potTopY - 80, 155, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Soft hill behind pot
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(cx - 170, potTopY + 34);
+  ctx.quadraticCurveTo(cx, potTopY - 6, cx + 170, potTopY + 34);
+  ctx.closePath();
+  ctx.fillStyle = pal.sageTint;
+  ctx.fill();
+  ctx.restore();
+
+  // Trunk (stage >= 2)
+  if(stage >= 2){
+    ctx.save();
+    ctx.fillStyle = pal.goldSoft;
+    drawRoundRectPath(ctx, cx - 8, potTopY - 56, 16, 58, 6);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // Pot
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(cx - 52, potTopY);
+  ctx.lineTo(cx + 52, potTopY);
+  ctx.lineTo(cx + 39, potTopY + 34);
+  ctx.quadraticCurveTo(cx, potTopY + 44, cx - 39, potTopY + 34);
+  ctx.closePath();
+  ctx.fillStyle = pal.card;
+  ctx.fill();
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = pal.lineStrong;
+  ctx.stroke();
+  ctx.restore();
+
+  // Stage 1: seed
+  drawCanvasEllipse(ctx, cx, potTopY, 44, 11, 0, pal.goldTint);
+  ctx.beginPath();
+  ctx.arc(cx, potTopY - 12, 8, 0, Math.PI * 2);
+  ctx.fillStyle = pal.sage;
+  ctx.fill();
+
+  // Stage 2: sprout
+  if(stage >= 2){
+    ctx.strokeStyle = pal.sage;
+    ctx.lineWidth = 7;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(cx, potTopY);
+    ctx.lineTo(cx, potTopY - 44);
+    ctx.stroke();
+    drawCanvasEllipse(ctx, cx - 18, potTopY - 48, 18, 10, -0.35, pal.sage);
+    drawCanvasEllipse(ctx, cx + 18, potTopY - 48, 18, 10, 0.35, pal.sage);
+  }
+
+  // Stage 3: twin leaves & stem
+  if(stage >= 3){
+    ctx.strokeStyle = pal.sage;
+    ctx.lineWidth = 9;
+    ctx.beginPath();
+    ctx.moveTo(cx, potTopY);
+    ctx.lineTo(cx, potTopY - 102);
+    ctx.stroke();
+    drawCanvasEllipse(ctx, cx - 24, potTopY - 74, 24, 13, -0.44, pal.sage);
+    drawCanvasEllipse(ctx, cx + 24, potTopY - 74, 24, 13, 0.44, pal.sage);
+    drawCanvasEllipse(ctx, cx, potTopY - 108, 20, 12, 0, pal.sage);
+  }
+
+  // Stage 4: branches
+  if(stage >= 4){
+    ctx.strokeStyle = pal.sage;
+    ctx.lineWidth = 7;
+    ctx.beginPath();
+    ctx.moveTo(cx - 34, potTopY - 32);
+    ctx.lineTo(cx, potTopY - 98);
+    ctx.moveTo(cx + 34, potTopY - 32);
+    ctx.lineTo(cx, potTopY - 98);
+    ctx.stroke();
+    drawCanvasEllipse(ctx, cx - 39, potTopY - 42, 20, 12, 0, pal.sage);
+    drawCanvasEllipse(ctx, cx + 39, potTopY - 42, 20, 12, 0, pal.sage);
+    drawCanvasEllipse(ctx, cx - 22, potTopY - 130, 26, 15, 0, pal.sage);
+    drawCanvasEllipse(ctx, cx + 22, potTopY - 130, 26, 15, 0, pal.sage);
+  }
+
+  // Stage 5 & 6: full canopy and golden fruit
+  if(stage >= 5){
+    var mainRx = stage >= 6 ? 62 : 52;
+    var mainRy = stage >= 6 ? 44 : 36;
+    var sideRx = stage >= 6 ? 34 : 30;
+    var sideRy = stage >= 6 ? 26 : 22;
+    drawCanvasEllipse(ctx, cx - 58, potTopY - 130, sideRx, sideRy, 0, pal.sage);
+    drawCanvasEllipse(ctx, cx + 58, potTopY - 130, sideRx, sideRy, 0, pal.sage);
+    drawCanvasEllipse(ctx, cx, potTopY - (stage >= 6 ? 176 : 164), mainRx, mainRy, 0, pal.sage);
+
+    var fruits = stage >= 6
+      ? [[cx - 26, potTopY - 196, 10], [cx + 22, potTopY - 205, 10], [cx, potTopY - 162, 10]]
+      : [[cx, potTopY - 184, 9]];
+    for(var f=0; f<fruits.length; f++){
+      ctx.beginPath();
+      ctx.arc(fruits[f][0], fruits[f][1], fruits[f][2], 0, Math.PI * 2);
+      ctx.fillStyle = pal.gold;
+      ctx.fill();
+    }
+  }
+}
+
+async function drawMilestoneCard(cardData, themeMode){
+  if(document.fonts && document.fonts.ready){
+    try{ await document.fonts.ready; }catch(e){}
+  }
+
+  var isNight = themeMode === "night";
+  var pal = isNight ? {
+    bg: "#171D26", card: "#212936", sunken: "#1B222D",
+    ink: "#F2ECE0", inkSoft: "#C4BCA8", inkFaint: "#8E8778",
+    indigo: "#93B2CC", gold: "#E3B354", goldSoft: "#C99433",
+    goldTint: "rgba(227,179,84,0.18)", sage: "#9BB587", sageTint: "rgba(155,181,135,0.18)",
+    line: "rgba(242,236,224,0.16)", lineStrong: "rgba(242,236,224,0.34)",
+    frameGold: "rgba(227,179,84,0.42)", frameGoldSub: "rgba(227,179,84,0.18)",
+    auraInner: "rgba(227,179,84,0.22)"
+  } : {
+    bg: "#EFE7D6", card: "#FBF8F0", sunken: "#EFE8D6",
+    ink: "#2B2A22", inkSoft: "#655F4C", inkFaint: "#8B8570",
+    indigo: "#2E4459", gold: "#AC7C24", goldSoft: "#D9AE5C",
+    goldTint: "#F3E4C2", sage: "#586B49", sageTint: "#DCE4D0",
+    line: "rgba(43,42,34,0.14)", lineStrong: "rgba(43,42,34,0.28)",
+    frameGold: "rgba(172,124,36,0.4)", frameGoldSub: "rgba(172,124,36,0.18)",
+    auraInner: "rgba(217,174,92,0.28)"
+  };
+
+  var W = 1080, H = 1080;
+  var canvas = document.createElement("canvas");
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext("2d");
+
+  // 1. Base background
+  ctx.fillStyle = pal.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Deterministic pseudo-random washi fibers & stars
+  var seed = 20261119;
+  function nextRand(){
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    return seed / 4294967296;
+  }
+  ctx.save();
+  ctx.lineWidth = 1.4;
+  for(var fi=0; fi<180; fi++){
+    var fx = nextRand() * W, fy = nextRand() * H;
+    var fang = nextRand() * Math.PI * 2, flen = 8 + nextRand() * 18;
+    ctx.strokeStyle = isNight ? "rgba(242,236,224,0.035)" : "rgba(172,124,36,0.055)";
+    ctx.beginPath();
+    ctx.moveTo(fx, fy);
+    ctx.lineTo(fx + Math.cos(fang) * flen, fy + Math.sin(fang) * flen);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // 2. Inner raised card with shadow
+  ctx.save();
+  ctx.shadowColor = isNight ? "rgba(0,0,0,0.45)" : "rgba(43,42,34,0.12)";
+  ctx.shadowBlur = 42;
+  ctx.shadowOffsetY = 14;
+  drawRoundRectPath(ctx, 56, 56, 968, 968, 32);
+  ctx.fillStyle = pal.card;
+  ctx.fill();
+  ctx.restore();
+
+  // Subtle top sky wash inside card
+  ctx.save();
+  drawRoundRectPath(ctx, 56, 56, 968, 968, 32);
+  ctx.clip();
+  var topWash = ctx.createLinearGradient(0, 56, 0, 440);
+  topWash.addColorStop(0, isNight ? "rgba(147,178,204,0.12)" : "rgba(46,68,89,0.06)");
+  topWash.addColorStop(1, "rgba(0,0,0,0)");
+  ctx.fillStyle = topWash;
+  ctx.fillRect(56, 56, 968, 390);
+  for(var si=0; si<24; si++){
+    var sx = 90 + nextRand() * 900, sy = 80 + nextRand() * 240, sr = 1.2 + nextRand() * 2.2;
+    ctx.beginPath();
+    ctx.arc(sx, sy, sr, 0, Math.PI * 2);
+    ctx.fillStyle = isNight ? "rgba(227,179,84,0.42)" : "rgba(172,124,36,0.22)";
+    ctx.fill();
+  }
+  ctx.restore();
+
+  // Double gold borders & corner stars
+  ctx.strokeStyle = pal.frameGold;
+  ctx.lineWidth = 2;
+  drawRoundRectPath(ctx, 76, 76, 928, 928, 24);
+  ctx.stroke();
+
+  ctx.strokeStyle = pal.frameGoldSub;
+  ctx.lineWidth = 1.2;
+  drawRoundRectPath(ctx, 88, 88, 904, 904, 18);
+  ctx.stroke();
+
+  var corners = [[104, 104], [976, 104], [104, 976], [976, 976]];
+  for(var ci=0; ci<corners.length; ci++){
+    drawFourPointStar(ctx, corners[ci][0], corners[ci][1], 9, pal.gold);
+  }
+
+  // 3. Header brand & date
+  ctx.save();
+  ctx.fillStyle = pal.indigo;
+  ctx.beginPath();
+  ctx.arc(146, 146, 20, 0, Math.PI * 2);
+  ctx.fill();
+  drawCanvasEllipse(ctx, 146, 146, 10, 5.5, -0.65, pal.card);
+
+  ctx.font = '600 28px "Shippori Mincho", "Hiragino Mincho ProN", serif';
+  ctx.fillStyle = pal.ink;
+  ctx.textAlign = "left";
+  ctx.textBaseline = "middle";
+  ctx.fillText("みことばの庭", 180, 147);
+
+  var now = todayDate();
+  var dateLabel = now.getFullYear() + "." + pad2(now.getMonth() + 1) + "." + pad2(now.getDate());
+  ctx.font = '500 24px "Zen Kaku Gothic New", "Hiragino Sans", sans-serif';
+  ctx.fillStyle = pal.inkFaint;
+  ctx.textAlign = "right";
+  ctx.fillText(dateLabel, 944, 147);
+  ctx.restore();
+
+  // 4. Growth Tree Illustration
+  var xp = globalXP();
+  var info = nextLevelInfo(xp);
+  var stage = Math.min(6, Math.ceil(info.cur.lv / 2));
+  drawWashiTree(ctx, 540, 396, stage, pal);
+
+  // 5. Gold pill badge
+  var badgeText = cardData.badge || "みことばの庭";
+  ctx.save();
+  ctx.font = '700 24px "Zen Kaku Gothic New", "Hiragino Sans", sans-serif';
+  var badgeW = Math.min(540, Math.max(180, ctx.measureText(badgeText).width + 64));
+  var badgeX = (W - badgeW) / 2, badgeY = 468, badgeH = 48;
+  drawRoundRectPath(ctx, badgeX, badgeY, badgeW, badgeH, 24);
+  ctx.fillStyle = pal.goldTint;
+  ctx.fill();
+  ctx.lineWidth = 1.6;
+  ctx.strokeStyle = pal.gold;
+  ctx.stroke();
+
+  ctx.fillStyle = pal.gold;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(badgeText, 540, badgeY + badgeH / 2 + 1);
+  ctx.restore();
+
+  // 6. Main Headline (auto-scaled Mincho)
+  var headline = cardData.headline || "みことばの庭";
+  ctx.save();
+  var fontSize = 72;
+  while(fontSize > 40){
+    ctx.font = '800 ' + fontSize + 'px "Shippori Mincho", "Hiragino Mincho ProN", serif';
+    if(ctx.measureText(headline).width <= 840) break;
+    fontSize -= 4;
+  }
+  ctx.fillStyle = pal.ink;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(headline, 540, 578);
+  ctx.restore();
+
+  // 7. Subline
+  var subline = cardData.subline || "";
+  if(subline){
+    ctx.save();
+    var subSize = 28;
+    while(subSize > 20){
+      ctx.font = '500 ' + subSize + 'px "Zen Kaku Gothic New", "Hiragino Sans", sans-serif';
+      if(ctx.measureText(subline).width <= 840) break;
+      subSize -= 2;
+    }
+    ctx.fillStyle = pal.inkSoft;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(subline, 540, 642);
+    ctx.restore();
+  }
+
+  // 8. 3-column Stats Strip
+  var totalDays = totalCompletedAllPlans();
+  var streak = currentActivityStreak();
+  ctx.save();
+  drawRoundRectPath(ctx, 124, 698, 832, 134, 22);
+  ctx.fillStyle = pal.sunken;
+  ctx.fill();
+  ctx.strokeStyle = pal.line;
+  ctx.lineWidth = 1.4;
+  ctx.stroke();
+
+  var stats = [
+    { label: "連続記録", val: streak + "日" },
+    { label: "通算読書", val: totalDays + "日" },
+    { label: "庭の成長", val: "Lv." + info.cur.lv + " " + info.cur.title }
+  ];
+  var colW = 832 / 3;
+  for(var k=0; k<stats.length; k++){
+    var colCx = 124 + colW * k + colW / 2;
+    if(k > 0){
+      var divX = 124 + colW * k;
+      ctx.beginPath();
+      ctx.moveTo(divX, 724);
+      ctx.lineTo(divX, 806);
+      ctx.strokeStyle = pal.line;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = '500 22px "Zen Kaku Gothic New", "Hiragino Sans", sans-serif';
+    ctx.fillStyle = pal.inkFaint;
+    ctx.fillText(stats[k].label, colCx, 742);
+
+    var valSize = k === 2 ? 28 : 34;
+    ctx.font = '700 ' + valSize + 'px "Shippori Mincho", "Hiragino Mincho ProN", serif';
+    ctx.fillStyle = k === 0 ? pal.gold : pal.ink;
+    ctx.fillText(stats[k].val, colCx, 786);
+  }
+  ctx.restore();
+
+  // 9. Quote & Footer
+  ctx.save();
+  ctx.setLineDash([7, 7]);
+  ctx.strokeStyle = pal.line;
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(148, 876);
+  ctx.lineTo(932, 876);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  var quote = QUOTES[dayOfYearSeed() % QUOTES.length] || "今日開いた一冊が、あなたの一年をつくる。";
+  ctx.font = '400 25px "Klee One", "Shippori Mincho", serif';
+  ctx.fillStyle = pal.inkSoft;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("― " + quote, 540, 922);
+
+  ctx.font = '500 20px "Zen Kaku Gothic New", "Hiragino Sans", sans-serif';
+  ctx.fillStyle = pal.inkFaint;
+  var footerLabel = state.churchName
+    ? state.churchName + " ／ 聖書通読アプリ「みことばの庭」"
+    : "聖書通読アプリ「みことばの庭」";
+  ctx.fillText(footerLabel, 540, 968);
+  ctx.restore();
+
+  return canvas;
+}
+
+async function renderShareCardCanvas(){
+  var cardData = shareCardState.presets[shareCardState.selectedIndex];
+  if(!cardData) return;
+  var canvas = await drawMilestoneCard(cardData, shareCardState.theme);
+  shareCardState.canvas = canvas;
+  try{
+    shareCardState.dataUrl = canvas.toDataURL("image/png");
+    var preview = document.getElementById("shareCardPreview");
+    if(preview) preview.src = shareCardState.dataUrl;
+  }catch(e){}
+}
+
+function renderShareCardControls(){
+  var presetRow = document.getElementById("shareCardPresetRow");
+  var themeRow = document.getElementById("shareCardThemeRow");
+  if(!presetRow || !themeRow) return;
+
+  if(shareCardState.presets.length <= 1){
+    presetRow.innerHTML = "";
+    presetRow.hidden = true;
+  } else {
+    presetRow.hidden = false;
+    presetRow.innerHTML = shareCardState.presets.map(function(p, idx){
+      return '<button type="button" class="card-pill'+(idx === shareCardState.selectedIndex ? ' active' : '')+'" data-preset-idx="'+idx+'">'+escapeHtml(p.label)+'</button>';
+    }).join("");
+    presetRow.querySelectorAll(".card-pill").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        shareCardState.selectedIndex = parseInt(this.getAttribute("data-preset-idx"), 10);
+        renderShareCardControls();
+        renderShareCardCanvas();
+      });
+    });
+  }
+
+  var themes = [{ id: "washi", label: "和紙（昼）" }, { id: "night", label: "夜空（夜）" }];
+  themeRow.innerHTML = themes.map(function(th){
+    return '<button type="button" class="card-pill'+(th.id === shareCardState.theme ? ' active' : '')+'" data-theme-id="'+th.id+'">'+th.label+'</button>';
+  }).join("");
+  themeRow.querySelectorAll(".card-pill").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      shareCardState.theme = this.getAttribute("data-theme-id");
+      renderShareCardControls();
+      renderShareCardCanvas();
+    });
+  });
+}
+
+function openShareCardModal(featuredMilestone){
+  var presets = buildCardPresets(state.active, featuredMilestone || null);
+  shareCardState.presets = presets;
+  shareCardState.selectedIndex = 0;
+  shareCardState.theme = defaultCardTheme();
+
+  var heading = document.getElementById("shareCardHeading");
+  var sub = document.getElementById("shareCardSub");
+  if(featuredMilestone){
+    heading.textContent = "おめでとうございます！";
+    sub.textContent = "ひとつの節目を迎えました。和紙調の達成カードにして分かち合えます。";
+  } else {
+    heading.textContent = "達成カード";
+    sub.textContent = "これまでの歩みを和紙調の画像にして、LINEやSNSで分かち合えます。";
+  }
+
+  renderShareCardControls();
+  document.getElementById("shareCardBackdrop").hidden = false;
+  renderShareCardCanvas();
+}
+
+function closeShareCardModal(){
+  document.getElementById("shareCardBackdrop").hidden = true;
+}
+
+function downloadShareCardPng(){
+  var dataUrl = shareCardState.dataUrl;
+  if(!dataUrl && shareCardState.canvas){
+    dataUrl = shareCardState.canvas.toDataURL("image/png");
+  }
+  if(!dataUrl) return;
+  var a = document.createElement("a");
+  a.href = dataUrl;
+  a.download = "mikotoba-niwa-" + todayStr() + ".png";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  showToast("画像を保存しました", false);
+}
+
+async function nativeShareCardPng(){
+  if(!shareCardState.canvas) return;
+  var cardData = shareCardState.presets[shareCardState.selectedIndex] || {};
+  var filename = "mikotoba-niwa-" + todayStr() + ".png";
+  try{
+    var blob = await new Promise(function(resolve){
+      shareCardState.canvas.toBlob(resolve, "image/png");
+    });
+    if(blob && typeof File === "function" && navigator.canShare){
+      var file = new File([blob], filename, { type: "image/png" });
+      if(navigator.canShare({ files: [file] })){
+        await navigator.share({
+          files: [file],
+          title: "みことばの庭",
+          text: cardData.shareText || "聖書通読の記録 #みことばの庭"
+        });
+        return;
+      }
+    }
+  }catch(e){
+    if(e && e.name === "AbortError") return;
+  }
+  downloadShareCardPng();
+}
+
+document.getElementById("shareCardCloseBtn").addEventListener("click", closeShareCardModal);
+document.getElementById("shareCardBackdrop").addEventListener("click", function(e){
+  if(e.target === this) closeShareCardModal();
+});
+document.getElementById("shareCardNativeBtn").addEventListener("click", nativeShareCardPng);
+document.getElementById("shareCardDownloadBtn").addEventListener("click", downloadShareCardPng);
+
+/* ============================== MEMO & CLOUD BACKUP / LICENSE ============================== */
+
+var CLOUD_STORAGE_KEY = "seisho-tsudoku-cloud-v1";
+var cloudAutoSaveTimer = null;
+var cloudModalState = {
+  step: "email", // "email" | "verify" | "account"
+  pendingEmail: "",
+  pendingInviteCode: "",
+  busy: false,
+  msg: null,
+  msgType: "ok",
+  conflictRemote: null
+};
+
+function escapeHtml(str){
+  return String(str == null ? "" : str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function saveMemoForDate(dateKey, rawText, silent){
+  if(!dateKey || !/^\d{4}-\d{2}-\d{2}$/.test(dateKey)) return;
+  state.notes = state.notes || {};
+  var cleaned = String(rawText || "").trim().slice(0, 500);
+  if(cleaned){
+    state.notes[dateKey] = {
+      text: cleaned,
+      updatedAt: new Date().toISOString()
+    };
+  } else {
+    delete state.notes[dateKey];
+  }
+  saveState();
+  var statusEl = document.getElementById("todayMemoStatus");
+  if(statusEl){
+    statusEl.textContent = cleaned ? "保存済み" : "最大500文字・自動バックアップ対象";
+    statusEl.classList.toggle("saved", Boolean(cleaned));
+  }
+  var histBtn = document.getElementById("openMemoHistoryBtn");
+  if(histBtn){
+    histBtn.textContent = "過去のメモ（" + Object.keys(state.notes || {}).length + "件）";
+  }
+  if(!silent){
+    showToast(cleaned ? "📝 一言メモを保存しました" : "メモを削除しました");
+  }
+}
+
+function openMemoHistoryModal(){
+  renderMemoHistoryList();
+  document.getElementById("memoHistoryBackdrop").hidden = false;
+}
+
+function closeMemoHistoryModal(){
+  document.getElementById("memoHistoryBackdrop").hidden = true;
+}
+
+function renderMemoHistoryList(){
+  var listEl = document.getElementById("memoHistoryList");
+  if(!listEl) return;
+  var notes = state.notes || {};
+  var keys = Object.keys(notes).sort().reverse();
+  if(keys.length === 0){
+    listEl.innerHTML = '<div class="memo-history-empty">まだ一言メモはありません。<br>「今日の通読」カードから日々の黙想や感謝を書き留められます。</div>';
+    return;
+  }
+  listEl.innerHTML = keys.map(function(dk){
+    var item = notes[dk];
+    var dObj = parseIsoDate(dk);
+    var label = dk.slice(0, 4) + "年" + formatDateJp(dObj) + "（" + WD_NAMES[dObj.getDay()] + "）";
+    return '<div class="memo-history-item">'+
+      '<div class="memo-history-head">'+
+        '<span class="memo-history-date">'+escapeHtml(label)+'</span>'+
+        '<button type="button" class="memo-history-del" data-del-memo="'+escapeHtml(dk)+'">削除</button>'+
+      '</div>'+
+      '<p class="memo-history-text">'+escapeHtml(item.text)+'</p>'+
+    '</div>';
+  }).join("");
+
+  listEl.querySelectorAll("[data-del-memo]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var dk = this.getAttribute("data-del-memo");
+      if(!dk || !state.notes || !state.notes[dk]) return;
+      delete state.notes[dk];
+      saveState();
+      renderMemoHistoryList();
+      if(state.active) renderTodayCard();
+      showToast("メモを削除しました");
+    });
+  });
+}
+
+document.getElementById("memoHistoryCloseBtn").addEventListener("click", closeMemoHistoryModal);
+document.getElementById("memoHistoryBackdrop").addEventListener("click", function(e){
+  if(e.target === this) closeMemoHistoryModal();
+});
+
+function loadCloudSession(){
+  try{
+    var raw = localStorage.getItem(CLOUD_STORAGE_KEY);
+    if(!raw) return null;
+    var parsed = JSON.parse(raw);
+    if(!parsed || !parsed.sessionToken) return null;
+    return parsed;
+  }catch(e){
+    return null;
+  }
+}
+
+function saveCloudSession(sess){
+  try{
+    if(!sess){
+      localStorage.removeItem(CLOUD_STORAGE_KEY);
+    } else {
+      localStorage.setItem(CLOUD_STORAGE_KEY, JSON.stringify(sess));
+    }
+  }catch(e){}
+  refreshCloudSettingsStatus();
+  refreshChurchBranding();
+}
+
+function refreshChurchBranding(){
+  var sess = loadCloudSession();
+  var church = state.churchName || (sess && sess.churchName) || null;
+  var subEl = document.getElementById("brandSubText");
+  if(subEl){
+    subEl.textContent = church ? ("⛪ " + church) : "聖書通読トラッカー";
+  }
+}
+
+function refreshCloudSettingsStatus(){
+  var badgeEl = document.getElementById("settingsCloudBadge");
+  var subEl = document.getElementById("settingsCloudSub");
+  if(!badgeEl || !subEl) return;
+  var sess = loadCloudSession();
+  if(sess && sess.sessionToken){
+    badgeEl.textContent = "連携中";
+    badgeEl.classList.add("active");
+    var subText = sess.email || "クラウド連携済み";
+    if(sess.churchName){
+      subText += "（" + sess.churchName + "）";
+    }
+    subEl.textContent = subText;
+  } else {
+    badgeEl.textContent = "未設定";
+    badgeEl.classList.remove("active");
+    subEl.textContent = state.churchName
+      ? ("⛪ " + state.churchName + " ライセンス対応")
+      : "メール認証で通読記録と一言メモを自動保存";
+  }
+}
+
+function hasMeaningfulUserData(s){
+  if(!s || typeof s !== "object") return false;
+  if(s.notes && Object.keys(s.notes).length > 0) return true;
+  if(s.activity && Object.keys(s.activity).length > 0) return true;
+  if(s.plans && typeof s.plans === "object"){
+    for(var pid in s.plans){
+      var ps = s.plans[pid];
+      if(ps && ps.completed && Object.keys(ps.completed).length > 0) return true;
+    }
+  }
+  return false;
+}
+
+function mergeAppStates(localData, remoteData){
+  var a = normalizeState(JSON.parse(JSON.stringify(localData || {})));
+  var b = normalizeState(JSON.parse(JSON.stringify(remoteData || {})));
+  var merged = {
+    active: a.active || b.active || null,
+    churchName: a.churchName || b.churchName || null,
+    inviteCode: a.inviteCode || b.inviteCode || null,
+    bestStreakEver: Math.max(a.bestStreakEver || 0, b.bestStreakEver || 0),
+    activity: {},
+    celebrated: {},
+    notes: {},
+    plans: {}
+  };
+
+  var k;
+  for(k in b.activity){ if(b.activity[k]) merged.activity[k] = true; }
+  for(k in a.activity){ if(a.activity[k]) merged.activity[k] = true; }
+
+  var pid, mk;
+  for(pid in b.celebrated){
+    merged.celebrated[pid] = merged.celebrated[pid] || {};
+    for(mk in b.celebrated[pid]){ merged.celebrated[pid][mk] = b.celebrated[pid][mk]; }
+  }
+  for(pid in a.celebrated){
+    merged.celebrated[pid] = merged.celebrated[pid] || {};
+    for(mk in a.celebrated[pid]){
+      var av = a.celebrated[pid][mk], bv = merged.celebrated[pid][mk];
+      merged.celebrated[pid][mk] = (!bv || (av && av < bv)) ? av : bv;
+    }
+  }
+
+  for(k in b.notes){ merged.notes[k] = b.notes[k]; }
+  for(k in a.notes){
+    var an = a.notes[k], bn = merged.notes[k];
+    if(!bn){
+      merged.notes[k] = an;
+    } else {
+      var aTs = Date.parse(an.updatedAt || "") || 0;
+      var bTs = Date.parse(bn.updatedAt || "") || 0;
+      merged.notes[k] = (aTs >= bTs) ? an : bn;
+    }
+  }
+
+  var allPlans = {};
+  for(pid in b.plans) allPlans[pid] = true;
+  for(pid in a.plans) allPlans[pid] = true;
+
+  for(pid in allPlans){
+    var pa = a.plans[pid] || { startDate: todayStr(), completed: {}, completedAt: {} };
+    var pb = b.plans[pid] || { startDate: todayStr(), completed: {}, completedAt: {} };
+    var pMerged = {
+      startDate: (a.plans[pid] && pa.startDate) ? pa.startDate : pb.startDate,
+      completed: {},
+      completedAt: {}
+    };
+
+    var dk, rk, ck;
+    var allDays = {};
+    for(dk in pb.completed) allDays[dk] = true;
+    for(dk in pa.completed) allDays[dk] = true;
+
+    for(dk in allDays){
+      var da = (pa.completed && pa.completed[dk]) || {};
+      var db = (pb.completed && pb.completed[dk]) || {};
+      var dMerged = {};
+      var allRefs = {};
+      for(rk in db) allRefs[rk] = true;
+      for(rk in da) allRefs[rk] = true;
+      for(rk in allRefs){
+        var ra = da[rk], rb = db[rk];
+        if(ra === true || rb === true){
+          dMerged[rk] = true;
+        } else if((ra && typeof ra === "object") || (rb && typeof rb === "object")){
+          var chUnion = {};
+          if(rb && typeof rb === "object"){
+            for(ck in rb){ if(rb[ck] === true) chUnion[ck] = true; }
+          }
+          if(ra && typeof ra === "object"){
+            for(ck in ra){ if(ra[ck] === true) chUnion[ck] = true; }
+          }
+          if(Object.keys(chUnion).length > 0) dMerged[rk] = chUnion;
+        }
+      }
+      if(Object.keys(dMerged).length > 0) pMerged.completed[dk] = dMerged;
+    }
+
+    for(dk in pb.completedAt){ pMerged.completedAt[dk] = pb.completedAt[dk]; }
+    for(dk in pa.completedAt){
+      var ca = pa.completedAt[dk], cb = pMerged.completedAt[dk];
+      pMerged.completedAt[dk] = (!cb || (ca && ca < cb)) ? ca : cb;
+    }
+
+    merged.plans[pid] = pMerged;
+  }
+
+  return normalizeState(merged);
+}
+
+async function cloudApiFetch(path, options){
+  options = options || {};
+  var sess = loadCloudSession();
+  var headers = { "Content-Type": "application/json" };
+  if(sess && sess.sessionToken){
+    headers["Authorization"] = "Bearer " + sess.sessionToken;
+  }
+  var res = await fetch(NOTIF_API_BASE + path, {
+    method: options.method || "GET",
+    headers: headers,
+    body: options.body ? JSON.stringify(options.body) : undefined
+  });
+  var data = {};
+  try{ data = await res.json(); }catch(e){}
+  if(!res.ok){
+    var err = new Error(data.error || ("通信エラー (" + res.status + ")"));
+    err.status = res.status;
+    err.code = data.code || "";
+    throw err;
+  }
+  return data;
+}
+
+async function pushCloudBackupNow(silent){
+  var sess = loadCloudSession();
+  if(!sess || !sess.sessionToken) return false;
+  if(cloudModalState.conflictRemote) return false;
+  try{
+    var res = await cloudApiFetch("/api/backup", {
+      method: "PUT",
+      body: { data: state }
+    });
+    sess.dataVersion = res.dataVersion || ((sess.dataVersion || 0) + 1);
+    sess.lastSyncedAt = res.updatedAt || new Date().toISOString();
+    saveCloudSession(sess);
+    if(!silent){
+      showToast("☁️ クラウドへバックアップしました");
+    }
+    return true;
+  }catch(err){
+    if(err.status === 401){
+      saveCloudSession(null);
+    }
+    if(!silent){
+      showToast(err.message || "クラウド保存に失敗しました");
+    }
+    return false;
+  }
+}
+
+function scheduleCloudAutoSave(){
+  var sess = loadCloudSession();
+  if(!sess || !sess.sessionToken) return;
+  if(cloudModalState.conflictRemote) return;
+  if(cloudAutoSaveTimer) clearTimeout(cloudAutoSaveTimer);
+  cloudAutoSaveTimer = setTimeout(function(){
+    cloudAutoSaveTimer = null;
+    pushCloudBackupNow(true);
+  }, 1500);
+}
+
+function applyRestoredState(nextState, toastMsg){
+  state = normalizeState(nextState);
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+  refreshChurchBranding();
+  refreshCloudSettingsStatus();
+  showView(state.active ? "dashboard" : "onboarding");
+  if(toastMsg) showToast(toastMsg);
+}
+
+function openCloudBackupModal(){
+  var sess = loadCloudSession();
+  cloudModalState.msg = null;
+  cloudModalState.conflictRemote = null;
+  cloudModalState.step = (sess && sess.sessionToken) ? "account" : "email";
+  cloudModalState.pendingInviteCode = state.inviteCode || "";
+  renderCloudBackupModal();
+  document.getElementById("cloudBackupBackdrop").hidden = false;
+}
+
+function closeCloudBackupModal(){
+  document.getElementById("cloudBackupBackdrop").hidden = true;
+}
+
+function renderCloudBackupModal(){
+  var bodyEl = document.getElementById("cloudBackupBody");
+  if(!bodyEl) return;
+  var sess = loadCloudSession();
+  var html = "";
+
+  var activeChurch = state.churchName || (sess && sess.churchName) || null;
+  if(activeChurch){
+    html += '<div class="cloud-church-banner">⛪ ' + escapeHtml(activeChurch) + '</div>';
+  }
+
+  if(cloudModalState.msg){
+    html += '<div class="cloud-msg ' + (cloudModalState.msgType === "error" ? "error" : "ok") + '">' +
+      escapeHtml(cloudModalState.msg) + '</div>';
+  }
+
+  if(cloudModalState.step === "account" && sess && sess.sessionToken){
+    var licenseLabel = sess.licenseType === "church"
+      ? ("教会ライセンス" + (sess.churchName ? "（" + sess.churchName + "）" : ""))
+      : "個人買い切りライセンス";
+    var syncTimeLabel = sess.lastSyncedAt
+      ? new Date(sess.lastSyncedAt).toLocaleString("ja-JP")
+      : "未同期";
+
+    html += '<div class="cloud-status-panel">'+
+      '<div><strong>連携メール：</strong>' + escapeHtml(sess.email || "") + '</div>'+
+      '<div><strong>プラン種別：</strong>' + escapeHtml(licenseLabel) + '</div>'+
+      '<div><strong>最終同期：</strong>' + escapeHtml(syncTimeLabel) +
+      (sess.dataVersion ? ('（v' + sess.dataVersion + '）') : '') + '</div>'+
+    '</div>';
+
+    if(cloudModalState.conflictRemote){
+      html += '<div class="cloud-conflict-box">'+
+        '<strong>データの統合確認</strong>'+
+        '<p style="margin:6px 0 0;font-size:.78rem;">この端末とクラウドの両方に通読記録があります。どの方法で反映しますか？</p>'+
+        '<div class="cloud-conflict-actions">'+
+          '<button type="button" class="btn btn-primary" id="cloudResolveMergeBtn">両方統合して保存（おすすめ）</button>'+
+          '<button type="button" class="btn btn-ghost" id="cloudResolveRemoteBtn">クラウドの記録で復元</button>'+
+          '<button type="button" class="btn btn-ghost" id="cloudResolveLocalBtn">この端末の記録でクラウドを上書き</button>'+
+        '</div>'+
+      '</div>';
+    } else {
+      html += '<div style="display:flex;flex-direction:column;gap:8px;">'+
+        '<button type="button" class="btn btn-primary" id="cloudSyncNowBtn"' + (cloudModalState.busy ? ' disabled' : '') + '>今すぐクラウドへ保存</button>'+
+        '<button type="button" class="btn btn-ghost" id="cloudPullNowBtn"' + (cloudModalState.busy ? ' disabled' : '') + '>クラウドから読み込み・統合</button>'+
+        '<button type="button" class="btn-text" id="cloudLogoutBtn" style="margin-top:6px;align-self:flex-start;">この端末の連携を解除（ログアウト）</button>'+
+      '</div>';
+    }
+  } else if(cloudModalState.step === "verify"){
+    html += '<div class="cloud-field">'+
+      '<label for="cloudCodeInput">' + escapeHtml(cloudModalState.pendingEmail) + ' に届いた6桁コード</label>'+
+      '<input type="text" id="cloudCodeInput" class="cloud-input code-otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000">'+
+      '<div class="cloud-help">10分以内に入力してください。迷惑メールフォルダも念のためご確認ください。</div>'+
+    '</div>'+
+    '<div style="display:flex;flex-direction:column;gap:8px;">'+
+      '<button type="button" class="btn btn-primary" id="cloudVerifyCodeBtn"' + (cloudModalState.busy ? ' disabled' : '') + '>認証して自動バックアップを開始</button>'+
+      '<button type="button" class="btn-text" id="cloudBackToEmailBtn">メールアドレス・コード入力に戻る</button>'+
+    '</div>';
+  } else {
+    html += '<div class="cloud-field">'+
+      '<label for="cloudEmailInput">メールアドレス</label>'+
+      '<input type="email" id="cloudEmailInput" class="cloud-input" autocomplete="email" placeholder="example@mail.com" value="' + escapeHtml(cloudModalState.pendingEmail) + '">'+
+    '</div>'+
+    '<div class="cloud-field">'+
+      '<label for="cloudInviteInput">解放コード または 教会コード（初回のみ）</label>'+
+      '<input type="text" id="cloudInviteInput" class="cloud-input" placeholder="例: NIWA-XXXX / 教会共通コード" value="' + escapeHtml(cloudModalState.pendingInviteCode || state.inviteCode || "") + '">'+
+      '<div class="cloud-help">※ 買い切り購入時の解放コード、または教会の共通コードを入力してください。すでに登録済みのメールアドレスで機種変更・再ログインする場合は空欄のままで進めます。</div>'+
+    '</div>'+
+    '<button type="button" class="btn btn-primary" style="width:100%;justify-content:center;" id="cloudSendCodeBtn"' + (cloudModalState.busy ? ' disabled' : '') + '>認証コードをメールで受け取る</button>';
+  }
+
+  bodyEl.innerHTML = html;
+
+  var sendBtn = document.getElementById("cloudSendCodeBtn");
+  if(sendBtn){
+    sendBtn.addEventListener("click", handleCloudSendCode);
+  }
+  var verifyBtn = document.getElementById("cloudVerifyCodeBtn");
+  if(verifyBtn){
+    verifyBtn.addEventListener("click", handleCloudVerifyCode);
+  }
+  var backBtn = document.getElementById("cloudBackToEmailBtn");
+  if(backBtn){
+    backBtn.addEventListener("click", function(){
+      cloudModalState.step = "email";
+      cloudModalState.msg = null;
+      renderCloudBackupModal();
+    });
+  }
+  var syncNowBtn = document.getElementById("cloudSyncNowBtn");
+  if(syncNowBtn){
+    syncNowBtn.addEventListener("click", async function(){
+      cloudModalState.busy = true;
+      renderCloudBackupModal();
+      var ok = await pushCloudBackupNow(false);
+      cloudModalState.busy = false;
+      cloudModalState.msg = ok ? "クラウドへ最新の記録を保存しました。" : "クラウドへの保存に失敗しました。";
+      cloudModalState.msgType = ok ? "ok" : "error";
+      renderCloudBackupModal();
+    });
+  }
+  var pullNowBtn = document.getElementById("cloudPullNowBtn");
+  if(pullNowBtn){
+    pullNowBtn.addEventListener("click", function(){
+      syncAfterCloudAuth(false);
+    });
+  }
+  var logoutBtn = document.getElementById("cloudLogoutBtn");
+  if(logoutBtn){
+    logoutBtn.addEventListener("click", async function(){
+      try{ await cloudApiFetch("/api/auth/logout", { method: "POST" }); }catch(e){}
+      saveCloudSession(null);
+      cloudModalState.step = "email";
+      cloudModalState.msg = "この端末のクラウド連携を解除しました。";
+      cloudModalState.msgType = "ok";
+      renderCloudBackupModal();
+    });
+  }
+  var mergeBtn = document.getElementById("cloudResolveMergeBtn");
+  if(mergeBtn){
+    mergeBtn.addEventListener("click", async function(){
+      var remoteData = cloudModalState.conflictRemote;
+      cloudModalState.conflictRemote = null;
+      var merged = mergeAppStates(state, remoteData);
+      applyRestoredState(merged, "☁️ 両方の記録を統合しました");
+      await pushCloudBackupNow(true);
+      cloudModalState.msg = "この端末とクラウドの記録を統合して保存しました。";
+      cloudModalState.msgType = "ok";
+      renderCloudBackupModal();
+    });
+  }
+  var remoteBtn = document.getElementById("cloudResolveRemoteBtn");
+  if(remoteBtn){
+    remoteBtn.addEventListener("click", function(){
+      var remoteData = cloudModalState.conflictRemote;
+      cloudModalState.conflictRemote = null;
+      applyRestoredState(remoteData, "☁️ クラウドの記録を復元しました");
+      cloudModalState.msg = "クラウドの記録でこの端末を復元しました。";
+      cloudModalState.msgType = "ok";
+      renderCloudBackupModal();
+    });
+  }
+  var localBtn = document.getElementById("cloudResolveLocalBtn");
+  if(localBtn){
+    localBtn.addEventListener("click", async function(){
+      cloudModalState.conflictRemote = null;
+      await pushCloudBackupNow(true);
+      cloudModalState.msg = "この端末の記録でクラウドを更新しました。";
+      cloudModalState.msgType = "ok";
+      renderCloudBackupModal();
+    });
+  }
+}
+
+async function handleCloudSendCode(){
+  var emailEl = document.getElementById("cloudEmailInput");
+  var inviteEl = document.getElementById("cloudInviteInput");
+  var email = emailEl ? emailEl.value.trim() : "";
+  var inviteCode = inviteEl ? inviteEl.value.trim() : "";
+  if(!email){
+    cloudModalState.msg = "メールアドレスを入力してください。";
+    cloudModalState.msgType = "error";
+    renderCloudBackupModal();
+    return;
+  }
+  cloudModalState.pendingEmail = email;
+  cloudModalState.pendingInviteCode = inviteCode;
+  cloudModalState.busy = true;
+  cloudModalState.msg = null;
+  renderCloudBackupModal();
+
+  try{
+    await cloudApiFetch("/api/auth/request-code", {
+      method: "POST",
+      body: { email: email, inviteCode: inviteCode }
+    });
+    if(inviteCode){
+      state.inviteCode = inviteCode.toUpperCase();
+      saveState();
+    }
+    cloudModalState.busy = false;
+    cloudModalState.step = "verify";
+    cloudModalState.msg = "認証コードを送信しました。メールをご確認ください。";
+    cloudModalState.msgType = "ok";
+    renderCloudBackupModal();
+  }catch(err){
+    cloudModalState.busy = false;
+    cloudModalState.msg = err.message || "認証コードの送信に失敗しました。";
+    cloudModalState.msgType = "error";
+    renderCloudBackupModal();
+  }
+}
+
+async function handleCloudVerifyCode(){
+  var codeEl = document.getElementById("cloudCodeInput");
+  var code = codeEl ? codeEl.value.trim() : "";
+  if(!code){
+    cloudModalState.msg = "6桁の認証コードを入力してください。";
+    cloudModalState.msgType = "error";
+    renderCloudBackupModal();
+    return;
+  }
+  cloudModalState.busy = true;
+  cloudModalState.msg = null;
+  renderCloudBackupModal();
+
+  try{
+    var res = await cloudApiFetch("/api/auth/verify-code", {
+      method: "POST",
+      body: {
+        email: cloudModalState.pendingEmail,
+        code: code,
+        inviteCode: cloudModalState.pendingInviteCode
+      }
+    });
+    var user = res.user || {};
+    if(user.churchName){
+      state.churchName = user.churchName;
+    }
+    if(user.licenseCode){
+      state.inviteCode = user.licenseCode;
+    }
+    saveCloudSession({
+      sessionToken: res.sessionToken,
+      email: user.email || cloudModalState.pendingEmail,
+      licenseCode: user.licenseCode || null,
+      licenseType: user.licenseType || "personal",
+      churchName: user.churchName || state.churchName || null,
+      licenseExpiresAt: user.licenseExpiresAt || null,
+      dataVersion: res.dataVersion || 0,
+      lastSyncedAt: res.backupUpdatedAt || null
+    });
+    cloudModalState.busy = false;
+    cloudModalState.step = "account";
+    await syncAfterCloudAuth(true);
+  }catch(err){
+    cloudModalState.busy = false;
+    cloudModalState.msg = err.message || "認証に失敗しました。";
+    cloudModalState.msgType = "error";
+    renderCloudBackupModal();
+  }
+}
+
+async function syncAfterCloudAuth(isInitialLogin){
+  cloudModalState.busy = true;
+  renderCloudBackupModal();
+  try{
+    var remote = await cloudApiFetch("/api/backup", { method: "GET" });
+    cloudModalState.busy = false;
+    if(!remote.exists || !remote.data){
+      await pushCloudBackupNow(true);
+      cloudModalState.msg = "クラウドバックアップを開始しました。これからの記録と一言メモは自動で保存されます。";
+      cloudModalState.msgType = "ok";
+      renderCloudBackupModal();
+      return;
+    }
+
+    var localHasData = hasMeaningfulUserData(state);
+    var remoteHasData = hasMeaningfulUserData(remote.data);
+
+    if(!localHasData && remoteHasData){
+      applyRestoredState(remote.data, "☁️ クラウドから記録を復元しました");
+      var sess = loadCloudSession();
+      if(sess){
+        sess.dataVersion = remote.dataVersion || sess.dataVersion;
+        sess.lastSyncedAt = remote.updatedAt || new Date().toISOString();
+        saveCloudSession(sess);
+      }
+      cloudModalState.msg = "クラウド上の通読記録と一言メモを復元しました。";
+      cloudModalState.msgType = "ok";
+      renderCloudBackupModal();
+      return;
+    }
+
+    if(localHasData && remoteHasData){
+      var localJson = JSON.stringify(normalizeState(JSON.parse(JSON.stringify(state))));
+      var remoteJson = JSON.stringify(normalizeState(JSON.parse(JSON.stringify(remote.data))));
+      if(localJson === remoteJson){
+        cloudModalState.msg = "この端末とクラウドの記録はすでに最新の状態で一致しています。";
+        cloudModalState.msgType = "ok";
+        renderCloudBackupModal();
+        return;
+      }
+      cloudModalState.conflictRemote = remote.data;
+      cloudModalState.msg = null;
+      renderCloudBackupModal();
+      return;
+    }
+
+    await pushCloudBackupNow(true);
+    cloudModalState.msg = isInitialLogin
+      ? "クラウド連携が完了し、現在の記録を保存しました。"
+      : "クラウドと同期しました。";
+    cloudModalState.msgType = "ok";
+    renderCloudBackupModal();
+  }catch(err){
+    cloudModalState.busy = false;
+    cloudModalState.msg = err.message || "クラウドデータの確認に失敗しました。";
+    cloudModalState.msgType = "error";
+    renderCloudBackupModal();
+  }
+}
+
+function applyUrlLaunchParams(){
+  try{
+    if(typeof window === "undefined" || !window.location || !window.location.search) return;
+    var params = new URLSearchParams(window.location.search);
+    var churchParam = (params.get("church") || "").trim();
+    var inviteParam = (params.get("invite") || params.get("code") || "").trim();
+    var changed = false;
+
+    if(churchParam){
+      state.churchName = churchParam.slice(0, 80);
+      changed = true;
+    }
+    if(inviteParam){
+      state.inviteCode = inviteParam.toUpperCase().slice(0, 64);
+      changed = true;
+    }
+    if(changed){
+      saveState();
+      refreshChurchBranding();
+      refreshCloudSettingsStatus();
+      if(churchParam){
+        setTimeout(function(){
+          showToast("⛪ " + state.churchName + " 専用リンクから起動しました");
+        }, 400);
+      }
+      if(inviteParam && !churchParam){
+        cloudApiFetch("/api/license/check?code=" + encodeURIComponent(state.inviteCode))
+          .then(function(info){
+            if(info && info.valid && info.churchName && !state.churchName){
+              state.churchName = info.churchName;
+              saveState();
+              refreshChurchBranding();
+              refreshCloudSettingsStatus();
+              showToast("⛪ " + state.churchName + " ライセンスを確認しました");
+            }
+          })
+          .catch(function(){});
+      }
+      if(window.history && window.history.replaceState){
+        params.delete("church");
+        params.delete("invite");
+        params.delete("code");
+        var rest = params.toString();
+        var cleanUrl = window.location.pathname + (rest ? ("?" + rest) : "") + (window.location.hash || "");
+        window.history.replaceState({}, "", cleanUrl);
+      }
+    }
+  }catch(e){}
+}
+
+document.getElementById("openCloudBackupBtn").addEventListener("click", function(){
+  closeSettingsModal();
+  openCloudBackupModal();
+});
+document.getElementById("cloudBackupCloseBtn").addEventListener("click", closeCloudBackupModal);
+document.getElementById("cloudBackupBackdrop").addEventListener("click", function(e){
+  if(e.target === this) closeCloudBackupModal();
+});
+
 /* ============================== INIT ============================== */
 
+applyUrlLaunchParams();
+refreshChurchBranding();
+refreshCloudSettingsStatus();
 showView(state.active ? "dashboard" : "onboarding");
 initBottomNav();
 updateNotifButtonBadge();

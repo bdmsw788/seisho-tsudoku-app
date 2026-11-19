@@ -10,7 +10,9 @@
     "db:migrate:local": "wrangler d1 migrations apply seisho-tsudoku-notifications --local",
     "db:migrate:remote": "wrangler d1 migrations apply seisho-tsudoku-notifications --remote",
     "vapid:local": "node scripts/setup-vapid.mjs --local",
-    "vapid:remote": "node scripts/setup-vapid.mjs --remote"
+    "vapid:remote": "node scripts/setup-vapid.mjs --remote",
+    "license:create": "node scripts/manage-license.mjs create",
+    "license:list": "node scripts/manage-license.mjs list"
   },
   "dependencies": {
     "@pushforge/builder": "^2.0.5"
